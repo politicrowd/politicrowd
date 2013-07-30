@@ -1,0 +1,31 @@
+
+{% for politician in politicians %}
+<div id="scroll_{{politician.bioguide_id}}" class="span3">
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.firstname}} {{politician.lastname}}</a><br/>
+
+<IMG SRC="http://politicrowd.com/static/media/politicians/{{politician.bioguide_id}}.jpg"/>
+
+
+</div>
+<br/>
+{% endfor %}
+
+
+{% for politician in more %}
+<div id="scroll_{{politician.bioguide_id}}" class="span3">
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.firstname}} {{politician.lastname}}</a><br/>
+
+<IMG SRC="http://politicrowd.com/static/media/politicians/{{politician.bioguide_id}}.jpg"/>
+</div>
+<br/>
+{% endfor %}
+
+{% for politician in most %}
+<div id="scroll_{{politician.bioguide_id}}" class="span3">
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.firstname}} {{politician.lastname}}</a><br/>
+<IMG SRC="http://politicrowd.com/static/media/politicians/{{politician.bioguide_id}}.jpg"/>
+
+</div>
+<br/>
+{% endfor %}
+

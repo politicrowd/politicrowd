@@ -1,0 +1,16 @@
+django_email_as_username.egg-info/PKG-INFO
+django_email_as_username.egg-info/SOURCES.txt
+django_email_as_username.egg-info/dependency_links.txt
+django_email_as_username.egg-info/top_level.txt
+emailusernames/__init__.py
+emailusernames/admin.py
+emailusernames/backends.py
+emailusernames/forms.py
+emailusernames/models.py
+emailusernames/tests.py
+emailusernames/utils.py
+emailusernames/management/__init__.py
+emailusernames/management/commands/__init__.py
+emailusernames/management/commands/createsuperuser.py
+emailusernames/management/commands/dumpdata.py
+emailusernames/management/commands/loaddata.py

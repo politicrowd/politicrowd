@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script type="text/javascript">
+toggle_visibility = function (id) {
+	var e = $("#"+id);
+	e.show();
+}
+remove_visibility = function (id) {
+	var e = $("#"+id);
+	e.hide();
+}
+
+
+
+</script>
+<style type="text/css">
+
+label { width: 20em; float: left; }
+label.error { float: none; color: #BF2623; padding-left: .5em; vertical-align: top; }
+p { clear: both; }
+.submit { margin-left: 12em; }
+em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+input.error,
+select.error,
+textarea.error {
+    border: 1px solid #BF2623;
+}
+</style>
+<script>
+$(document).ready(function(){
+	$("#issue").validate();
+$("#issue").submit(function() {
+	if($(this).validate().checkForm()) {
+		$("#submit").attr('disabled',true);
+    } else {
+        $('#submit').attr('disabled',false);
+    }
+});
+
+
+$("#search-issue").validate();
+$("#search-issue").submit(function() {
+	if($(this).validate().checkForm()) {
+		$("#issue-submits").attr('disabled',true);
+    } else {
+        $('#issue-submits').attr('disabled',false);
+    }
+});
+
+
+});
+</script>
+
+<script>
+
+issuepages = function(slug) {
+	$("#issue-pages").show();
+	$("#issue-pages").load(
+	"/issue/"+slug+"/");
+	
+}
+
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#issue-submits").click(function(){
+	 
+				var query = $("#searchissue").val();
+				$.get("/issuesearch/", {"query":query }, function(data) {$("#issuers")}, "text" );
+			
+	});
+			});
+ 				 							
+ 			</script>
+{% endblock %}
+
+
+
+{% block content %}
+<title>Browse OpenLetters by Issue</title>
+
+<!-- implement merging here too eventually so when user searches for one phrasing of an issue they can be redirected to the main way of wording it -->
+<div class="span12">
+<h2 style="display:inline;">Browse OpenLetters by Issue</h2>
+
+
+<br/><br/>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#
+			search = function() {  
+				var query = $("#searchissue").val();
+				alert(query);
+			}
+			});
+ 				 							
+ 			</script>
+<div class="span12">
+ {% if issues.has_previous %}
+            <a href="?page={{ issues.previous_page_number }}"><i class="icon-chevron-up"></i> previous</a>
+        {% endif %}
+<div id="issuers" class="span6">
+<div class="well">
+<div>
+<!--<input type="text" name="query" placeholder="Search for an Issue" id="searchissue" class="required span3" title="Please type the name of an issue"> &nbsp&nbsp&nbsp<button class="btn" id="issue-submits" style="vertical-align:4px; margin:0px;">Submit</button><br/><br/><br/>-->
+{% for issue in issues %}
+
+<span class="hidden" id="star-empty"><a class="pointer" onclick="favorite('{{issue.title}}')"><i class="icon-star-empty"></i></a></span><span class="hidden" id="star"><i class="icon-star"></i></span>{{issue.rank}} | <a class="pointer" onClick="issuepages('{{issue.slug}}')">{{issue.title}}</a><br/><br/>
+
+{% endfor %}
+
+<div class="span6"><br/><br/>
+    <span class="step-links">
+        {% if issues.has_previous %}
+            <a href="?page={{ issues.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ issues.number }} of {{ issues.paginator.num_pages }}
+        </span>
+
+        {% if issues.has_next %}
+           <a href="?page={{ issues.next_page_number }}"><i class="icon-chevron-down"></i> next</a>
+        {% endif %}<br/><br/>
+    </span>
+</div>
+
+</div>
+</div>
+</div>
+<div id = "issue-pages" class="span6 well">
+</div>
+</div>
+</div>
+
+{% endblock %}

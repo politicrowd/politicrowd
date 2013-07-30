@@ -1,0 +1,32 @@
+{% for article in articles %}
+
+
+{{article.rank}}|<a href="/{{article.slug}}"> {{article.question}} </a></br></br>
+
+{% endfor %}
+<br/>
+<span class="step-links">
+        {% if articles.has_previous %}
+           <a onClick="prev()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+        </span>
+
+        {% if articles.has_next %}
+            <a onClick="next()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+   	    <script>
+next = function() {
+	$("#articles").text();
+	$("#articles").load(
+	"/next/?page={{ articles.next_page_number }}");
+}
+prev = function() {
+	$("#articles").text();
+	$("#articles").load(
+	"/next/?page={{ articles.previous_page_number }}");
+}
+</script>

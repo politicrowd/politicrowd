@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+<div class="span12">
+<h3>{{ama.ttitle}} {{ama.first}} {{ama.last}} wants to hear from constituents about:</h3><br/>
+<h4>{{title}}</h4>
+</div>
+<br/><br/><br/>
+<div class="span6 well">
+{{extra|linebreaks}}
+<br/><br/><br/>
+{% if address %}
+<form name="query" class="well span5 form-horizontal" action="/location/" method = "post">
+<h4>Please verify you are in {{thetitle}} {{first}} {{last}}'s district</h4><br/>
+{% csrf_token %}
+<p>
+	<label for="name">First Name</label><input type="text" class="span3" name = "name" id="name"/>
+</p>
+<p>
+<label for="address">Address</label><input type="text" class="span4" name="address" id="address"/>
+</p>
+<p>
+<label for="city">City</label><input type="text" class="span3" name="city" id="city"/>
+</p>
+
+<p>
+<label for="states">State:</label> <select name = "state" id="state">
+<option name = "Choose" value = "Choose">Select your state…</option>
+{% for state in states %}
+<option name = "{{state.1}}" value = "{{state.0}}" >{{state.1}}</option>
+{% endfor %}
+</select>
+
+</p>
+<p>
+<label for="zip">Zip Code</label><input type="text" class="span4" name="zip" id="zip"/>
+</p>
+<p>
+    <input type="submit" class="btn btn-primary" value="Submit"/>
+</p>
+</form>
+
+
+{% else %}
+You are not able to add comments to the page, because you are not in the politician's district.<br/>
+{% endif %}
+</div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+{% if comments %}
+<div class="span6"><h2>Responses:</h2><br/>
+{% for comment in comments %}
+<div class="span6 well">
+<div id="comment-wrap-{{comment.id}}">
+{{comment.creator.name}} in {{comment.creator.city}}, {{comment.creator.state}}<br/>
+{{comment.comment}}<br/><br/>
+</div>
+{% for response in comment.responses.all %}
+<div id="reply-wrap-{{response.id}}">
+{{response.creator.name}} in {{response.creator.city}}, {{response.creator.state}}<br/>
+{{response.response}}
+</div>
+<br/><br/>
+{% endfor %}
+
+</div>
+
+{% endfor %}
+</div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script type="text/javascript">
+toggle_visibility = function (id) {
+	var e = $("#"+id);
+	e.show();
+}
+remove_visibility = function (id) {
+	var e = $("#"+id);
+	e.hide();
+}
+
+
+
+</script>
+
+
+<script>
+congress = function() {
+	$("#openletters").load(
+	"/load/congress/");	
+}
+
+state = function() {
+	
+	$("#openletters").load(
+	"/load/OR/");
+}
+
+mypoliticians = function() {
+	$("#openletters").load(
+	"/load/mypoliticians/");
+}
+
+issuepages = function(slug) {
+	var type = $("#letter-view").val();
+	if (type !== 'Null'){
+		$("#openletters").load(
+	"/issue/"+slug+"/"+type+"/");
+	}
+	else{
+		var politician = $("#politician-id").val();
+		$("#mention").load(
+		"/issue/"+slug+"/"+politician+"/");
+	}
+	
+}
+
+search = function() {
+	var search=$("#searching").val();
+	$("#openletters").load(
+	"/searchletters/"+search+"/");	
+}
+
+stateLetters = function(id) {
+	$("#openletters").load(
+	"/congress/legislator/"+id+"/");
+	
+	$("#politician-id").val(id);	
+}
+
+fedLetters = function(id) {
+	$("#openletters").load(
+	"/congress/congressman/"+id+"/");
+	
+	$("#politician-id").val(id);	
+}
+
+letterStat = function(val) {
+        $("#letter-view").val(val);
+    }
+
+
+</script>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<input type="hidden" value="Congress" id="letter-view">
+<input type="hidden" value="" id="politician-id">
+<div class="span8 well" id="content-container">
+<h3>OpenLetters to: </h3><div class="btn-group" data-toggle="buttons-radio" >
+<button type="button" onClick="congress(), letterStat('Congress')" class="btn btn-primary btn-large active" data-toggle="button">Congress</button>
+  <button type="button" onClick="state(), letterStat('State')" class="btn btn-success btn-large" data-toggle="button">Oregon Legislature</button>
+  <button type="button" onClick="mypoliticians(), letterStat('Null')" class="btn btn-info btn-large" data-toggle="button">My Politicians</button>
+</div>
+<hr>
+<div id="openletters">
+<div class="btn-group">
+<div class="input-prepend">
+<span id="appendedPrependedDropdownButton">Sorted by:</span> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+Trending
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a class="pointer" onClick="top()">Top</a></li>
+    <li><a class="pointer" onClick="new()">New</a></li>
+    <li><a class="pointer" onClick="controversial()">Controversial</a></li>
+  </ul>
+  </div>
+</div>
+<br/><br/>
+{% for letter in open_letters %}
+<h4><a href="/openletters/{{letter.slug}}">{{letter.title}}</a></h4>
+Started by {{letter.creator}} | {{letter.rank}} Contributor{{letter.rank|pluralize}}<br/><br/>
+{% endfor %}
+
+</div>
+</div>
+<div class="span3 well">
+<h3>Issues</h3>
+
+{% for issue in issues %}
+
+<a class="pointer" onclick="issuepages('{{issue.slug}}')">{{issue.rank}} | {{issue.title}} </a><br/>
+{% endfor %}
+<hr>
+
+<form class="form-search" onSubmit="search('test'); return false">
+Search
+<div class="input-append">
+  				<input type="text" name="query" id="searching" class="search-query span225" placeholder="Find OpenLetters">
+  				<button onClick="search()" class="btn" type="button"><i class="icon-search"></i></button>
+  				</div>
+				</form>
+				
+</div>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<script>
+$(document).ready(function() { 
+
+$("#committee-lower").change(function(){
+		if($(this).val() != ''){
+			var id = $(this).find(':selected')[0].id;
+			$("#lid").val(id);
+
+		}
+		
+});
+
+
+$("#committee-upper").change(function(){
+		if($(this).val() != ''){
+			var id = $(this).find(':selected')[0].id;
+			$("#uid").val(id);
+
+		}
+		
+});
+});
+</script>
+<h4>Target Relevant Legislative Committees</h4><br/>
+<label for="committees">House Committees:</label><select name = "lcommittees" id="committee-lower" class="" title="Select a committee">
+<option name = "Choose" value = "">Select a committee (Optional)</option>
+{% for committee in lcommittees|dictsort:"committee" %}
+<option name="{{committee.id}}" id="{{committee.id}}" value="{{committee.committee}}">{% if committee.subcommittee%}{{committee.committee}}: {{committee.subcommittee}}{% else %}{{committee.committee}}{% endif %}</option>
+{% endfor %}
+</select>
+<br/>
+<br/>
+<label for="committees">Senate Committees:</label> <select name = "ucommittees" id="committee-upper" class="" title="Select a committee">
+<option name = "Choose" value = "">Select a committee (Optional)</option>
+{% for committee in ucommittees|dictsort:"committee" %}
+<option name="{{committee.id}}" id="{{committee.id}}" value="{{committee.committee}}">{% if committee.subcommittee%}{{committee.committee}}: {{committee.subcommittee}}{% else %}{{committee.committee}}{% endif %}</option>
+{% endfor %}
+</select>
+<!-- could have issue with id's on subcommittees... -->
+<input type="hidden" id="lid" name="lid" value="">
+<input type="hidden" id="uid" name="uid" value="">
+<br/>

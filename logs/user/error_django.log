@@ -1,0 +1,17 @@
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1] mod_wsgi (pid=733237): Exception occurred processing WSGI script '/home/plocker/webapps/django/myproject/myproject/wsgi.py'.
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1] Traceback (most recent call last):
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/core/handlers/wsgi.py", line 241, in __call__
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     response = self.get_response(request)
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/core/handlers/base.py", line 179, in get_response
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     response = self.handle_uncaught_exception(request, resolver, sys.exc_info())
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/core/handlers/base.py", line 228, in handle_uncaught_exception
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     return callback(request, **param_dict)
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/utils/decorators.py", line 91, in _wrapped_view
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     response = view_func(request, *args, **kwargs)
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/views/defaults.py", line 32, in server_error
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     t = loader.get_template(template_name) # You need to create a 500.html template.
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/template/loader.py", line 145, in get_template
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     template, origin = find_template(template_name)
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]   File "/home/plocker/webapps/django/lib/python2.7/django/template/loader.py", line 138, in find_template
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1]     raise TemplateDoesNotExist(name)
+[Sat Jul 13 22:12:34 2013] [error] [client 127.0.0.1] TemplateDoesNotExist: 500.html

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PolitiCrowd - Volunteer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />
+<link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+<script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+<script type="text/javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/static/media/js/custom.js"></script>
+<script src="/static/media/js/validate.js"></script>
+<script src="/static/media/bootstrap-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/media/bootstrap-1/css/bootstrap.min.css" />
+<script src="/static/media/js/tooltip.js"></script>
+<link rel="shortcut icon" href="/static/media/img/favv.ico" />
+<script type="text/javascript">
+        $(document).ready(function(e) {
+        	$(function(){
+					$('.my-dropdown1').sSelect();
+				});
+        $("#volunteers").validate({
+  rules: {
+  	email: {
+      required: true,
+      email: true
+    }
+    
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});  
+
+
+        
+        
+        
+        });
+        </script>
+</head>
+
+<body>
+<div class="comingWrapper">
+
+<section class="coming-sec">
+	<article class="coming-box">
+    	<a class="coming-logo" href="/"><img src="/static/media/images/coming-logo.png" alt="img"></a>
+        <h1>Volunteer for PolitiCrowd!<br/> Launching 8/4/13.</h1>
+        <p>PolitiCrowd is a 501c3 non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. Visit our <a href="/about/">About Page</a> or email us at <a href="mailto:crowd@politicrowd.com">Crowd@PolitiCrowd.com</a> if you would like to learn more.</p>
+        <div class="volunteer-form">
+               <form action = "/savevolunteer/" id="volunteers" class="volunteer" method="post">
+{% csrf_token %}
+<ul class="loginDetail">
+<li>
+<label>Full Name</label>
+<input type="text" class="required" name="name"/>
+</li>
+<li>
+<label>Email Address</label>
+<input type="email" class="required" name="email"/>
+</li>
+<li>
+<label>Phone (optional)</label>
+<input type="text" name="phone"/>
+</li>
+<li>
+
+<label>Volunteer</label>
+
+     <div class="selectbox1">   
+     <select id="my-dropdown1" name="volunteer" class="my-dropdown1 required" title="Select an option" name="state">
+     <option value = "">Select an interest…</option>
+     <option value = "launch event volunteer">Launch event volunteer</option>
+     <option value = "front-end programmer">Front-end programming (HTML, CSS, jQuery/JavaScript)</option>
+     <option value = "back-end programmer">Back-end programming (Python - Django framework)</option>
+     <option value = "marketing guru">Marketing (social media, PR, media relations)</option>
+     <option value = "master of research">Research</option>
+     </select>
+     </div>
+</li>
+<li>
+<label>Comments</label>
+<textarea name="comment" row = "2" col="2"></textarea>
+</li>
+<li>
+<input type="submit" value="submit" />
+</li>
+</ul>
+</form>
+
+            
+        </div>
+    </article>
+</section>
+
+ </div>
+</body>
+</html>
+
+
+
+
+

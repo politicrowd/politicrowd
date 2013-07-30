@@ -1,0 +1,107 @@
+                            {% for comment in comments %}
+                            <div class="commentLink">
+                                <div class="title-sec">
+                                {% if comment.title %}	<h3>Title: {{comment.title}}</h3>{% endif %}
+                                    <div class="drop-sec">
+                                    	<a class="closeUL" href="#"><img src="/static/media/images/cross.png" alt="img"></a>
+                                        <ul>
+                                       <form method="POST" action="/report/{{comment.id}}/{{open_letter.slug}}/">
+                                        {% csrf_token %}
+                                        	<li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="abuse"/></small>
+                                                <span>Abusive language.</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="spam" /></small>
+                                                <span>Spam</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="other"/></small>
+                                                <span>Other</span>
+                                            </li>   
+                                            <li><textarea name="other" id="other-{{comment.id}}" cols="" rows=""></textarea></li>       
+                                            <li><input type="submit" value="Report" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                </div>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_comment('{{comment.id}}')"></a> <span id="comment_rank_{{comment.id}}" class="{{comment.rank}}">{{comment.rank}}</span> <a class="arrowdown1" onClick="downvote_comment('{{comment.id}}')"></a> </div>
+                                    <div class="commentRight">
+                                        <p>{{comment.comment}}</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                {% if comment.replies.all %}
+                                    <section class="reply potion">
+                                        <p>{{comment.replies.count}}</p>
+                                    </section>
+                                    {% endif %}
+                                    {% if comment.creator.politician %}<div class="commentimg1"> {% if comment.creator.politician.jurisdiction == 'federal' %} <img height="85" width="85" src="/static/media/politicians/{{politician.photo}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="85" width="85" src="{{politician.photo}}" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %} </div>{% endif %}
+                                    <ul class="uiLeft">
+                                        <li>by {% if comment.creator.politician %}<a href="/politicians/{{comment.creator.politician.unique}}/">{{comment.creator.politician.title}} {{comment.creator.politician.last}}</a>{% endif %}{{comment.creator}} in {{comment.creator.city}}, {{comment.creator.state}} &nbsp&nbsp</li>
+                                        <li class="last">&nbsp&nbsp {{comment.creation_date}}</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: {% if comment.title %} {{comment.title}} {% endif %}</h3>
+                                        <form method="POST" action="/reply/{{open_letter.slug}}/{{comment.id}}/">
+                                        {% csrf_token %}
+                                        <div class="commenText">
+                                            <textarea name="reply" row="2" col="2"></textarea>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                                        </form>
+                                        
+                                    </div>
+                                <div class="replyComment">
+                                	{% for reply in comment.replies.all %}
+                                    <div class="commentLink commenttxt bord-bot">
+                                   	 	<div class="title-sec">
+                                        <h3>Reply: {{comment.title}} </h3>
+                                        <div class="drop-sec">
+                                    	<a class="closeUL" href="#"><img src="/static/media/images/cross.png" alt="img"></a>
+                                        <ul>
+                                       <form method="POST" action="/report_reply/{{reply.id}}/{{open_letter.slug}}/">
+                                        {% csrf_token %}
+                                        	<li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="abuse"/></small>
+                                                <span>Abusive language.</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="spam" /></small>
+                                                <span>Spam</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="other"/></small>
+                                                <span>Other</span>
+                                            </li>   
+                                            <li><textarea name="other" id="other-reply-{{reply.id}}" cols="" rows=""></textarea></li>       
+                                            <li><input type="submit" value="Report" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                    </div>
+                                        <div class="commenText">
+                                        <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_reply('{{reply.id}}')"></a> <span id="reply_rank_{{reply.id}}" class="{{reply.rank}}">{{reply.rank}}</span> <a class="arrowdown1" onClick="downvote_reply('{{reply.id}}')"></a> </div>
+                                        
+                                        
+                                            <div class="commentRight">
+                                                <p>{{reply.comment}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="reply-uiLeft">
+                                                <li>by {{reply.creator.first}} in {{reply.creator.city}}, {{reply.creator.state}}&nbsp</li>
+                                                <li class="last">&nbsp {{reply.creation_date}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}

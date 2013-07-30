@@ -1,0 +1,127 @@
+
+<script type="text/javascript">
+            $(document).ready(function(e) {
+            
+            
+             
+ 
+ 
+ 
+ 
+                $(function() {
+                    $("#foo2").carouFredSel({
+                        responsive: true,
+                        circular: false,
+                        infinite: false,
+                        auto 	: false,
+                        width: '100%',
+                        scroll:1,
+                        prev: '#foo2_prev',
+                        next: '#foo2_next',
+                        items: {
+				
+                            //	height: '30%',	//	optionally resize item-height
+                            visible: {
+                                min: 1,
+                                max: 4
+                            }
+                        }
+                    });                   
+                });
+                
+                $('.bxslider1').bxSlider({
+                    minSlides:1,
+                    maxSlides:4,
+                    slideWidth:155,
+                    slideMargin:20
+                });
+                                
+               
+            });		
+            if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100px',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 1,
+                                    max: 1
+                                }
+                            }
+                        });                   
+                    });
+                });
+            }
+			 
+            if ((navigator.userAgent.match(/iPad/i))) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100%',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 3,
+                                    max: 3
+                                }
+                            }
+                        });                   
+                    });
+                });
+            }
+            
+				 
+				 
+        </script>
+
+
+<h3>Search Results:</h3>
+                <ul class="bxslider1">
+                {% if requests %}
+                
+{% for request in requests %}
+										<li>
+                                            <div class="img1">
+                                                <article class="arrow"></article>
+                                                <section class="upvote_politication_img"> <a href="/politicians/{{request.politician.unique}}">{% if request.politician.jurisdiction == 'federal' %} <img height="75" width="75" src="/static/media/politicians/{{request.politician.photo}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="75" width="75" src="{{request.politician.photo}}" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %}</a>
+
+                                                </section><em class="pol-shadow"></em>
+                                            </div>
+                                            <section class="politic_des">
+                                                <h3>{{request.politician.title}}, {{request.politician.state}}<br>
+                                                    {{request.politician.first}} {{request.politician.last}}</h3>
+                                                <h5>Requesting: {{request.upvotes}}/{{request.politician.response_threshold}}</h5>
+                                                <figure class="openMail blue_clr">Response: {{request.responses}}</figure>
+                                            </section>
+                                        </li>
+
+
+{% endfor %}
+
+{% else %}
+<h3>{{error}} errrrrrror</h3>
+
+{% endif %}
+
+                                                                            
+                                    </ul>
+                                    <div class="clearfix"></div>
+

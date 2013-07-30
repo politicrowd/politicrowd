@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+{% block content %} 
+<div>
+{% if pages %}
+<div class="span4">
+<h4>Posts:</h4>
+{% for page in pages %}
+<a href="/{{page.slug}}/">{{page.rank}}| {{page.question}}</a><br/>
+{% endfor %}
+</div>
+{% endif %}
+
+{% if issues %}
+<div class="span4">
+<h4>Issues:</h4>
+{% for issue in issues %}
+<a href="/issue/{{issue.slug}}/">{{issue.title}}</a><br/>
+{% endfor %}
+
+</div>
+{% endif %}
+<div class="span4">
+{% if politicians %}
+<h4>Politicians</h4>
+{% for politician in politicians %}
+
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</a>
+<br/>
+
+{% endfor %}
+
+{% endif %}
+
+{% if more %}
+
+{% for politician in more %}
+
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</a>
+<br/>
+
+{% endfor %}
+
+{% endif %}
+
+{% if most %}
+
+{% for politician in most %}
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</a><br/>
+{% endfor %}
+
+{% endif %}
+</div>
+</div>
+
+{% endblock %}

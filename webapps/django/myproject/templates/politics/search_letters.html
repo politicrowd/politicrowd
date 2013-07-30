@@ -1,0 +1,10 @@
+{% if open_letters %}
+The following OpenLetters matched your search for "{{query}}":<br/>
+{% for letter in open_letters %}
+<a href="/openletters/{{letter.slug}}/">{{letter.title}}</a><br/>
+{% endfor %}
+
+{% else %}
+
+No OpenLetters found matching "{{query}}".
+{% endif %}

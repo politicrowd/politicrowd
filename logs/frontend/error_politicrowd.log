@@ -1,0 +1,112 @@
+2013/07/14 03:13:23 [info] 149450#0: *49825309 client 66.249.73.225 closed keepalive connection
+2013/07/14 03:13:32 [info] 149450#0: *49825517 client 76.105.208.224 closed keepalive connection
+2013/07/14 03:25:04 [info] 149449#0: *49838548 client 66.87.112.187 closed keepalive connection
+2013/07/14 03:25:11 [info] 149449#0: *49838603 client 66.87.112.187 closed keepalive connection
+2013/07/14 03:41:02 [info] 149450#0: *49855210 client 66.249.73.225 closed keepalive connection
+2013/07/14 04:00:18 [info] 149449#0: *49873889 client 24.130.40.89 closed keepalive connection
+2013/07/14 05:12:14 [info] 149449#0: *49936429 client 75.92.167.197 closed keepalive connection
+2013/07/14 05:12:23 [error] 149449#0: *49936474 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 05:12:26 [error] 149449#0: *49936474 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 05:16:38 [info] 149450#0: *49940366 client 66.249.73.117 closed keepalive connection
+2013/07/14 05:16:43 [info] 149450#0: *49940442 client 66.249.73.117 closed keepalive connection
+2013/07/14 06:11:14 [info] 149450#0: *49982518 client 75.92.167.197 closed keepalive connection
+2013/07/14 06:11:17 [info] 149450#0: *49982532 client 75.92.167.197 closed keepalive connection
+2013/07/14 06:21:06 [info] 149449#0: *49990247 client 67.171.212.135 closed keepalive connection
+2013/07/14 06:33:28 [info] 149449#0: *49998738 client 75.92.167.197 closed keepalive connection
+2013/07/14 06:34:00 [error] 149450#0: *49999161 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 06:34:03 [info] 149450#0: *49999176 client 199.21.99.117 closed keepalive connection
+2013/07/14 06:34:23 [error] 149450#0: *49999368 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 06:34:24 [info] 149450#0: *49999354 client 75.92.167.197 closed keepalive connection
+2013/07/14 06:43:38 [info] 149449#0: *50005714 client 75.92.167.197 closed keepalive connection
+2013/07/14 06:43:41 [error] 149449#0: *50005729 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 06:43:43 [error] 149449#0: *50005729 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 75.92.167.197, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 07:06:34 [info] 149449#0: *50021549 client 71.94.230.13 closed keepalive connection (104: Connection reset by peer)
+2013/07/14 07:31:33 [info] 149450#0: *50037372 client 184.72.70.127 closed keepalive connection
+2013/07/14 07:31:34 [info] 149450#0: *50037381 client 23.22.64.87 closed keepalive connection
+2013/07/14 07:55:45 [info] 149449#0: *50054743 client 66.249.73.117 closed keepalive connection
+2013/07/14 08:29:25 [info] 149449#0: *50080465 client 5.10.83.80 closed keepalive connection
+2013/07/14 08:47:46 [info] 149449#0: *50093011 client 66.249.73.117 closed keepalive connection
+2013/07/14 09:02:55 [info] 149449#0: *50103993 client 199.21.99.117 closed keepalive connection
+2013/07/14 09:42:19 [info] 149449#0: *50133798 recv() failed (104: Connection reset by peer) while sending to client, client: 180.76.5.98, server: plocker.webfactional.com, request: "GET /demo/openletter/ HTTP/1.1", upstream: "http://127.0.0.1:43176/demo/openletter/", host: "www.politicrowd.com"
+2013/07/14 09:57:39 [info] 480209#0: *50144734 client 111.250.107.246 closed keepalive connection
+2013/07/14 10:14:44 [error] 480209#0: *50157700 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 76.105.209.127, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 10:14:44 [error] 480209#0: *50157699 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 76.105.209.127, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 10:23:49 [info] 506101#0: *50164633 client 66.249.73.225 closed keepalive connection
+2013/07/14 11:14:30 [info] 506102#0: *50202114 client 66.249.73.117 closed keepalive connection
+2013/07/14 12:23:04 [info] 506101#0: *50260678 client 66.249.73.117 closed keepalive connection
+2013/07/14 12:43:06 [info] 506101#0: *50278700 client 66.249.73.225 closed keepalive connection
+2013/07/14 12:53:33 [info] 506101#0: *50289397 client 66.249.73.117 closed keepalive connection
+2013/07/14 14:30:07 [info] 719369#0: *50392175 client 66.249.73.225 closed keepalive connection
+2013/07/14 14:42:32 [info] 719369#0: *50406412 client 66.249.73.225 closed keepalive connection
+2013/07/14 15:01:02 [info] 719369#0: *50427188 client 216.87.230.188 closed keepalive connection (104: Connection reset by peer)
+2013/07/14 15:01:03 [info] 719369#0: *50427214 client 216.87.230.188 closed keepalive connection (104: Connection reset by peer)
+2013/07/14 15:01:04 [info] 719369#0: *50427215 client 216.87.230.188 closed keepalive connection
+2013/07/14 15:01:04 [info] 719369#0: *50427213 client prematurely closed connection while sending response to client, client: 216.87.230.188, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/M001176.jpg HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/"
+2013/07/14 15:01:04 [info] 719369#0: *50427186 client prematurely closed connection while sending response to client, client: 216.87.230.188, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/W000791.jpg HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/"
+2013/07/14 15:01:04 [info] 719369#0: *50427219 client 216.87.230.188 closed keepalive connection
+2013/07/14 15:01:04 [info] 719369#0: *50427185 client 216.87.230.188 closed keepalive connection
+2013/07/14 15:01:05 [error] 719369#0: *50427247 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 216.87.230.188, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/"
+2013/07/14 15:01:06 [error] 719369#0: *50427247 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 216.87.230.188, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/"
+2013/07/14 15:07:17 [info] 719367#0: *50433851 client 66.249.73.225 closed keepalive connection
+2013/07/14 15:35:29 [info] 719367#0: *50468469 client 66.249.73.225 closed keepalive connection
+2013/07/14 15:50:13 [info] 719369#0: *50484953 client 66.249.73.225 closed keepalive connection
+2013/07/14 16:06:07 [info] 719367#0: *50503958 client 157.55.35.77 closed keepalive connection (104: Connection reset by peer)
+2013/07/14 16:22:19 [info] 719367#0: *50521545 client 66.249.73.225 closed keepalive connection
+2013/07/14 17:08:24 [info] 719367#0: *50572526 client 70.90.135.197 closed keepalive connection
+2013/07/14 17:08:25 [error] 719367#0: *50572528 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 70.90.135.197, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 17:08:26 [error] 719367#0: *50572522 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 70.90.135.197, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 17:09:01 [info] 719369#0: *50573139 client 70.90.135.197 closed keepalive connection
+2013/07/14 17:09:15 [info] 719369#0: *50573388 client 70.90.135.197 closed keepalive connection
+2013/07/14 17:13:24 [info] 719367#0: *50577846 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:49 [error] 719367#0: *50578441 open() "/home/plocker/webapps/static/media/include/images/sep1.png" failed (2: No such file or directory), client: 66.87.112.209, server: plocker.webfactional.com, request: "GET /static/media/include/images/sep1.png HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/demo/openletter/"
+2013/07/14 17:13:49 [error] 719367#0: *50578431 open() "/home/plocker/webapps/static/media/include/css/images/bx_loader.gif" failed (2: No such file or directory), client: 66.87.112.209, server: plocker.webfactional.com, request: "GET /static/media/include/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/demo/openletter/"
+2013/07/14 17:13:52 [info] 719367#0: *50578440 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:52 [info] 719367#0: *50578443 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:52 [info] 719367#0: *50578436 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:52 [info] 719367#0: *50578446 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:52 [info] 719367#0: *50578431 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:13:57 [info] 719367#0: *50578606 client 66.87.112.209 closed keepalive connection
+2013/07/14 17:36:04 [info] 719367#0: *50603806 client 166.147.88.29 closed keepalive connection
+2013/07/14 17:38:08 [info] 719369#0: *50605780 client 70.90.135.197 closed keepalive connection
+2013/07/14 17:51:44 [info] 719367#0: *50620912 client 199.21.99.117 closed keepalive connection
+2013/07/14 18:32:32 [info] 719369#0: *50669579 client 217.44.52.99 closed keepalive connection
+2013/07/14 19:26:10 [info] 719367#0: *50736449 client 66.249.73.117 closed keepalive connection
+2013/07/14 19:30:17 [info] 719367#0: *50742185 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:30:17 [info] 719369#0: *50742279 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:30:29 [info] 719367#0: *50742616 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:30:29 [info] 719367#0: *50742633 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:30:41 [info] 719369#0: *50742868 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:30:44 [info] 719367#0: *50742947 client 199.21.99.117 closed keepalive connection
+2013/07/14 19:34:42 [info] 719367#0: *50749731 client 157.55.35.77 closed keepalive connection
+2013/07/14 19:34:43 [info] 719367#0: *50749760 client 157.55.35.77 closed keepalive connection
+2013/07/14 20:02:52 [info] 719367#0: *50788170 recv() failed (104: Connection reset by peer) while sending to client, client: 180.76.5.93, server: plocker.webfactional.com, request: "GET /accounts/login/?next=/ HTTP/1.1", upstream: "http://127.0.0.1:43176/accounts/login/?next=/", host: "www.politicrowd.com"
+2013/07/14 20:43:00 [info] 719369#0: *50839325 client 199.21.99.117 closed keepalive connection
+2013/07/14 20:54:03 [info] 29109#0: *50853741 client 66.249.73.225 closed keepalive connection
+2013/07/14 22:07:13 [error] 29109#0: *50947831 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 22:07:13 [error] 29109#0: *50947832 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 22:07:44 [error] 29110#0: *50948399 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 22:08:02 [error] 29109#0: *50948687 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:08:02 [error] 29109#0: *50948687 open() "/home/plocker/webapps/static/media/images/sep1.png" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/images/sep1.png HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:17:40 [error] 29109#0: *50960443 open() "/home/plocker/webapps/static/media/politicians/oregon/ORL000024.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/ORL000024.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/profile/"
+2013/07/14 22:18:58 [error] 29109#0: *50961900 open() "/home/plocker/webapps/static/media/images/sep1.png" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/images/sep1.png HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:18:59 [error] 29109#0: *50961925 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:19:55 [info] 29109#0: *50962929 client 66.249.73.225 closed keepalive connection
+2013/07/14 22:20:50 [error] 29109#0: *50963978 open() "/home/plocker/webapps/static/media/politicians/B000574.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/B000574.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:20:50 [error] 29109#0: *50963990 open() "/home/plocker/webapps/static/media/politicians/W000779.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/W000779.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:20:58 [error] 29109#0: *50964114 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:20:58 [error] 29109#0: *50964114 open() "/home/plocker/webapps/static/media/images/sep1.png" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/images/sep1.png HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/please-turn-my-school-into-a-mothership/"
+2013/07/14 22:22:08 [info] 29109#0: *50965176 client 50.139.37.20 closed keepalive connection
+2013/07/14 22:23:16 [error] 29109#0: *50966295 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/politicians/test/"
+2013/07/14 22:36:45 [error] 29110#0: *50981453 open() "/home/plocker/webapps/static/media/politicians/oregon/test.jpg" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/politicians/oregon/test.jpg HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 22:36:46 [error] 29110#0: *50981454 open() "/home/plocker/webapps/static/media/css/images/bx_loader.gif" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/css/images/bx_loader.gif HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/"
+2013/07/14 22:37:38 [error] 29109#0: *50982653 open() "/home/plocker/webapps/static/media/images/sep1.png" failed (2: No such file or directory), client: 50.139.37.20, server: plocker.webfactional.com, request: "GET /static/media/images/sep1.png HTTP/1.1", host: "politicrowd.com", referrer: "http://politicrowd.com/openletters/vote-to-bring-jobs-and-more-energy-from-our-offshore-resources/"
+2013/07/14 22:52:59 [info] 29109#0: *51000317 client 46.229.164.97 closed keepalive connection
+2013/07/14 23:15:42 [info] 29110#0: *51026453 client 66.249.73.225 closed keepalive connection
+2013/07/15 00:17:57 [info] 29109#0: *51088990 client 24.22.85.214 closed keepalive connection
+2013/07/15 00:17:57 [info] 29110#0: *51088984 client 24.22.85.214 closed keepalive connection
+2013/07/15 00:17:57 [info] 29110#0: *51088992 client 24.22.85.214 closed keepalive connection
+2013/07/15 00:45:55 [info] 29110#0: *51100028 client prematurely closed connection, so upstream connection is closed too while sending request to upstream, client: 76.105.209.37, server: plocker.webfactional.com, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:43176/", host: "www.politicrowd.com", referrer: "https://www.google.com/"
+2013/07/15 00:45:56 [info] 29110#0: *51100030 client prematurely closed connection, so upstream connection is closed too while sending request to upstream, client: 76.105.209.37, server: plocker.webfactional.com, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:43176/", host: "www.politicrowd.com", referrer: "https://www.google.com/"
+2013/07/15 00:47:01 [error] 29110#0: *51101227 open() "/home/plocker/webapps/static/media/include/images/sep1.png" failed (2: No such file or directory), client: 76.105.209.37, server: plocker.webfactional.com, request: "GET /static/media/include/images/sep1.png HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/demo/openletter/"
+2013/07/15 00:47:01 [error] 29109#0: *51101225 open() "/home/plocker/webapps/static/media/include/css/images/bx_loader.gif" failed (2: No such file or directory), client: 76.105.209.37, server: plocker.webfactional.com, request: "GET /static/media/include/css/images/bx_loader.gif HTTP/1.1", host: "www.politicrowd.com", referrer: "http://www.politicrowd.com/demo/openletter/"
+2013/07/15 02:58:01 [info] 239994#0: *77896 client prematurely closed connection, so upstream connection is closed too while sending request to upstream, client: 76.105.209.127, server: plocker.webfactional.com, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:43176/", host: "politicrowd.com"

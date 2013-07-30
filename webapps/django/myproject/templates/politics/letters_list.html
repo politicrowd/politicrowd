@@ -1,0 +1,19 @@
+<div class="btn-group">
+<div class="input-prepend">
+<span id="appendedPrependedDropdownButton">Sorted by:</span> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+Trending
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a class="pointer" onClick="top()">Top</a></li>
+    <li><a class="pointer" onClick="new()">New</a></li>
+    <li><a class="pointer" onClick="controversial()">Controversial</a></li>
+  </ul>
+  </div>
+</div>
+<br/><br/>
+{% for letter in open_letters %}
+<h4><a href="/openletters/{{letter.slug}}">{{letter.title}}</a></h4>
+Started by {{letter.creator}} | {{letter.rank}} Contributor{{letter.rank|pluralize}}<br/><br/>
+{% endfor %}
+

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if articles %}
+<div class="span10 well">
+<div class="">
+<h3>Open Letters to Government</h3><br/>
+<div id="articles">
+{% for article in articles %}
+
+
+<h5>{{article.rank}}|<a href="/{{article.slug}}"> {{article.question}} </a> {% if article.state %}[{{article.state}}]{% endif %}</h5><br/>
+
+{% endfor %}
+<br/>
+{% if articles.paginator.num_pages > 1 %}
+
+<span class="step-links">
+        {% if articles.has_previous %}
+           <a onClick="prev()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+        </span>
+
+        {% if articles.has_next %}
+            <a onClick="next()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+   	    {% endif %}
+</div>
+<script>
+next = function() {
+	$("#articles").text();
+	$("#articles").load(
+	"/next/?page={{ articles.next_page_number }}");
+}
+prev = function() {
+	$("#articles").text();
+	$("#articles").load(
+	"/next/?page={{ articles.previous_page_number }}");
+}
+</script>
+</div>
+</div>
+</div>
+{% endif %}
+<div class="hero-unit span9">
+{% if fed %}
+<h2>Your Elected Officials</h2><br/>
+<div class="row">
+{% for politician in fed %}
+<div class="span3">
+
+<a href= "/congress/{{politician.0}}/{{politician.1}}/"> <img src="/static/media/politicians/{{politician.2}}.jpg" onerror="this.src = '/static/media/politicians/None.jpg';" /></a>
+<br/>
+<a href = "/congress/{{politician.0}}/{{politician.1}}/">{{politician.0}} {{politician.1}}</a><br/>
+</div>
+{% endfor %}
+{% for politician in state %}
+<div class="span3">
+<a href="/congress/{{politician.0}}/{{politician.1}}/{{politician.2}}"><img src="{{politician.3}}" width="200" height="250" onerror="this.src = '/static/media/politicians/None.jpg';"/></a><br/>
+<a href = "/congress/{{politician.0}}/{{politician.1}}/{{politician.2}}">{{politician.1}} {{politician.2}}</a><br/>
+
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+        <h2>Type your Address to Connect with your Politicians</h2><br/>
+        <div class="row">
+        <div class="span4">
+        {{session}}
+        <p>
+        <form name="query" id="form" action="/localize/" method = "post">
+        {% csrf_token %}
+        <label for="street">Street</label> <input type="text" class="required" title="Please enter your street address" name = "street" id="street"/>
+        </p>
+        <p>
+        <label for="city">City</label> <input type="text" class="required" title="Please enter your city name" name="city" id="city"/>&nbsp&nbsp&nbsp<label for="state">State</label> <select name = "state" id="state" class="required" title="Select your state">
+<option name = "OR" value = "OR">Oregon</option>
+</select>
+<br/><label for="zip">Zip Code</label><input type="text" class="required" title="Please enter your zip code" name="zip" id="zip"/>
+        </p>
+        <p><input type="submit" class="btn btn-primary btn-large" value="Connect &raquo;"/></p>
+        </div>
+        <div class="span3"><br/><br/>
+        <h3>Why ask for an address?</h3>
+        Politicians are elected to represent their constituents. In order to make your opinion count, we need to restrict your communications to the politicians elected to represent you. Your address will not be shared or sold to politicians or any other third party.
+        </div>
+        </div>
+        
+ {% endif %}       
+      </div>
+
+
+{% endblock %}

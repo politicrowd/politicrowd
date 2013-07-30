@@ -1,0 +1,1371 @@
+{% extends "base.html" %}
+
+<!--Load Youtube Filter-->
+{% load filters %}
+{% block extrahead %}
+<!--JAVASCRIPT FUNCTIONS-->
+
+<script>
+$(function(){
+	$('#fav').popover();
+	$('#response_form').popover();
+});
+
+pop = function(id){
+	$('#'+id).popover();
+	};
+</script>
+
+
+<script>
+favcompromise = function(id) {
+	if (id=="undefined"){
+		alert("Please wait until the button is the same height as the comment");
+	}
+	$('input[name=favorable-compromised]').val(id);
+	var comments = $("#the_comment_"+id).text();
+	var comment = jQuery.trim(comments).substring(0, 150)
+    .split(" ").slice(0, -1).join(" ") + "...";
+	$("#fav-compromise-comment-title").show();
+	$("#tabs2").hide();
+	$("#tabs3").show();
+	$("#tabs1").hide();
+	$("#fav-compromiser").hide();
+	$("#favorable-menu").hide();
+	$("#critical-menu").show();
+	$("#crit-compromiser").show();
+	$("#compromise-title").hide();
+	background('#BF2626');
+	$("#critical-title").show();
+	$("#fav-compromise-comments").text(comment);
+	
+};
+
+critcompromise = function(id) {
+	if (id=="undefined"){
+		alert("Please wait until the button is the same height as the comment");
+	}
+	$('input[name=critical-compromised]').val(id);
+	var comments = $("#the_comment_"+id).text();
+	var comment = jQuery.trim(comments).substring(0, 150)
+    .split(" ").slice(0, -1).join(" ") + "...";
+
+	$("#crit-compromise-comment-title").show();
+	$("#crit-compromiser").hide();
+	$("#critical-menu").hide();
+	$("#critical-title").hide();
+	$("#tabs3").hide();
+	$("#crit-compromise-comments").text(comment);
+
+};
+
+
+
+</script>
+
+<script>
+$('#downvote').click(function(){
+   alert("ahh");
+   $(this).attr("href","");
+});
+
+</script>
+<script type="text/javascript">
+toggle_visibility = function (id) {
+	var e = $("#"+id);
+	e.show();
+}
+remove_visibility = function (id) {
+	var e = $("#"+id);
+	e.hide();
+}
+
+
+
+</script>
+
+
+     
+
+<script type="text/javascript">
+			report = function(id) {  
+				var f = $("#" + id); 
+ 				$.get("/{{slug}}/report/", {"id":id }, function(data) {alert(data);}, "text" );	
+ 				  
+ 							}; 
+ 			replyreport = function(id) {
+ 				$.get("/{{slug}}/replyreport/", {"id":id }, function(data) {alert(data);}, "text" );	
+ 				  
+ 							}; 
+ 							
+ 			compreport = function(id) {
+ 				$.get("/compreport/", {"id":id }, function(data) {alert(data);}, "text" );	
+ 				  
+ 							};
+ 							
+ 			unreportreply = function(id) {
+ 				$.get("/unreportreply/", {"id":id }, function(data) {alert(data);}, "text" );
+ 			};
+ 			
+ 			unreportcomment = function(id) {
+ 				$.get("/unreportcomment/", {"id":id }, function(data) {alert(data);}, "text" );
+ 			};
+ 							
+ 			</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	function move_div() {
+	window_width = $(window).width();
+	obj_width = $('.centered').width();
+	ext_width = $('#extra').width();
+	you_width = $('#youtube').width();
+	$('#youtube').css('left', (window_width/2)-(you_width/2));
+	$('.centered').css('left', (window_width/2)-(obj_width/2));
+	$('#extra').css('left', (window_width/2)-(ext_width/2));
+	}
+
+move_div();
+$(window).resize(function() {
+	move_div();
+});
+});
+</script>
+
+<script>
+ upvote = function(){
+ var id = $("#vote").attr('class');
+ $.get("/upvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+ 
+ downvote = function(){
+ var id = $("#vote").attr('class');
+ $.get("/downvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+  compupvote = function(){
+ var id = $("#vote").attr('class');
+ $.get("/compupvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+  compdownvote = function(){
+ var id = $("#vote").attr('class');
+ $.get("/compdownvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+ 
+  
+ </script>
+ 
+ 
+ <script>
+ replyupvote = function(){
+ var id = $("#replyvotes").attr('class');
+ $.get("/replyupvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+ 
+ replydownvote = function(){
+ var id = $("#replyvotes").attr('class');
+ $.get("/replydownvote/", {"id":id}, function(data) {
+	$("#vote-results").text(data);
+ });
+ };
+ </script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#human_form').change(function() {
+  	value = $(this).attr('value');
+  	q = $('#q').val();
+		$.get("/check/", {"value":value, "q":q}, function(data) {
+			if (data==""){
+				$("#form-results").toggle();
+				} 
+			else{
+				$("#form-hide").hide(); 
+				$("#try-again").append(data);
+				}
+		});
+	}); 
+		});
+
+	
+</script>
+<script>
+
+background = function(id) {
+	$("#background").attr('class',id);
+	 $("#drop").css('background-color',id);
+
+};
+</script>
+
+<script type="text/javascript">
+			$(document).ready(function() {  
+  				$('span[id^="reply_"]').hover(function() {  
+    			$(this).css("cursor", "pointer");  
+ 				 });
+ 				   
+			}); 
+			</script>
+			
+				<script type="text/javascript">
+$(document).ready(function() { 
+	$('#response_form').change(function() {
+		value = $(this).attr('value');
+		if(value !== 'Choose') {
+		$('#submit').removeAttr('disabled');
+			if(value == 'Compromise') {
+			$("#compromise-contain").show();
+			$("#drop2").show();
+			$("#critical-menu").hide();
+			$("#compromise-menu").hide();
+			background('#1766E8');
+			$("#compromise-title").show();
+			$("#tabs2").hide();
+			$("#tabs3").hide();
+			$("#tabs1").show();
+			$("#critical-title").hide();
+			$("#fav-compromiser").show();
+			$("#drop").hide();
+			alert("Scroll down and click Favorable Compromise when you find a comment to incorporate into your compromise.");
+			}
+		}
+		if(value == 'Choose') {
+		$('#submit').attr('disabled', 'disabled');
+		}			
+	});
+	
+});
+</script>		
+			<script type="text/javascript">
+			jQuery(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+				reply = function(id) {  
+				var form = $("#the_reply_form" + id);
+				var id = $("#id_" + id).val(); 
+				var submit = $("#submitt_" + id);
+				var comment = $("#comment_" + id).val();
+				if (comment != "") {
+				$.post("/{{slug}}/reply/", {"id":id, "comment":comment}, function(data) {$("#new_" + id).addClass('replies'); $("#new_" + id).append(data).fadein('slow');}, "html" ); }
+				else {
+				alert("You cannot submit an empty reply!");
+				toggle_visibility('the_reply_form');
+				}
+				//instead of alert create fadein with glow so they know their response was taken	
+ 				  
+ 							}; 
+ 							
+ 							
+ 			comreply = function(id) {  
+				var form = $("#com_reply_form" + id);
+				var id = $("#comid_" + id).val(); 
+				var submit = $("#comsubmitt_" + id);
+				var comment = $("#comcomment_" + id).val();
+				if (comment != "") {
+				$.post("/{{slug}}/comreply/", {"id":id, "comment":comment}, function(data) {$("#com_new_" + id).addClass('replies'); $("#com_new_" + id).append(data).fadein('slow');}, "html" ); }
+				else {
+				alert("You cannot submit an empty reply!");
+				toggle_visibility('the_reply_form');
+				}
+				//instead of alert create fadein with glow so they know their response was taken	
+ 				  
+ 							}; 
+			</script>
+		
+		
+			<script type="text/javascript">
+			
+			search = function(query) {  
+				var query = $("#query").val();
+				if (query != "") {
+				$.get("/search/", {"query":query}, function(data) {if (data==""){$("#search-results").append("No results found");} else{$("#search-results").append("Search Results: " + data).fadein('slow');}}); }
+				else {
+				alert("You need to type something to search!");
+				}
+				//instead of alert create fadein with glow so they know their response was taken	
+ 				  
+ 							}; 
+			</script>
+			
+			<script>
+			$(document).ready(function() {
+		
+			var window_height = $(window).height();
+			var obj_height = $('#drop').height();
+			var top = $('#drop').offset().top;
+			$(window).scroll(function() {
+				
+			var scrollMiddle = $(window).scrollTop() + ((window_height/2) - (obj_height /2));
+			
+			if (scrollMiddle >= top) {
+				$('#drop').addClass('fixed');
+				$('#drop2').addClass('fixed');
+				$('#drop2').css('top', (window_height / 2) - (obj_height / 2));
+				$('#drop').css('top', (window_height / 2) - (obj_height / 2));
+			} else {
+				$('#drop').removeClass('fixed');
+				$('#drop2').removeClass('fixed');
+			}
+			
+			});
+			});
+			
+			</script>
+			
+			
+			
+			
+			<script>
+			favorite = function(){
+				
+				$.get("/{{slug}}/favorite/", {}, function(data) {
+					$("#favorite-status").text(data);
+				}, "text");
+			
+			};
+			</script>
+			
+
+<!--END JAVASCRIPT-->
+{%endblock%}
+<!--END HEADER-->
+
+<!--Begin <body> in content block of base.html-->
+{% block content %}
+<div class="span8">
+<div class="span8">
+    <div id="slug" class="{{slug}}">
+    </div>
+
+<!--END SEARCH-->
+
+<!--Creator's Content-->
+    <div class="row">
+        <div class="span12">
+            <h2>Issue: {{issue}}</h2>
+
+            <br/><br/>
+            <h3>{{question}}</h3> 
+            <br/><a id="favorite" onClick="favorite()" class="btn btn-success btn">Add to Favorites</a>&nbsp&nbsp<span id="favorite-status"></span> &nbsp<input type = "button" class="btn btn-primary btn" id = "submitt_" value="Search for Politician to Tag" onClick = "toggle_visibility('search')" /><!--Mentions of politician/individual/GROUP(group voting)-->
+    {% if mentions %}
+    <div class="row">
+        <div class="span8">
+       <br/>Mentions: 
+<!--Iterate through each of the individuals/groups/etc treated here as one seperate database object-->
+        {%for mention in mentions%}
+            <a href="/congress/{{mention.first}}/{{mention.last}}/">{{mention.title}} {{mention.first}} {{mention.last}} | {{mention.mentions}}</a>&nbsp&nbsp
+        {%endfor%}
+        </div>
+    </div>
+
+    {% endif %}
+
+<!--Search for politician/individual/group-->
+<!--JQEUERY/ajax get from same page look at django book for instant search example search django ajax-->
+    <div class="row">
+        <div id = "search" class="span8">
+
+        <form name="query" class="well span4 form-horizontal" action="/search/" method = "get">
+        <h3>Search for Politicians to Tag</h3>
+        <p>
+	    <input type="hidden" name="slug" id = "slug" value="{{slug}}"/>
+	    <label for="name">Name</label><input type="text" class="span3" name = "query" id="query" placeholder = "Search by First and Last Name...">
+        </p>
+        <p>
+        <input type="submit" class="btn btn-primary" value="Submit"/> <input type="button" class="btn btn-danger" id="cancell_" value="Cancel" onclick="remove_visibility('search')" />
+        </p>
+        </form>
+        </div>
+    </div>
+{% if user.is_authenticated %}
+    <div id = "search-results">
+        <p>
+        </p>
+    </div>
+    <br />
+{% endif %}		
+  			
+        </div>
+    </div>
+<!--Show YouTube video if it exists-->
+<!--Create many to many youtube video field so can reference back to existing videos-->
+<!--use policrowd as a backup media site-->
+    <p>
+
+    {% if youtube_url %}
+
+        {{youtube_url|youtube|safe}}
+
+    {% endif %}
+
+    </p>
+<!--END YOUTUBE-->
+
+<!--Optional Extra details/comments-->
+
+<script>
+ upvoter = function(){
+ var slug = $("#vote-title").attr('class');
+ $.get("/up/", {"slug":slug}, function(data) {
+	$("#vote-title").text(data);
+ });
+ };
+ 
+ downvoter = function(){
+ var slug = $("#vote-title").attr('class');
+ $.get("/down/", {"slug":slug}, function(data) {
+	$("#vote-title").text(data);
+ });
+ };
+ </script>
+
+    <div id="title-contain">
+
+        <div id="extra-top">
+  			<div class="row">
+                <div class="span8">
+                     {{extra|linebreaks}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br />  <br /><br />  <br /><br />
+
+    <p>
+    </p>
+</div>
+
+<style type="text/css">
+  
+  [id^=scroll_]{
+    background-color:white;
+    padding: 10px;
+  }
+  #replyer {
+    height: 400px;
+    background: white;
+  }
+  
+
+</style>
+
+
+
+
+<script>
+$(document).ready(function() {      
+  var window_height = $(window).height();
+  $(window).scroll(function() {
+  	$("#vote-results").text("");
+  	$("#favorite-status").text("");
+  	
+    var scrollMiddle = $(window).scrollTop() + (window_height/2);
+    $('div[id^="scroll_"]').each(function() {
+      elTop = $(this).offset().top;
+      elBtm = elTop + $(this).height();
+      if (elTop < scrollMiddle && elBtm > scrollMiddle) {
+      	var parse = $(this).attr('id');
+    	var commentid= parse.split('_');
+    	var theid=commentid[1];
+    	var background = $("#background").attr('class');
+        $(this).css('background-color',background);
+        $("#drop").css('background-color',background);
+        $("#vote").attr("class",theid);
+        $("#up").text($('#the_up_'+theid).attr('class'));
+        $("#cup").text($('#c_up_'+theid).attr('class'));
+    	$("#down").text($('#the_down_'+theid).attr('class'));
+    	$("#cdown").text($('#c_down_'+theid).attr('class'));
+    	$(".vote-tally").text($('#the_comment_'+theid).attr('class'));
+    	$("#reply-votes").hide();
+    	$("#reg-votes").show();
+    	$("#box-sources").show();
+    	$(".reports").show();
+    	$("#box-reply").attr("onClick","toggle_visibility('make_reply_"+theid+"')");
+    	$("#comp-reply").attr("onClick","toggle_visibility('comp_reply_"+theid+"')");
+    	$("#reply-report").hide();
+    	$("#comp-report").attr("onClick","compreport('"+theid+"')");
+    	
+    	$("#box-report").attr("onClick","report('"+theid+"')");
+    	if ($(this).attr('class')=="sourced") {
+    		$("#box-search").text("View Source");
+    		$("#comp-sources").text("View Source");
+    		$("#box-search").attr("onClick", "toggle_visibility('the_source_"+theid+"')");
+    		$("#comp-sources").attr("onClick", "toggle_visibility('the_comp_source_"+theid+"')");
+   		}
+   		
+    	else {
+    		$("#box-search").text("Add Source");
+    		$("#comp-sources").text("Add Source");
+    		$("#box-search").attr("onClick", "toggle_visibility('source_"+theid+"')");
+    		$("#comp-sources").attr("onClick", "toggle_visibility('comp_source_"+theid+"')");
+    	    }
+      } else {
+        $(this).css('background-color',"white");
+      }
+    });
+     $('div[id^="scroll_"]').each(function() {
+      elTop = $(this).offset().top;
+      elBtm = elTop + $(this).height();
+      if (elTop < scrollMiddle && elBtm > scrollMiddle) {
+      	var parse = $(this).attr('id');
+    	var commentid= parse.split('_');
+    	var theid=commentid[1];
+    	var background = $("#background").attr('class');
+        $(this).css('background-color',background);
+        $("#drop").css('background-color',background);
+        $("#compromise-box").attr("class",theid);
+    	$("#fav-compromiser").attr("onClick","favcompromise('"+theid+"')");
+    	$("#crit-compromiser").attr("onClick","critcompromise('"+theid+"')");
+      } else {
+        $(this).css('background-color',"white");
+      }
+    });
+
+    
+    
+    
+  });
+});
+</script>
+
+<script>
+$(document).ready(function() {      
+  var window_height = $(window).height();
+  $(window).scroll(function() {
+  	$("#vote-results").text("");
+  	$("#favorite-status").text("");
+  	
+    var scrollMiddle = $(window).scrollTop() + (window_height/2);
+    $('div[id^="reply_"]').each(function() {
+      elTop = $(this).offset().top;
+      elBtm = elTop + $(this).height();
+      if (elTop < scrollMiddle && elBtm > scrollMiddle) {
+      	var parse = $(this).attr('id');
+    	var commentid= parse.split('_');
+    	var theid=commentid[1];
+    	var background = $("#background").attr('class');
+    	var commentid= $(this).attr('class');
+        $(this).css('background-color',background);
+        $("#drop").css('background-color',background);
+        $("#replyvotes").attr("class",theid);
+        
+        $("#reply-votes").show();
+        $("#reg-votes").hide();
+        $("#box-reply").attr("onClick","toggle_visibility('make_reply_"+commentid+"')");
+        $("#box-sources").hide();
+    	$(".reports").hide();
+    	$("#reply-report").show();
+    	$("#reply-report").attr("onClick","replyreport('"+theid+"')");
+    	
+
+        $(".up").text($('#ups_'+theid).attr('class'));
+    	$(".down").text($('#downs_'+theid).attr('class'));
+    	$("#box-report").attr("onClick","reportreply('"+theid+"')");
+    	
+      } else {
+        $(this).css('background-color',"white");
+      }
+    });
+     
+
+    
+    
+    
+  });
+});
+</script>
+
+
+
+
+
+    <p>
+    <div class="row">
+        <div class="span12">
+            {% if user.is_authenticated %}
+            <div>
+            <p>
+            <div id = "replyer">
+                <form name="comment" class = "well span6" id = "theform" action="/{{slug}}/comment/" method = "post">
+                <h3>Add your Voice to the Conversation</h3>
+                {% csrf_token %}
+                <p>
+                    <input type="hidden" name="favorable-compromised" id = "favorable-compromised" value=""/>
+                    <input type="hidden" name="critical-compromised" id = "critical-compromised" value=""/>
+                    <label for="category">Response Type:</label> 
+                    <select name = "response" id="response_form">
+                    <option name = "Choose" value = "Choose">Categorize your response…</option>
+                    {% for response in responses %}
+                        <option name = "{{response}}" value = "{{response}}" >{{response}}</option>
+                    {% endfor %}
+                    </select>
+
+               </p>
+               <p>
+                   <label for="comment">Comment:</label> <textarea name = "comment" id = "comment_text" placeholder = "Enter Response" class="span6" rows="6"></textarea></label>
+               </p>
+               <p>
+	               <button class="btn btn-large" type="submit" id="submit" disabled="disabled">Submit</button>
+               </p>
+               </form>
+           </div>
+           </p>
+        </div>
+    </div>
+    </p>
+
+    <div id="favv-comp" class="span35">
+        <div id="fav-compromise-comment-title">
+            <h4>Compromise ~ favorable comment:</h4>
+        </div><br/>
+        <div id="fav-compromise-comments">
+        </div>
+    </div>
+
+    <div id="critt-comp" class="span35">
+        <div id="crit-compromise-comment-title">
+        <h4>Compromise ~ critical comment:</h4>
+        </div><br/>
+        <div id="crit-compromise-comments">
+        </div>
+    </div>
+</div>
+    {% else %}
+<!--
+<p>
+<div id = "nonn-user-comment">
+<form name="non-user-comment" id = "non-user-comment" action="/test/" method = "post">
+<h1>Add your Voice to the Conversation</h1>
+{% csrf_token %}
+<p>
+<label for="category">Response Type</label> <select id = "response_form" name = "response">
+<option name = "Choose" value = "Choose">Categorize your response…</option>
+{% for response in responses %}
+<option name = "{{response}}" value = "{{response}}" >{{response}}</option>
+{% endfor %}
+</select>
+</p>
+<p>
+<label for="name">First Name</label><input type="text" name="firstname" />
+</p>
+<p>
+<label for="city">Zip Code</label><input type="text" name="city" />
+</p>
+<p>
+<label for="comment">Comment</label> <textarea name = "comment" id = "comment_text" placeholder = "Enter Response" rows="6" cols="60"></textarea></label>
+</p>
+<p>
+<hr />
+
+<span id="form-hide">
+Please answer the following question to prove you're not a computer!<br /><br />
+<span id="test-question"><label>Question</label> {{q.question}}</span>
+</p>
+<p>
+<input type="hidden" name="id" id = "q" value="{{q.id}}"/>
+<label for="test">Answer</label><select id="human_form" name="human">
+<option name="Choose" value="choose">Select an answer…</option>
+<option name ="r1" value="R1">{{q.r1}}</option>
+<option name="r2" value="R2">{{q.r2}}</option>
+<option name="r3" value="R3">{{q.r3}}</option>
+</select><span id="form-results"><IMG SRC="http://politicrowd.com/static/media/img/glyphicons-halflings.png"/></span>
+</p>
+</span>
+<p>
+    <input id = "submit" id = "anon-submit" type="submit" value="Submit" />
+</p>
+</form>
+</p>
+</div>
+-->
+    {% endif %}
+
+    <div id="try-again">
+    </div>
+
+    <br />
+    <br />
+
+</div>
+    <div id="clear">
+    </div>
+
+
+<div id="background" class="#1766E8"
+<!-- Use radio style buttons so can only click one response type at a time-->
+    <div id="usual2" class="usual"> 
+       <div id="response_types">
+           
+           <a id="favorable-menu" onClick="remove_visibility('tabs2'), background('#1766E8'), remove_visibility('tabs3'), toggle_visibility('tabs1'), toggle_visibility('box-favorable'), remove_visibility('box-critical'), remove_visibility('box-compromise'), remove_visibility('comp-report'), remove_visibility('compromise-votes'), remove_visibility('comp-source'), toggle_visibility('com-source'), remove_visibility('comp-response-type'), toggle_visibility('box-response-type'), remove_visibility('comp-reply'), toggle_visibility('box-reply'), toggle_visibility('box-report'), toggle_visibility('comment-votes')"class="btn btn-primary btn-large">Favorable Responses ({{pro_count}})</a> &nbsp&nbsp
+           <a id="compromise-menu" onClick="remove_visibility('tabs1'), background('#8C27FF'), remove_visibility('tabs3'), toggle_visibility('tabs2'), toggle_visibility('box-compromise'), remove_visibility('comment-votes'), toggle_visibility('compromise-votes'), remove_visibility('com-source'), toggle_visibility('comp-source'), toggle_visibility('comp-report'), remove_visibility('box-report'), remove_visibility('box-critical'), remove_visibility('box-response-type'), toggle_visibility('comp-response-type'), remove_visibility('box-reply'), toggle_visibility('comp-reply'), remove_visibility('box-favorable')" class="btn btn-custom btn-large">Compromise Responses ({{comp_count}})</a> &nbsp&nbsp
+           <a id="critical-menu" onClick="remove_visibility('tabs1'), background('#BF2626'), remove_visibility('tabs2'),  toggle_visibility('tabs3'), toggle_visibility('box-critical'), remove_visibility('box-favorable'), remove_visibility('box-compromise'), remove_visibility('comp-source'), toggle_visibility('com-source'), remove_visibility('comp-response-type'), toggle_visibility('box-response-type'), remove_visibility('comp-reply'), toggle_visibility('box-reply'), remove_visibility('comp-report'), remove_visibility('compromise-votes'), toggle_visibility('box-report'), toggle_visibility('comment-votes')" class="btn btn-danger btn-large">Critical Responses ({{neg_count}})</a> <br/><br/> 
+         
+        </div>  
+    </div>
+
+
+  <br/><br/>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- -->
+  
+  
+  
+    <div id="tabs1" class="span8">
+
+        {% for comment in pro_comments %}
+        {% if comment.flag < 3 %}
+        <div class="well">
+            <span id="the_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="the_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+               <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                <span id="the_comment_{{comment.id}}">
+            
+                {{comment.comment}}</span><br/><br/>
+                <span id="the_source_{{comment.id}}">
+			<FONT SIZE="2">
+			Source:<br />
+			{{comment.source|urlize}}
+			<br />
+			
+			<a onClick="remove_visibility('the_source_{{comment.id}}')"><u> Hide Source </u></a>
+			</FONT>
+			</span>
+			
+			<div id="make_reply_{{comment.id}}">
+			<form name="titleform" id="the_reply_form_{{comment.id}}" action="" method = "post">
+			<h3>Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="id_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<label for="reply">Reply:</label><textarea name = "comment" id = "comment_{{comment.id}}" placeholder="Enter Reply Here" value="{{comment}}" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="submitt_{{comment.id}}" value="Submit" onclick="reply('{{comment.id}}'), remove_visibility('make_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('make_reply_{{comment.id}}'), toggle_visibility('reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			<div id="source_{{comment.id}}">
+			<form name="source" action="/{{slug}}/cite/" method = "post">
+			{% csrf_token %}
+			<h3>Paste Link to Source and Write a Summary</h3>
+			<input type="hidden" name="id" value="{{comment.id}}"/>
+			<p>
+    		<textarea name = "source" placeholder="Add source website and summarize the main points." value="" rows="10" cols="75"></textarea>
+    		</p>
+    		<input type="submit" class="btn btn-primary" value="Submit"/> <input type="button" class="btn btn-danger" id="cancell_{{comment.id}}" value="Cancel" onclick="remove_visibility('source_{{comment.id}}'), toggle_visibility('button_source_{{comment.id}}')" />
+			</form>
+
+			
+			
+			
+            </div>
+			
+			
+            </div>
+            <div id="new_{{comment.id}}" class=""></div>
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="creator">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/><br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    <span id="reported_{{reply.id}}">
+                    {{reply.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')">Click to view.</a></span><br/>
+            </div>
+            {% endif %}
+            {% endfor %}
+		
+			{% endif %}
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+        {% endif %}
+        {% endfor %}
+        <script>
+
+nextpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.next_page_number }}");
+}
+prevpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.previous_page_number }}");
+}
+
+nextcomp = function(slug) {
+	$("#tabs2").text();
+	$("#tabs2").load(
+	"/comp/{{slug}}/?page={{ compromises.next_page_number }}");
+}
+prevcomp = function(slug) {
+	$("#tabs2").text();
+	$("#tabs2").load(
+	"/comp/{{slug}}/?page={{ compromises.previous_page_number }}");
+}
+
+nextneg = function(slug) {
+	$("#tabs3").text();
+	$("#tabs3").load(
+	"/neg/{{slug}}/?page={{ neg_comments.next_page_number }}");
+}
+prevneg = function(slug) {
+	$("#tabs3").text();
+	$("#tabs3").load(
+	"/neg/{{slug}}/?page={{ neg_comments.previous_page_number }}");
+}
+
+
+</script>
+        <span class="step-links">
+        {% if pro_comments.has_previous %}
+           <a onClick="prevpro()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pro_comments.number }} of {{ pro_comments.paginator.num_pages }}
+        </span>
+
+        {% if pro_comments.has_next %}
+            <a onClick="nextpro()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+
+    </div>
+
+
+
+<div id="tabs2" class="span8">
+
+        {% for comment in compromises %}
+        {% if comment.flag < 3 %}
+       
+        <div class="span8">
+            <span id="the_comment_{{comment.id}}">
+            </span>
+            <span id="c_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="c_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+               <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                {{comment.comment}}<br/><br/>
+         </div>       
+                <span class="span35">
+                <a href="/{{comment.favorable.creator}}/profile/">{{comment.favorable.creator}}</a><br/>
+                {{comment.favorable.comment}}
+                <br/><br/>
+                </span>
+                <span class="span35">
+                <a href="/{{comment.critical.creator}}/profile/">{{comment.critical.creator}}</a><br/>
+                {{comment.critical.comment}}
+                <br/><br/>
+
+                </span>
+               
+                <span id="the_comp_source_{{comment.id}}">
+			<FONT SIZE="2">
+			Source:<br />
+			{{comment.source|urlize}}
+			<br />
+			
+			<a onClick="remove_visibility('the_comp_source_{{comment.id}}')"><u> Hide Source </u></a>
+			</FONT>
+			</span>
+			
+			<div id="comp_reply_{{comment.id}}">
+			<form name="titleform" id="com_reply_form_{{comment.id}}" action="" method = "post">
+			<h3>Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="comid_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<label for="reply">Reply:</label><textarea class="span6" name = "comment" id = "comcomment_{{comment.id}}" placeholder="Enter Reply Here" value="{{comment}}" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="comsubmitt_{{comment.id}}" value="Submit" onclick="comreply('{{comment.id}}'), remove_visibility('comp_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('comp_reply_{{comment.id}}'), toggle_visibility('reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			<div id="comp_source_{{comment.id}}">
+			<form name="source" action="/{{slug}}/compcite/" method = "post">
+			{% csrf_token %}
+			<h3>Paste Link to Source and Write a Summary</h3>
+			<input type="hidden" name="id" value="{{comment.id}}"/>
+			<p>
+    		<textarea name = "source" placeholder="Add source website and summarize the main points." value="" rows="10" cols="75"></textarea>
+    		</p>
+    		<input type="submit" class="btn btn-primary" value="Submit"/> <input type="button" class="btn btn-danger" id="cancell_{{comment.id}}" value="Cancel" onclick="remove_visibility('comp_source_{{comment.id}}'), toggle_visibility('button_source_{{comment.id}}')" />
+			</form>
+
+			
+			
+			
+            </div>
+			
+			
+        
+                <div id="com_new_{{comment.id}}" class=""></div>
+                <div class="span6">
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="creator">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/><br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    <span id="reported_{{reply.id}}">
+                    {{reply.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')">Click to view.</a></span><br/>
+            </div>
+
+            {% endif %}
+            
+            {% endfor %}
+		
+			{% endif %}
+			</div>
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+
+        {% endif %}
+        {% endfor %}
+        <span class="step-links">
+        {% if compromises.has_previous %}
+           <a onClick="prevcomp()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ compromises.number }} of {{ compromises.paginator.num_pages }}
+        </span>
+
+        {% if compromises.has_next %}
+            <a onClick="nextcomp()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+    </div>
+
+
+
+
+
+
+    <div id="tabs3" class="span8">
+
+        {% for comment in neg_comments %}
+        {% if comment.flag < 3 %}
+        <div class="span8">
+            
+            <span id="the_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="the_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+               <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                <span id="the_comment_{{comment.id}}">
+            
+                {{comment.comment}}</span><br/><br/>
+                <span id="the_source_{{comment.id}}">
+			<FONT SIZE="2">
+			Source:<br />
+			{{comment.source|urlize}}
+			<br />
+			
+			<a onClick="remove_visibility('the_source_{{comment.id}}')"><u> Hide Source </u></a>
+			</FONT>
+			</span>
+			
+			<div id="make_reply_{{comment.id}}">
+			<form name="titleform" id="the_reply_form_{{comment.id}}" action="" method = "post">
+			<h3>Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="id_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<label for="reply">Reply:</label><textarea name = "comment" id = "comment_{{comment.id}}" placeholder="Enter Reply Here" value="{{comment}}" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="submitt_{{comment.id}}" value="Submit" onclick="reply('{{comment.id}}'), remove_visibility('make_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('make_reply_{{comment.id}}'), toggle_visibility('reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			<div id="source_{{comment.id}}">
+			<form name="source" action="/{{slug}}/cite/" method = "post">
+			{% csrf_token %}
+			<h3>Paste Link to Source and Write a Summary</h3>
+			<input type="hidden" name="id" value="{{comment.id}}"/>
+			<p>
+    		<textarea name = "source" placeholder="Add source website and summarize the main points." value="" rows="10" cols="75"></textarea>
+    		</p>
+    		<input type="submit" class="btn btn-primary" value="Submit"/> <input type="button" class="btn btn-danger" id="cancell_{{comment.id}}" value="Cancel" onclick="remove_visibility('source_{{comment.id}}'), toggle_visibility('button_source_{{comment.id}}')" />
+			</form>
+
+			
+			
+			
+            </div>
+			
+			
+            </div>
+            <div id="new_{{comment.id}}" class=""></div>
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="creator">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    {{reply.comment}}
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/><br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <a href="/{{reply.creator}}/profile/">{{reply.creator}}</a><br/>
+                    <span id="reported_{{reply.id}}">
+                    {{reply.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')">Click to view.</a></span><br/>
+            </div>
+
+            {% endif %}
+            {% endfor %}
+		
+			{% endif %}
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <a href="/{{comment.creator}}/profile/">{{comment.creator}}</a><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span><br/>
+                    <br/>
+                    <a onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+
+        {% endif %}
+        {% endfor %}
+        
+        <span class="step-links">
+        {% if neg_comments.has_previous %}
+           <a onClick="prevneg()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ neg_comments.number }} of {{ neg_comments.paginator.num_pages }}
+        </span>
+
+        {% if neg_comments.has_next %}
+            <a onClick="nextneg()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+
+    </div>
+
+
+
+
+
+
+
+
+
+<!-- -->    
+    <div class="span4">
+    <div id="drop2" class="">
+    <span id="compromise-box" class="hidden"><!--if submit with no variable say something's wrong with your javascript-->
+  			<div id="compromise-title" class="hidden">
+  			First find a Favorable Response to incorporate into your compromise:
+  			</div>
+  			<div id="critical-title" class="hidden">
+  			Now find a Critical Response to incorporate into your compromise:
+  			</div>
+  			<br/>
+  			 <a id="fav-compromiser" onClick="favcompromise()" class="btn btn-primary btn-large"> <span id="show-ok">This</span> Favorable Response</a><br/><br/><!-- make only this button and favorable comments appear-->
+  			 <a id="crit-compromiser" onClick="critcompromise()" class="btn btn-danger btn-large">Compromise with this Critical Response</a>
+  			 </span>
+  			 <br/>
+  			 <span id="compromise-results">
+  			 </span> 
+  			 </div>
+        <div id="drop" class="span4 well hidden"> 
+             <span id="drop1" class="">
+                 <span id="box-design">
+                     <span id="vote" class="">
+                     </span>
+                     <span id="replyvotes" class="">
+                     </span>
+                     <span id="reg-votes">
+                 	 <span id="comment-votes">
+                 <a id="upvoted" onClick="upvote()" class="btn btn-primary btn-large">Vote <i class="icon-white icon-chevron-up"></i></a>&nbsp&nbsp&nbsp&nbsp<br/>
+                 <br/>
+             
+                 <a id="downvoted" onClick="downvote()" class="btn btn-danger btn-large">Vote <i class="icon-white icon-chevron-down"></i></a>
+  			    	</span>
+  			    	<span id="compromise-votes">
+                 <a id="upvoted" onClick="compupvote()" class="btn btn-primary btn-large">Vote <i class="icon-white icon-chevron-up"></i></a>&nbsp&nbsp&nbsp&nbsp<br/>
+                 <br/>
+             
+                 <a id="downvoted" onClick="compdownvote()" class="btn btn-danger btn-large">Vote <i class="icon-white icon-chevron-down"></i></a>
+  			    	</span>
+  			    </span>
+  			    <span id="reply-votes">
+                 <a id="replyupvoted" onClick="replyupvote()" class="btn btn-primary btn-large">Vote <i class="icon-white icon-chevron-up"></i></a>&nbsp&nbsp&nbsp&nbsp<br/>
+                 <br/>
+             
+                 <a id="replydownvoted" onClick="replydownvote()" class="btn btn-danger btn-large">Vote <i class="icon-white icon-chevron-down"></i></a>
+  			    </span>
+  			    </span>
+  			    <h4>
+  			    <span id="box-response-type">
+                    <span id="up"></span> Agree <br/>
+                    <span id="down"></span> Disagree
+                </span>	
+                <span id="comp-response-type">
+                <span id="cup"></span> Agree <br/>
+                <span id="cdown"></span> Disagree
+                </span>	
+  			    <br/>
+                <span id="vote-results">
+                </span>
+                </h4>
+   			</span>
+  			        
+  			        <br/>
+  			<div id="box-contain">
+               <span class="buttons">
+               <a class="btn btn-primary btn" onClick="" id="box-reply"><i class="icon-comment icon-white"></i> Reply</a>
+               </span>
+               <span class="buttons">
+               <a class="btn btn-primary btn" onClick="" id="comp-reply"><i class="icon-comment icon-white"></i> Reply</a>
+	           </span>
+	           
+  		       <span class="buttons">
+                   <span id="buttons2">&nbsp&nbsp&nbsp
+                   <span id="box-sources">
+                   <span id="com-source">
+                   <a class="btn btn-info">
+  	                   <span id="box-search">Add Source
+  			           </span></a>&nbsp&nbsp&nbsp
+  			        </span>  
+  			        <span id="comp-source">
+  			        <a class="btn btn-info">
+  			        	<span id="comp-sources">Add Source
+  			        	</span></a>&nbsp&nbsp&nbsp
+  			        </span>
+  			           </span>
+  			           <span id="report-comment" class="reports">
+  		               <a class="btn btn-danger btn" id="box-report">Report</a>
+  		               </span>
+  		               <span id="report-compromise" class="reports">
+  		               <a class="btn btn-danger btn" id="comp-report">Report</a>
+  		               </span>
+  		               <span id="report-reply">
+  		               <a class="btn btn-danger btn" id="reply-report">Report</a>
+  		               </span>
+   	               </span>
+  			           <span id="sources">
+                       </span>
+              </span>
+              </div><!--box-contain-->
+         </div>
+
+
+
+
+
+
+
+     </div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+{% endblock %}

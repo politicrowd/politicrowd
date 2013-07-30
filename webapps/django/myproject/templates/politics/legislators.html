@@ -1,0 +1,34 @@
+<script type="text/javascript" language="javascript" src="/static/media/js/jquery.stylish-select.min.js"></script>
+
+
+ <script type="text/javascript">
+            $(document).ready(function(){
+               $('#dpoliticians').sSelect();  
+            });
+        </script>
+
+
+							<li class="poliSelect">
+                            <label>Politicians</label>
+                            <select name= "politician" id="politicians">
+                            <option name = "Choose" value = "">Choose a Politician</option>
+							<option name = "Blank" value = ""></option>
+							<option name = "Federal" value= "">Legislators in Congress:</option>
+							{% for politician in congressmen %}
+							<option name="{{politician.bioguide_id}}" id="{{politician.bioguide_id}}" value="{{politician.bioguide_id}}">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</option>
+							{% endfor %}
+							<option name = "Blank" value= ""></option>
+							<option name = "State" value = "">State Legislators:</option>
+							{% for politician in lower %}
+							<option name="{{politician.leg_id}}" id="{{politician.leg_id}}" class="state" value="{{politician.leg_id}}">Rep. {{politician.full_name}}</								option>
+							{% endfor %}
+							{% for politician in upper %}
+							<option name="{{politician.leg_id}}" id="{{politician.leg_id}}" value="{{politician.leg_id}}">Sen. {{politician.full_name}}</option>
+							{% endfor %}
+
+                            </select>
+                        </li>
+
+<!-- could have issue with id's on subcommittees... -->
+<input type="hidden" id="politician_id" name="politician_id" value="">
+

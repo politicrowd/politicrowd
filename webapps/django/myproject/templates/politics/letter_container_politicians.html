@@ -1,0 +1,105 @@
+<!-- Main container for Left Bar and Slider -->
+                <div class="open-head profile">                    
+                    <ul>
+                        <li class="first active"><a id="requested" href="#">{{unread_count}} Requested Response{{unread_count|pluralize}} </a></li>                        
+                        <li class="last"><a id="responded" href="#">{{responded_count}} Response{{responded_count|pluralize}} Given </a></li>
+                    </ul>
+                </div>
+                <div class="issues-sec profile">
+                    <section class="issue-left-sec">
+                        <ul class="issues-list">
+                            <li class="bold active profile"><a class="all" href="#"><span>All Issues</span></a></li>
+                            {% for issue in issues %}
+                            <li><a class="{{ issue.open_letter__issue}}" href="#"><span>{{ issue.open_letter__issue}} </span><small>({{issue.dcount}})</small></a></li>
+                            {% endfor %}
+                            
+                        </ul>
+
+                    </section>
+                    <div class="open-box">
+                        <div class="open-data">
+                             <div class="most-target politics hidden">
+                                    <a class="target-link" href="#">Top</a>
+                                    <ul class="target-drop politics">
+                                        <li><a href="#">Top</a></li>
+                                        <li><a href="#">New </a></li>
+                                        <li><a href="#">Trending</a></li>
+                                        <li><a href="#">Controversial</a></li>
+                                    </ul>                   
+                                </div>
+                            <!--<a href="#" class="toptxt">Top</a>-->
+                            <ul id="open-letter-box" class="open-listing">
+                            
+                                {% for open_letter in open_letters %}
+                                {% if forloop.first %}
+                                <li class="first">
+                                       <div class="arrows">
+                                       <a onClick="upvote('{{open_letter.open_letter.slug}}')" id="arrowup_{{open_letter.open_letter.slug}}" class="up-arrow"></a><span id="vote_count_{{open_letter.open_letter.slug}}" class="{{open_letter.open_letter.rank}}"></span> <span id="show_vote_{{open_letter.open_letter.slug}}" class="count">{{open_letter.open_letter.rank}}</span> <a onClick="downvote('{{open_letter.open_letter.slug}}')" id="arrowdown_{{open_letter.open_letter.slug}}" class="down-arrow"></a>
+                                        
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <a href="/openletters/{{open_letter.open_letter.slug}}">{{open_letter.open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#"><label>{{open_letter.open_letter.contributors.count}}</label> contributors</a></li>
+                                            <li class="last"><a href="#"> <label>{{open_letter.upvotes}}</label> constituents request a response</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                </li>
+                                {% else %}
+                                
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>{{open_letter.open_letter.rank}}</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <a href="/openletters/{{open_letter.open_letter.slug}}">{{open_letter.open_letter.title}}</a> 
+                                        <ul>
+                                            <li class="first"><a href="#"><label>{{open_letter.open_letter.contributors.count}}</label> contributors</a></li>
+                                            <li class="last"><a href="#"> <label>{{open_letter.upvotes}}</label> constituents request a response</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                               
+                                
+                               
+                                {% endif %}
+                                
+                             
+                                 {% endfor %}
+                                
+                                
+                               <ul class="pagination">
+                                <span class="step-links">
+        
+            
+       
+<li> <a id="next" href="#">next</a></li>
+        <li><a><span class="current">
+            Page {{ open_letters.number }} of {{ open_letters.paginator.num_pages }}
+        </span></a>
+        </li>
+			<li><a id="previous" href="#">previous</a></li>
+        
+          <br><br><br>
+    </span>
+
+                            </ul>
+                                
+                                
+                                
+                            </ul>
+                                                    </div>
+                        
+                    </div>
+                    <div class="searchbox">
+                        <form autocomplete="on" method="post" action="">
+                            <input type="text" class="field" value="Find Openletters" onblur="if (this.value == '') {this.value = 'Find Openletters';}" onfocus="if(this.value == 'Find Openletters') {this.value = '';}" />
+                            <input type="submit" class="button">
+                        </form>
+                    </div>
+                </div>

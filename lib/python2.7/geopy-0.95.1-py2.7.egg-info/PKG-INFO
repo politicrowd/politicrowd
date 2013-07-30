@@ -1,0 +1,22 @@
+Metadata-Version: 1.1
+Name: geopy
+Version: 0.95.1
+Summary: Python Geocoding Toolbox
+Home-page: http://code.google.com/p/geopy/
+Author: GeoPy Project / Mike Tigas
+Author-email: mike@tig.as
+License: MIT
+Download-URL: http://code.google.com/p/geopy/downloads/list
+Description: UNKNOWN
+Keywords: geocode geocoding gis geographical maps earth distance
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering :: GIS
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3

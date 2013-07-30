@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Reply{% endblock %}
+
+{% block content %}
+<h3>Reply:</h3> <form name="titleform" action="/{{slug}}/reply/" method = "post">
+    <input type="hidden" name="id" value="{{id}}"</input>
+{% csrf_token %}
+	Response Type: <select name = "response">
+{% for response in responses %}
+<option name = "{{response}}" value = "{{response}}" >{{response}}</option>
+{% endfor %}
+</select>
+    <textarea name = "comment" value="{{comment}}" rows="1" cols="60"></textarea><br>
+    <input type="submit" value="Create"/>
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+
+/****************************************************************************************/
+.stylish-select .introForm li .SSContainerDivWrapper {margin:0;padding:0;width:69%;position:absolute;top:32px !important;left: auto !important;z-index:2; background: #e4e3e0; right: 0;}
+.stylish-select .introForm li ul.newList {margin:0;padding:20px 0;list-style:none;color:#000;background:#e4e3e0;border:1px solid #d3d3d3; overflow: visible;}
+.stylish-select .introForm li ul.newList * {margin:0;padding:0;background:#e4e3e0;border:none;}
+.stylish-select .introForm li ul.newList a {color: #000;text-decoration:none;display:block;padding:0px 0 0 12%; font: 600 1.4em/28px 'Open Sans';}
+.stylish-select .introForm li .newListSelected {width:44.1%;color:#000;height:32px;padding:0 0 0 1%;float:left;background:url(../images/dropdown.png) no-repeat 0 0;}
+.stylish-select .introForm li .selectedTxt {width:100%;overflow:hidden;height:32px;padding:0; color: #999; font: 400 1.4em/32px 'Open Sans';}
+
+
+.stylish-select .selectbox1 .SSContainerDivWrapper {margin:0;padding:0;width:100%;position:absolute;top:32px;left:0;z-index:2; background: #e4e3e0; right: 0;}
+.stylish-select .selectbox1 ul.newList {margin:0;padding:0;list-style:none;color:#000;background:#e4e3e0;border:1px solid #d3d3d3; overflow: visible;}
+.stylish-select .selectbox1 ul.newList * {margin:0;padding:0;background:#e4e3e0;border:none;}
+.stylish-select .selectbox1 ul.newList a {color: #000;text-decoration:none;display:block;padding:3px 8px;}
+.stylish-select .selectbox1 .newListSelected {width:100%;color:#000;height:32px;padding:0 0 0 1%;float:left;background:url(../images/select1.png) no-repeat 0 0;}
+.stylish-select .selectbox1 .selectedTxt {width:100%;overflow:hidden;height:32px;padding:0; color: #999; font: 400 1.4em/32px 'Open Sans';}
+.stylish-select .introForm li .selectedTxt {width:100%;overflow:hidden;height:32px;padding:0; color: #999; font: 400 1.4em/32px 'Open Sans';}
+
+/****************************************************************************************/
+.stylish-select .introForm .step3 .SSContainerDivWrapper {margin:0;padding:0;width:36%;position:absolute;top:32px;left: auto !important;z-index:2; background: #e4e3e0; right: 0;}
+.stylish-select .introForm .step3 ul.newList {margin:0;padding:20px 0;list-style:none;color:#000;background:#e4e3e0;border:1px solid #d3d3d3; overflow: visible;}
+.stylish-select .introForm .step3 ul.newList * {margin:0;padding:0;background:#e4e3e0;border:none;}
+.stylish-select .introForm .step3 ul.newList a {color: #000;text-decoration:none;display:block;padding:0px 0 0 12%; font: 600 1.4em/28px 'Open Sans';}
+.stylish-select .introForm .step3 .newListSelected {width:68%;color:#000;height:32px;padding:0 0 0 1%;float:left;background:url(../images/dropdown2.png) no-repeat 0 0;}
+.stylish-select .introForm .step3 .selectedTxt {width:100%;overflow:hidden;height:32px;padding:0; color: #999; font: 400 1.4em/32px 'Open Sans';}
+
+/****************************************************************************************/
+.stylish-select .introForm .step3 .poliSelect .SSContainerDivWrapper {margin:0;padding:0;width:60%;position:absolute;top:32px;left: auto !important;z-index:2; background: #e4e3e0; right: 0;}
+.stylish-select .introForm .step3 .poliSelect ul.newList {margin:0;padding:20px 0;list-style:none;color:#000;background:#e4e3e0;border:1px solid #d3d3d3; overflow: visible;}
+.stylish-select .introForm .step3 .poliSelect ul.newList * {margin:0;padding:0;background:#e4e3e0;border:none;}
+.stylish-select .introForm .step3 .poliSelect ul.newList a {color: #000;text-decoration:none;display:block;padding:0px 0 0 12%; font: 600 1.4em/28px 'Open Sans';}
+.stylish-select .introForm .step3 .poliSelect .newListSelected {width:68%;color:#000;height:32px;padding:0 0 0 1%;float:left;background:url(../images/dropdown2.png) no-repeat 0 0;}
+.stylish-select .introForm .step3 .poliSelect .selectedTxt {width:100%;overflow:hidden;height:32px;padding:0; color: #999; font: 400 1.4em/32px 'Open Sans';}

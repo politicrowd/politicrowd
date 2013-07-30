@@ -1,0 +1,169 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Step 1: Submit an OpenLetter - PolitiCrowd.com {% endblock %}
+
+{% block head %}
+
+        <script type="text/javascript">
+ $(document).ready(function(e) {
+        	$(function(){
+					$('.my-dropdown1').sSelect();
+				});
+        $("#step1").validate({
+  rules: {
+  	issue:{
+  		required: true
+  		
+  	}
+
+    
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});     
+        });
+
+	draft = function() 
+	{  
+		
+		var issue = $("#issue").val(); 
+		var title = $("#title").val();
+		var introduction = $("#introduction").val();
+		var slug = $("#draft").val();
+		if(introduction != "You've got 80 characters. Use them wisely."){
+		
+		$.post("/create-draft/", {"issue":issue, "title":title, "introduction":introduction, "slug":slug}, function(data) {
+			
+			if(data == 'ok'){
+			alert('updated');
+			} 
+			else {
+				if(data == 'error'){
+					alert('error');
+				}
+			else{
+			$("#draft").val(data);
+			alert('success');
+			}
+			}
+			});}
+		else {
+			alert("Need to add a title");	
+		} 
+				
+				
+				//instead of alert create fadein with glow so they know their response was taken	
+ 				  
+ 							}
+        
+        
+        
+        
+            $(document).ready(function(){
+               $('.introForm select').sSelect();  
+               {% if draft %}
+               $("#issue").val("{{draft.issue.slug}}");
+               {% endif %}
+            });
+        </script>
+{% endblock %}
+
+{% block body %}
+
+        <div class="body_infographic2">
+            <div class="wrapper">
+                <section class="submit_steps">
+                    <ul>
+                        <li class="active">
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"><img src="/static/media/images/intro-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/intro-icon.png" alt=""/></figure>
+                                <span>Introduction</span>
+                            </div>
+                        </li>
+                        <li>
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"><img src="/static/media/images/letter-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/letter-active.png" alt=""/></figure>
+                                <span>Start an OpenLetter</span>
+                            </div>
+                        </li>
+                        <li>
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"> <img src="/static/media/images/target-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/target-active.png" alt=""/></figure>
+                                <span>Target Politicians</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgBox">
+                                <figure class="step_img"> <img src="/static/media/images/preview-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/preview-active.png" alt=""/></figure>
+                                <span>Preview</span>
+                            </div>
+                        </li>                        
+                    </ul>
+                </section>
+            </div>
+        </div>
+        <div class="introSec">
+            <div class="wrapper">
+                <div class="introForm">
+                    <h2>Introduction</h2>
+                    <form id="step1" action="/save1/" method="POST">
+                    	{% csrf_token %}
+                    <ul>
+                        <li>
+                            <label>What are you concerned about?</label>
+                            <select class="required" name = "issue" id="issue">
+                            	<option value = "">Select an issue…</option>
+                                {% for issue in issues %}
+                               	<option name = "{{issue}}" value = "{{issue.slug}}" {% if issue.slug == draft.issue.slug %}selected{% endif %}>{{issue}}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <label>Title</label>
+                            <input type="text" class="required" maxlength="80" name="title" id="title" onfocus="if(this.placeholder == 'You've got 80 characters. Use them wisely.') {this.placeholder = '';}" onblur="if (this.placeholder == '') {this.placeholder = 'You've got 80 characters. Use them wisely.';}" placeholder="You've got 80 characters. Use them wisely." value="{% if draft.title %}{{draft.title}}{% endif %}" />
+                        </li>
+                        <input type="hidden" name="slug" id="draft" value="{{draft.slug}}">
+                        <li>
+                            <label>Introduction</label>
+                            <textarea name="introduction" class="" id="introduction" onfocus="if(this.placeholder == 'Give a brief overview of your letter.. This is a good place to give context for the issue.') {this.value = '';}" onblur="if (this.placeholder == '') {this.placeholder = 'Give a brief overview of your letter.. This is a good place to give context for the issue.';}" placeholder="{% if draft.introduction %} {{draft.introduction}} {% else %}Give a brief overview of your letter.. This is a good place to give context for the issue.{% endif %}" value="{{draft.introduction}}">{{draft.introduction}}</textarea>
+                        </li>
+                        <li>
+                        
+                        <span class="hidden">
+                            <label><a href="#">Upload an Image</a></label>
+                            <div class="imgInfo"><span>Choose an image from your computer</span> JPEG, PNG, GIF, OR BMP, 10MB limit<br/> At least 275x158 pixels</div></span>
+                            <a  onClick="draft()" class="saveDraft">Save as a draft</a>
+                            <input type="submit" value="Next" class="nextBtn nextBtn2"/>                            
+                        </li>
+                    </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}

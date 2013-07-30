@@ -1,0 +1,35 @@
+<div class="span5">
+<h2>My Politicians in:</h2>
+<div class="span4">
+<h3>Congress</h3><br/>
+
+{% for politician in politicians %}
+<div class="float-left">
+<img class="circular" src="/static/media/politicians/{{politician.bioguide_id}}.jpg"/>&nbsp&nbsp&nbsp&nbsp<br/>
+
+{{politician.title}} {{politician.lastname}}&nbsp&nbsp&nbsp&nbsp<br/>
+</div>
+{% endfor %}
+</div>
+
+<div class="span4">
+<br/><br/><br/>
+<h3>{{state}} - State Legislature</h3><br/>
+{% for politician in state_legislators %}
+<div class="float-left">
+
+<img class="circular" src="{{politician.photo_url}}"/>&nbsp&nbsp&nbsp&nbsp<br/>
+
+{% if politician.chamber == 'lower' %}Rep {% else %}Sen {% endif %} {{politician.last_name}}&nbsp&nbsp&nbsp&nbsp<br/>
+
+</div>
+{% endfor %}			
+</div>
+
+<div class="span4">
+{% if city %}
+You are located in {{city}}. Add portland city council here if in Portland.
+{% endif %}
+</div>
+
+</div>

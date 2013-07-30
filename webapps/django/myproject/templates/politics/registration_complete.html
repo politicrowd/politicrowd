@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+<script src="/static/media/js/yqlgeo.js"></script>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+
+<script src="/static/media/js/validate.js"></script>
+
+<style type="text/css">
+
+label { width: 20em; float: left; }
+label.error { float: none; color: #BF2623; padding-left: .5em; vertical-align: top; }
+p { clear: both; }
+.submit { margin-left: 12em; }
+em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+input.error,
+select.error,
+textarea.error {
+    border: 1px solid #BF2623;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+	
+$("#location").validate();
+$("#location").submit(function() {
+	if($(this).validate().checkForm()) {
+		$("#submit").attr('disabled',true);
+    } else {
+        $('#submit').attr('disabled',false);
+    }
+});
+
+});
+</script>
+
+<!-- need to get rid of alerts and show the errors nicely. -->
+<script>
+
+function showAddr() {
+	$("#map").hide();
+	$("#map_ok").hide();
+	$("#address").show();
+	$("#local_field").show();
+	$("#latitude").val('');
+    $("#longitude").val('');	
+}
+jQuery(window).ready(function(){  
+        jQuery("#btnInit").click(initiate_geolocation);  
+    })  
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    function initiate_geolocation() {  
+    	$("#address").hide();
+        if (navigator.geolocation)  
+        {  
+            navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);  
+        }  
+        else  
+        {  
+            yqlgeo.get('visitor', normalize_yql_response);  
+        }  
+    }  
+    function handle_errors(error)  
+    {  
+        switch(error.code)  
+        {  
+            case error.PERMISSION_DENIED: alert("user did not share geolocation data");  
+            break;  
+            case error.POSITION_UNAVAILABLE: alert("could not detect current position");  
+            break;  
+            case error.TIMEOUT: alert("retrieving position timedout");  
+            break;  
+            default: alert("unknown error");  
+            break;  
+        }  
+    }  
+    function normalize_yql_response(response)  
+    {  
+        if (response.error)  
+        {  
+            var error = { code : 0 };  
+            handle_error(error);  
+            return;  
+        }  
+        var position = {  
+            coords :  
+            {  
+                latitude: response.place.centroid.latitude,  
+                longitude: response.place.centroid.longitude  
+            },  
+            address :  
+            {  
+                city: response.place.locality2.content,  
+                region: response.place.admin1.content,  
+                country: response.place.country.content  
+            }  
+        };  
+        handle_geolocation_query(position);  
+        
+    }  
+    function handle_geolocation_query(position)
+{
+    var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
+                    position.coords.longitude + "&zoom=14&size=300x400&markers=color:blue|label:|" +
+                    position.coords.latitude + ',' + position.coords.longitude;
+    jQuery("#map").remove();
+    jQuery(document.body).append(
+        jQuery(document.createElement("img")).attr("src", image_url).attr('id','map')
+    );
+
+        
+    codeLatLng(position.coords.latitude, position.coords.longitude)
+}
+
+function codeLatLng(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results)
+        if (results[1]) {
+         //formatted address
+         var partsOfAddr = results[0].formatted_address.split(',');
+         var city = partsOfAddr[1];
+         var state = partsOfAddr[2].split(' ')[1];
+         $("#city").val(city);
+        $("#state").val(state);
+        $("#latitude").val(lat);
+        $("#longitude").val(lng);
+        $("#local_field").show();
+        $("#map_ok").show();
+        alert(lat);
+        alert(lng);
+        $("#politicians").load(
+	"/mypoliticians/"+lat+"/"+lng+"/");
+
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  }
+    </script> 
+    
+{% endblock %}
+
+{% block content %}
+
+  <form name='query' id="location" class='span5' action='/hlocation/' method = 'post'>
+        {% csrf_token %}
+        
+        <legend>Before you can engage with users and politicians we need:</legend>
+        
+        <label for='first'>First Name</label><input type="text" class="required" title="Please enter your first name" name="first" id="first"/>
+        
+        <label for='last'>Last Name (initial)</label><input type="text" class="required" maxlength="1" title="Please enter your last name initial" name="last" id="last"/>
+        <br/>
+        <hr>
+        <h4><a class="pointer" id="btnInit"><i class="icon-map-marker"></i>Identify my Politicians </a></h4>(or <a class="pointer" onClick="showAddr()">Enter Permanent Address</a>)<hr>
+        
+        <div class="hidden" id="address"><label for='address'>Address</label> <input type='text' class='required' title='Please enter your street address' name = 'address' id='street'/>
+        </div>
+        <input type="hidden" name="latitude" id="latitude"/>
+        <input type="hidden" name="longitude" id="longitude"/>
+        <div id="local_field" class="hidden">
+         <p>
+        <label for='city'>City</label> <input type='text' class='required' title='Please enter your city name' name='city' id='city'/>&nbsp&nbsp&nbsp<label for='state'>State</label> <select name = 'state' id='state' class='required' title='Select your state'>
+<option name = "Choose" value = "">Select your state…</option>
+
+<option name = "CA" value = "CA" >California</option>
+
+<option name = "OR" value = "OR" selected>Oregon</option>
+
+<option name = "WA" value = "WA" >Washington</option>
+
+</select>
+        </p>
+        </div>
+        <div id="map_ok" class="hidden">
+        Is the pin on the map on or near your permanent address?<br/>
+        <input type="radio" name="map_ok" class="required" value="yes"> Yes &nbsp&nbsp&nbsp
+        <input type="radio" name="map_ok" onClick="showAddr()" class="required" value="no"> No<br/><br/>
+        </div>
+         
+        <p><input type='submit' id='submit' class='btn btn-primary btn-large' value='Connect &raquo;'/></p>
+        
+        </form>
+        <div id="politicians">
+    
+    </div>
+{% endblock %}

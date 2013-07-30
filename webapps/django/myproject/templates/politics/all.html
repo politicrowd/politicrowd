@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if articles %}
+<div class="span8">
+{% for article in articles %}
+
+
+{{article.rank}}|<a href="/{{article.slug}}"> {{article.question}} </a></br></br>
+
+{% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

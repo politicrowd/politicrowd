@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}<script>
+$("img").error(function(){
+        $(this).hide();
+});
+</script>
+<div id="poli-left" class="span6">
+
+<script type='text/javascript' src='http://politiwidgets.com/embed?w=district&bgd={{bioguide}}&s=lg&color=eaf3f4&'></script>
+<br/><br/>
+District: {{district}}<br/> State: {{state}} Party: {{party}} <br/>
+{% if email %}Email: {{email}} {% endif %} {% if website %}<a href="{{website}}">Website</a> {% endif %} {% if facebook %} <a href="http://www.facebook.com/{{facebook}}">Facebook</a>{% endif %} {% if twitter %}<a href="http://www.twitter.com/{{twitter}}">Twitter</a>{% endif %}
+
+<br/>
+
+Office: {{office}}<br/>Washington, DC 20515<br/>
+Phone: {{phone}}
+<!--<script type='text/javascript' src='http://politiwidgets.com/embed?w=district&bgd={{bioguide}}&s=lg&color=159dac&'></script>-->
+
+</div>
+
+<div id="poli-right">
+{% if mentions %}
+<div class="span4">
+
+<h3>Mentions</h3><br />
+{% for mention in mentions %}
+<div class="well">
+{{mention.mentions}} mention{{ mention.mentions|pluralize}} in <a href="/{{mention.post.slug}}/">{{mention.post.question}}</a><br />
+</div>
+{% endfor %}
+</div>
+
+{% endif %}
+
+<div id="townhall" class="span4">
+<h3>Web Town Halls</h3><br/>
+{% if live %}
+<div class="well">
+<h4>Live Now:</h4><br/>
+{% for ama in live %}
+
+<a href="/congress/{{ama.slug}}/">{{ama.title}}</a> <br/>Started {{ama.creation_date}}<br/>Ends {{ama.end_date}}<br/>
+
+{% endfor %}
+</div>
+<hr>
+{% endif %}
+{% if infinite %}
+<h4>Open Ended: </h4><br/>
+{% for ama in infinite %}
+<div class="well">
+<a href="/congress/{{ama.slug}}/">{{ama.title}}</a> <br/>Started {{ama.creation_date}}<br/>
+</div>
+{% endfor %}
+<hr>
+{% endif %}
+{% if coming %}
+<h4>Coming Soon:</h4><br/>
+{% for ama in coming %}
+<div class="well">
+<a href="/congress/{{ama.slug}}/">{{ama.title}}</a> <br/>Starts {{ama.creation_date}}<br/>
+</div>
+{% endfor %}
+<hr>
+{% endif %}
+{% if ended %}
+<h4>Ended:</h4><br/>
+{% for ama in ended %}
+<div class="well">
+<a href="/congress/{{ama.slug}}/">{{ama.title}}</a> <br/>Ended {{ama.end_date}}<br/>
+</div>
+{% endfor %}
+<hr>
+{% endif %}
+</div>
+
+
+
+</div>
+{% endblock %}

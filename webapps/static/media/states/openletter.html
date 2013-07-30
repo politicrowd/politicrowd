@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Politicrowd - Open Letter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/media/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+        <script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="/static/media/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery.carouFredSel-6.2.0-packed.js"></script>
+        
+        <script type="text/javascript" language="javascript" src="/static/media/js/custom.js"></script>
+        <script type="text/javascript">
+        
+        
+            $(document).ready(function(e) {
+            
+            
+          $("#follow").click(function(){
+      	 	var slug = "{{open_letter.slug}}";
+			$.get("/follow_open_letter/", {"slug":slug}, function(data){
+		
+		alert(data);	
+		return false;	
+		
+	});
+          });
+  
+          
+		
+		$('.ok-btn').click(function(){
+		$('.thanks').hide();
+		return false;
+	});
+	
+	search = function(){
+	var search = $("#politician_search").val();
+	$.get("/politician_search/{{open_letter.slug}}/", {"search":search}, function(data){
+		
+		$("#between_brackets").text();
+		$("#between_brackets").html(data);		
+		
+	});
+	}
+	
+	
+	$('#comment').keyup(function() {
+		if ($("#comment").val().length > 500) {
+			$("#title_input").show();
+		}
+	});
+	
+	
+	
+upvote_comment = function(comment_id){
+
+ $.get("/comment/up/", {"comment_id":comment_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+ 
+ 
+ 
+ downvote_comment = function(comment_id){
+
+ $.get("/comment/down/", {"comment_id":comment_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+
+	
+	
+	
+
+	
+	
+	
+	            	
+   upvote = function(slug){
+
+ $.get("/open_up/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#upvote_count").attr('class');
+			votes++;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+			$("#politician_vote").load(
+	"/requestpolitician/{{open_letter.slug}}/",function(){$(".thanks").toggle();});                                            
+			
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var downvotes = $("#downvote_count").attr('class');
+			downvotes--;
+			$("#downvote_count").attr('class', downvotes);
+			$("#downvote_count").text(downvotes);
+			
+			var votes = $("#upvote_count").attr('class');
+			votes++;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+			$("#politician_vote").load(
+	"/requestpolitician/{{open_letter.slug}}/",function(){$(".thanks").toggle();}); 
+	$("#politician_vote").prepend("Don't forget to request a response from your politicians!");
+		}
+		else {
+		var votes = $("#upvote_count").attr('class');
+			
+			votes--;
+			$("#upvote_count").text(votes);	
+			$("#upvote_count").attr('class', votes);
+			
+			
+			
+		}
+	}
+ 
+ });
+ }
+ 
+ 
+ downvote = function(slug){
+
+ $.get("/open_down/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#downvote_count").attr('class');
+			votes++;
+			$("#downvote_count").attr('class', votes);
+			$("#downvote_count").text(votes);
+			                                          
+			
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var upvotes = $("#upvote_count").attr('class');
+			upvotes--;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+
+			
+			var votes = $("#downvote_count").attr('class');
+			votes++;
+			$("#downvote_count").attr('class', votes);
+			$("#downvote_count").text(votes);
+			
+		}
+		else {
+		var votes = $("#downvote_count").attr('class');
+			
+			votes--;
+			$("#downvote_count").text(votes);	
+			$("#downvote_count").attr('class', votes);
+			
+			
+			
+		}
+	}
+ 
+ });
+ }
+ 
+ 
+ 
+ 
+ 
+                $(function() {
+                    $("#foo2").carouFredSel({
+                        responsive: true,
+                        circular: false,
+                        infinite: false,
+                        auto 	: false,
+                        width: '100%',
+                        scroll:1,
+                        prev: '#foo2_prev',
+                        next: '#foo2_next',
+                        items: {
+				
+                            //	height: '30%',	//	optionally resize item-height
+                            visible: {
+                                min: 1,
+                                max: 4
+                            }
+                        }
+                    });                   
+                });
+                $('.bxslider1').bxSlider({
+                    minSlides:1,
+                    maxSlides:4,
+                    slideWidth:155,
+                    slideMargin:20
+                });
+                $('.bxslider3').bxSlider({
+					
+                    onSliderLoad: function() {
+                        $('.bxslider4').bxSlider({
+                            minSlides:3,
+                            maxSlides:3,
+                            slideWidth:54,
+                            slideMargin:30
+                        }); 
+                        $('.bxslider5').bxSlider({
+                            minSlides:3,
+                            maxSlides:3,
+                            slideWidth:50,
+                            slideMargin:30
+                        }); 
+						
+                    }
+					
+                }); 
+                
+               
+            });		
+            if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100px',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 1,
+                                    max: 1
+                                }
+                            }
+                        });                   
+                    });
+                });
+            }
+			 
+            if ((navigator.userAgent.match(/iPad/i))) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100%',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 3,
+                                    max: 3
+                                }
+                            }
+                        });                   
+                    });
+                });
+            }
+            
+				 
+				 
+        </script>
+    </head>
+
+    <body id="openletter">
+    <div class="outerWrapper">
+        <header class="brown_bg">
+            <div class="wrapper"> <a href="/" id="logo"> <img src="/static/media/images/logo.png" alt=""/></a>
+                <a class="mob-menu" href="#">
+                    <span class="mob-open"><img src="/static/media/images/mob-menu-img.png" alt="img"></span>
+                    <span class="mob-close"><img src="/static/media/images/mob-close.png" alt="img"></span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="politicians.html">POLITICIANS</a></li>
+                        <li><a href="issues.html">ISSUES</a></li>
+                        <li><a href="/create">SUBMIT</a></li>
+                        <li><a href="/profile">MY POLITICS</a></li>
+                        <li class="last marg_right"><a href="#">LOG IN/SIGN UP</a></li>
+                        <li class="search marg_right"><a href="#"></a></li>
+                    </ul>
+                    <form action="#">
+                        <div class="search_box">
+                            <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                        </div>
+                    </form>
+                </nav>
+
+            </div>
+        </header>
+        <div class="body_infographic light_bg">
+            <div class="wrapper">
+                <section class="body_upvote_openletter">
+                    <ul>
+                        <li>
+                            <figure class="img"><img src="/static/media/images/left_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/left_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Vote to make your voice heard.</span> </li>
+                        <li class="arrow"></li>
+                        <li>
+                            <figure class="img"><img src="/static/media/images/middle_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/middle_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Add a comment to make your voice represented.</span> </li>
+                        <li class="arrow"></li>
+                        <li>
+                            <figure> <img src="/static/media/images/right_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/right_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Vote on comments to develop the community voice.</span> </li>
+                    </ul>
+                    <a href="" class="openletter_close"></a> </section>
+            </div>
+        </div>
+        <div class="trendingopen_letter openlettergray">
+            <div class="wrapper">
+                <section class="body_upvote_openletter padd">
+                    <h4>Title: {{open_letter.title}}</h4>
+                    <div class="upvote_innercontainer">
+                        <article class="issues_edu">Issue: <span>Education</span></article>
+                        <article class="all_issues">all issues</article>
+                        <section class="politician_container">
+                            <div class="upvote_downvote_left">
+                                <article id="upvote_count" class="{{open_letter.up}}">{{open_letter.up}}</article>
+                                <article><a onClick="upvote('{{open_letter.slug}}')" class="up_arrow_grey"></a></article>
+                                <article><a onClick="downvote('{{open_letter.slug}}')" class="down_arrow_grey morg"></a></article>
+                                <article id="downvote_count" class="{{open_letter.down}}">{{open_letter.down}}</article>
+                                <div class="thanks hidden">
+                                    <em></em>
+                                    <strong class="voting">THANK YOU FOR VOTING</strong>
+                                    <span class="politicians">Request a response from your politicians:</span>
+                                    <div id="politician_vote" class="sideSlide">
+                                        
+
+                                    </div>
+                                    <a class="ok-btn" onClick="politician_request()">ok</a>
+                                </div>
+                            </div>
+                            <section class="ploitician_slider">
+                                <figure class="bracket_left"></figure>
+                                <div id="between_brackets" class="between_brackets ">
+                                    <ul class="bxslider1">
+                                     {% for request in requests %}
+										<li>
+                                            <div class="img1">
+                                                <article class="arrow"></article>
+                                                <section class="upvote_politication_img"> <a href="/politicians/{{request.politician.unique}}">{% if request.politician.jurisdiction == 'federal' %} <img height="75" width="75" src="/static/media/politicians/{{request.politician.photo}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="75" width="75" src="{{request.politician.photo}}" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %}</a>
+
+                                                </section><em class="pol-shadow"></em>
+                                            </div>
+                                            <section class="politic_des">
+                                                <h3>{{request.politician.title}}, {{request.politician.state}}<br>
+                                                    {{request.politician.first}} {{request.politician.last}}</h3>
+                                                <h5>Requesting: {{request.upvotes}}/{{request.politician.response_threshold}}</h5>
+                                                <figure class="openMail blue_clr">Response: {{request.responses}}</figure>
+                                            </section>
+                                        </li>
+
+
+								{% endfor %}  
+								  
+                                                                            
+                                  </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <figure class="bracket_right"></figure>
+                            </section>
+                            <div class="search_politicians">
+                                <p>{{requests.count}} targeted politicians</p>
+                                <a href="" class="search"></a> </div>
+                                
+                                 
+                          <div class="search_box">
+                            <form method='POST' onsubmit='javascript:search();return false;'>
+                                <input type="text" id="politician_search"  onfocus="if(this.value == 'Search for a Politician (enter first and last name)') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for a Politician (enter first and last name)';}" value="Search for a Politician (enter first and last name)"/>
+                                 <input type="button" value="" style="margin:-9999px" name="btn-submit" class="btn-go" onclick="javascript:search();return false;" />
+</form>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="body_openletter_middle"> 
+                    <div class="introBox2">
+                        <div class="textIntro"> <img src="/static/media/images/intro-img.png" alt=""/>
+                            <h2>Introduction</h2>
+                            <p>{{open_letter.introduction}}……read more</p>
+                        </div>
+
+                    </div>
+                    <ul class="bxslider3">
+                        <li>
+                            <section class="openletter_right">
+                                <article class="heading">
+                                    <h3>{{open_letter.title}}</h3>
+                                    <small>Started by {{open_letter.creator}}</small> </article>
+                                <p>To:</p>
+                                <p>{{open_letter.target}} </p>
+                                <p>{{open_letter.content}}</p>
+                                <p> Sincerely,<br>
+                                    PolitiCrowd</p>
+                                <article class="middleshadow"> <img src="/static/media/images/body_openletter_shadow.png" alt=""/> </article>
+                                <div class="page_number"> <a href="" class="pagearrow_left"></a> <span class="text">P 1</span> <a href="" class="pagearrow_right"></a> </div>
+                            </section>
+                            <div class="introBox">
+                                <div class="textIntro"> <img src="/static/media/images/intro-img.png" alt=""/>
+                                    <h2>Introduction</h2>
+                                    <p>{{open_letter.introduction}}</p>
+                                </div>
+                                <div class="introSlider">
+                                    <h3>Politicians&lsquo; lastest Response</h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider4">
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="introSlider1">
+                                    <h3>You might be also interested in </h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider5">
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic3.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li class="last"><img src="/static/media/images/pic3.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+
+                                    </div>                               
+                                </div> 
+                                
+                        <div class="introSocial1">
+                            <div class="introsocial">
+                                <h3>Share with Friends or Follow </h3>
+                                <ul class="introsocial1">
+                                    <li><a href="#" class="facebookSocial"></a></li>
+                                    <li><a href="#" class="twiterSocial"></a></li>
+                                    <li><a href="#" class="messageSocial"></a></li>
+                                    <li class="marg_right"><a id="follow" href="#" class="followSocial"></a></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    
+                                
+                                
+                                </div>
+                        </li>
+                        <li>
+                            <section class="openletter_right">
+                                <article class="heading">
+                                    <h3>{{open_letter.title}}</h3>
+                                    <small>Started by {{open_letter.creator}}</small> </article>
+                                <p>To:</p>
+                                <p>{{open_letter.target}} </p>
+                                <p>{{open_letter.content}}</p>
+                                <p> Sincerely,<br>
+                                    PolitiCrowd </p>
+                                <article class="middleshadow"> <img src="/static/media/images/body_openletter_shadow.png" alt=""/> </article>
+                                <div class="page_number"> <a href="" class="pagearrow_left"></a> <span class="text">P 1</span> <a href="" class="pagearrow_right"></a> </div>
+                            </section>
+                            <div class="introBox">
+                                <div class="textIntro"> <img src="/static/media/images/intro-img.png" alt=""/>
+                                    <h2>Introduction</h2>
+                                    <p>{{open_letter.introduction}}</p>
+                                </div>
+                                <div class="introSlider">
+                                    <h3>Politicians&lsquo; lastest Response</h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider4">
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="introSlider1">
+                                    <h3>You might be also interested in </h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider5">
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic3.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li class="last"><img src="/static/media/images/pic3.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </li>
+                        <li>
+                            <section class="openletter_right">
+                                <article class="heading">
+                                    <h3>Let Girls Play Football! Stop the Discrimination by the Archdiocese of Philadelphia CYO Office</h3>
+                                    <small>Started by Jeremy Fish</small> </article>
+                                <p>To:</p>
+                                <p>Archdiocese of Philadelphia CYO Office, Office of CYO Sports
+                                    Donna Farrell, Director of Communications, Archdiocese of Philadelphia </p>
+                                <p>Stop Discrimination - Change the CYO Football Rule - Allow Girls to Play. It is one of the lone remaining organizations that discriminate against girls in football. The ability of a girl to be able to participate and compete safely has been proven. Girls are allowed to play Pop Warner football and even the NFL has no "male-only" rule. Caroline Pla has been fortunate enough to be part of a special CYO team the last two years, where she got to experience the camaraderie and ultimate team atmosphere of football, while representing her local CYO program. She was physically able to compete, and was a contributer and equal part of the team. According to the rule, she is no longer allowed to continue, as the CYO office looks to enforce this archaic language in their handbook - that football is for boys. The rule, as it stands now, will prevent any girl in the future from participating in and be part of a CYO football team. Moreover, because schools in the Archdiocese take federal funds, it may also be a violation of Title IX to discontinue allowing girls to play. Caroline wants more than anything that this rule be updated and modernized to reflect the times. Simply change the rule and allow girls to play.</p>
+                                <p> Sincerely,<br>
+                                    [Your name] </p>
+                                <article class="middleshadow"> <img src="/static/media/images/body_openletter_shadow.png" alt=""/> </article>
+                                <div class="page_number"> <a href="" class="pagearrow_left"></a> <span class="text">P 1</span> <a href="" class="pagearrow_right"></a> </div>
+                            </section>
+                            <div class="introBox">
+                                <div class="textIntro"> <img src="/static/media/images/intro-img.png" alt=""/>
+                                    <h2>Introduction</h2>
+                                    <p>My daughter Caroline, who has played football since age 5, has been fortunate enough to be part of a special team the last two years, where she got to experience the camaraderie and ultimate team atmosphere of the sport, while representing our local Catholic Youth Organization (CYO) program. She was physically able to compete, and was a contributor and equal part of the team. My husband George and I, who have been active in the church and CYO for decades, were told in the middle of the season that Caroline because......read more</p>
+                                </div>
+                                <div class="introSlider">
+                                    <h3>Politicians&lsquo; lastest Response</h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider4">
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                            <li><img src="/static/media/images/open-pol-lat-resp.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="introSlider1">
+                                    <h3>You might be also interested in </h3>
+                                    <div class="smallscroller">
+                                        <ul class="bxslider5">
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic3.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic1.png" alt=""></li>
+                                            <li><img src="/static/media/images/pic2.png" alt=""></li>
+                                            <li class="last"><img src="/static/media/images/pic3.png" alt=""></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section class="commentCntr">
+            <div class="wrapper">
+                <div class="innerCommentCntr">
+                    <section class="leftSection">
+                        <div class="commentInfo">
+                            <h2>Be the first to contribute:</h2>
+                            <p>Your voices are as important as the OpenLetter. We will forward the top ranking comments to the politicians along with the OpenLetter. Let&lsquo;s leveraging the power of our community. </p>
+                            
+						<form method='POST' action="/comment/{{open_letter.slug}}/">
+						{% csrf_token %}
+						<ul class="commentForm">
+                                <span id="title_input" class="hidden">
+                                <li>
+                                    <label>Title (option)</label>
+                                    <input type="text" name="title" id="title" onfocus="if(this.value == 'write a title for a long comment') {this.value = '';}" onblur="if (this.value == '') {this.value = 'write a title for a long comment';}" value="" />
+                                </li>
+                                </span>
+                                <li>
+                                    <label>Add your voice</label>
+                                    <textarea name="comment" id="comment" row="2" col="2"></textarea>
+                                </li>
+                                
+                                <li> {% if politician %}<small>
+                                        <input type="checkbox" class="styled" />
+                                        Mark as a promise (for politician&lsquo;s response only) </small>{% endif %}
+                                    <input type="submit" value="submit" />
+                                </li>
+                            </ul>
+                            
+                            
+                       	</form>
+
+                            
+                        </div>
+                        <div class="commentPost">
+                            <div class="commentHd">
+                                <h3>Politician&lsquo;s Responses (2) </h3>
+                                <div class="most-target">
+                                    <a class="target-link" href="#">Controversial</a>
+                                    <ul class="target-drop">
+                                        <li><a href="#">Top</a></li>
+                                        <li><a href="#">New </a></li>
+                                        <li><a href="#">Trending</a></li>
+                                        <li><a href="#">Controversial</a></li>
+                                    </ul>                   
+                                </div>
+
+                            </div>
+                            <div class="commentLink">
+                                <h3>Title (option):  Lorem Dolor Ligula</h3>
+                                <span class="close"></span>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>228 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus.</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <section class="reply potion">
+                                        <p>1</p>
+                                    </section>
+                                    <div class="commentimg1"> <img alt="" src="/static/media/images/open-pol-lat-resp.png"> </div>
+                                    <ul class="uiLeft">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                        <li><a href="#" class="active">Marked as a Promise</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <textarea row="2" col="2"></textarea>
+                                            <input type="submit" value="Post" />
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                <div class="replyComment">
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentLink">
+                                <h3>Title (option):</h3>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <section class="reply">
+                                        <p>1</p>
+                                    </section>
+                                    <div class="commentimg1"> <img alt="" src="/static/media/images/second_polimg2.png"> </div>
+
+                                    <ul class="uiLeft">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="req-pro" href="#">Request Promise </a><div class="honk"><img src="/static/media/images/honk.png" alt="img"><small>1</small></div></li>
+                                        <li><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <textarea row="2" col="2"></textarea>
+                                            <input type="submit" value="Post" />
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="replyComment">
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentLink">
+                                <h3>Title (option):</h3>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod tempus ullamcorpe...read more</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <section class="reply">
+                                        <p>1</p>
+                                    </section>
+                                    <div class="commentimg1"> <img alt="" src="/static/media/images/second_polimg2.png"> </div>
+                                    <ul class="uiLeft">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="req-pro" href="#">Request Promise </a><div class="honk"><img src="/static/media/images/honk.png" alt="img"><small>1</small></div></li>
+                                        <li><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <textarea row="2" col="2"></textarea>
+                                            <input type="submit" value="Post" />
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="replyComment">
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="postShowBtn"> <a href="#">show more</a> </div>
+                        </div>
+                        <div class="commentPost">
+                            <div class="commentHd">
+                                <h3>Contributors (6) </h3>
+                                <div class="most-target">
+                                    <a class="target-link" href="#">Controversial</a>
+                                    <ul class="target-drop">
+                                        <li><a href="#">Top</a></li>
+                                        <li><a href="#">New </a></li>
+                                        <li><a href="#">Trending</a></li>
+                                        <li><a href="#">Controversial</a></li>
+                                    </ul>                   
+                                </div>
+                            </div>
+                            <div id="comment_submit" class="commentLink">
+                            </div>
+                            
+                            {% for comment in comments %}
+ 								<div class="commentLink">
+                                {% if comment.title %}<h3>Title: {{comment.title}}</h3> {% endif %}
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" onClick="upvote_comment('{{comment.id}}')"></a> <span id="comment_rank_{{comment.id}}" class="{{comment.rank}} center" >{{comment.rank}} </span> <a class="arrowdown1" onClick="downvote_comment('{{comment.id}}')"></a> </div>
+                                    <div class="commentRight">
+                                        <p>{{comment.comment}} asdf;oij we;fio jiwa;ifeo jiowaefhouhwfi wieuhf iuhiweuaf </p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                {% if comment.replies.all %}
+                                    <section class="reply potion">
+                                        <p>{{comment.replies.count}}</p>
+                                    </section>
+                                    {% endif %}
+                                    <ul class="uiLeft">
+                                        <li>by {{comment.creator.first}} in {{comment.creator.city}}, {{comment.creator.state}} &nbsp&nbsp</li>
+                                        <li class="last">&nbsp&nbsp {{comment.creation_date}}</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="commentLink commentbox">
+                                        <h3>Reply: {% if comment.title %} {{comment.title}} {% endif %}</h3>
+                                        
+                                        <form method='POST' action="/reply/{{open_letter.slug}}/{{comment.id}}/">
+										{% csrf_token %}
+										<div class="commenText">
+                                            <textarea name="reply" row="2" col="2"></textarea>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                            
+                            
+                       					</form>
+
+                                        
+                                        
+                                        
+                                        
+                              </div>
+                              <div class="replyComment">
+                                    {% for reply in comment.replies.all %}
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: {{comment.title}} </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>{{reply.rank}} </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>{{reply.comment}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by {{reply.creator.first}} in {{reply.creator.city}}, {{reply.creator.state}}&nbsp</li>
+                                                <li class="last">&nbsp{{reply.creation_date}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+                              </div>
+                            </div>
+{% endfor %}
+                           
+                           
+                           
+                           
+                                                       <div class="commentLink">
+                                <h3>Title (option):</h3>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <section class="reply potion">
+                                        <p>1</p>
+                                    </section>
+                                    <ul class="uiLeft">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <textarea row="2" col="2"></textarea>
+                                            <input type="submit" value="Post" />
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="replyComment">
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentLink">
+                                <h3>Title (option):  Parturient Pharetra Pellentesque Elit </h3>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod tempus ullamcorpe...<a href="#">read more</a></p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <section class="reply potion active">
+                                        <p>1</p>
+                                    </section>
+                                    <ul class="uiLeft">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <textarea row="2" col="2"></textarea>
+                                            <input type="submit" value="Post" />
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="replyComment">
+                                    <div class="commentLink commenttxt bord-bot">
+                                        <h3>Reply: Parturient Pharetra Pellentesque Elit </h3>
+                                        <div class="commenText">
+                                            <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                            <div class="commentRight">
+                                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="uiLeft">
+                                                <li>by Sen.Jeff Merkley , OR</li>
+                                                <li class="last">02.08.2013, 3:15pm PST</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="commentLink">
+                                <h3>Title (option):  Parturient Pharetra Pellentesque Eli</h3>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1" href="#"></a> <span>227 </span> <a class="arrowdown1" href="#"></a> </div>
+                                    <div class="commentRight">
+                                        <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Curabitur blandit tempus porttitor. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec ullamcorper nulla non metus auctor fringilla. Etiam porta sem malesuada magna mollis euismod tempus ullamcorpe...<a href="#">read more</a></p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                    <ul class="uiLeft uiLeft1">
+                                        <li>by Sen.Jeff Merkley , OR</li>
+                                        <li class="last">02.08.2013, 3:15pm PST</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+            </div>
+        </section>
+        <footer class="footerCntr">
+            <div class="wrapper">
+                <article class="aboutBox">
+                    <h2>About </h2>
+                    <p>PolitiCrowd is a non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. </p>
+                </article>
+                <div class="contactBox">
+                    <div class="first">
+                        <h2>Contact</h2>
+                        <p><a href="mailto:Info@politicrowd.com">Info@politicrowd.com</a></p>
+                    </div>
+                    <div class="second">
+                        <h2>Support us</h2>
+                        <a href="#" class="donation">Donation</a> 
+                    </div>
+                </div>
+                <div class="followBox">
+                    <h2>Follow us</h2>
+                    <ul class="socialUl">
+                        <li class="facebook"><a href="#"></a></li>
+                        <li class="twiter"><a href="#"></a></li>
+                    </ul>
+                    <div class="form">
+                        <form action="" method="post"  autocomplete="on">
+                            <input type="text"  onfocus="if(this.value == 'Your Email') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Your Email';}" value="Your Email" class="field" />
+                            <input type="submit" class="button" />
+                        </form>
+                    </div>
+                    <p><small>&copy; 2013, PolitiCrowd.com. All Rights Reserved.</small> <a href="#">Privacy Policy </a>. <a href="#">Terms of Use</a></p>
+                </div>
+            </div>
+        </footer></div>
+    </body>
+</html>

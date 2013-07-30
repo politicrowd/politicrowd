@@ -1,0 +1,30 @@
+{% if politicians %}
+						
+						
+
+                            {% for politician in politicians %}
+                            <li {% if forloop.counter|divisibleby:3 %}class="last"{% endif %}>
+                                <figure class="img1">
+
+                                     <a class="circular-img" href="/politicians/{{politician.unique}}">{% if politician.jurisdiction == 'federal' %} <img height="158" width="158" src="/static/media/politicians/{{politician.photo}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="158" width="158" src="{{politician.photo}}" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %}<small class="hover_effect"></small>
+                                     <em class="arrow"></em>
+                                     </a>
+                                     
+                                    
+                                    <em class="pol-shadow"></em>
+                                </figure>
+                                <section class="politic_des">
+                                    <h3>{{politician.title}} <br>
+                                        {{politician.first}} {{politician.last}}</h3>
+                                    <h5>{{politician.jurisdiction}}</h5>
+                                    <figure class="mail">{{politician.inbox.count}}</figure>
+                                    <figure class="openMail">need</figure>
+                                </section>
+                            </li>
+                            {% endfor %}
+             asdf               
+{% else %}
+asdfsss
+<h2>Nothing to see here yet, try finding some politicians to <a href="/politicians/">follow</a></h2>
+
+{% endif %}

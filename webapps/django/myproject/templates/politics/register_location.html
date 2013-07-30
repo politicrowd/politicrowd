@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Politicrowd</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="include/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="include/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="include/css/stylish-select.css" />
+        <link rel="stylesheet" type="text/css" href="include/css/css3.css" />
+        <link rel="stylesheet" type="text/css" href="include/css/responsive.css" />
+        <script type="text/javascript" src="include/js/html5shiv.js"></script>
+        <script type="text/javascript" language="javascript" src="include/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="include/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" language="javascript" src="include/js/custom.js"></script>
+        <script type="text/javascript" language="javascript" src="include/js/jquery.stylish-select.min.js"></script>
+        <script type="text/javascript" language="javascript" src="include/js/custom-form-elements.js"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function(e) {
+                $('.bxslider7').bxSlider({
+					auto: true,
+					slideWidth:140,
+					slideMargin:40,
+					minSlides:1,
+					maxSlides: 4
+				});
+            });
+
+if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		
+		$('.bxslider7').bxSlider({
+			auto: true,
+			slideWidth:140,
+			slideMargin:40,
+			minSlides:1,
+			maxSlides: 1
+		});
+	});	
+}
+
+if ((navigator.userAgent.match(/iPad/i))) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		/*$('.headPolitician a.bx-prev, .headPolitician a.bx-next').show();*/
+		$('.bxslider7').bxSlider({
+			auto: true,
+			slideWidth:140,
+			slideMargin:40,
+			minSlides:3,
+			maxSlides: 3
+		});
+		
+		
+	});
+}
+
+
+
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.loginDetail').hide();
+                $('.loginDetail').eq(1).show();
+                $('.tabSec:first').addClass('active');
+                $('.tabSec ul li a').click(function(){
+                    $('.tabSec ul li').removeClass('active');
+                    $(this).parent().addClass('active');
+                    var currentTab = $(this).attr('href');
+                    $('.loginDetail').hide();
+                    $(currentTab).show();
+                    return false;
+                });
+				$(".save").click(function(){
+					$('.overlay').fadeIn();	
+					$(".popup1").fadeIn();
+					return false;
+				});
+				$(".cross-icon, .overlay").click(function(){
+					$(".overlay").fadeOut();
+					$('.popup1').fadeOut();	
+					return false;
+				});
+				$('.overlay').css('opacity','1');
+				$(function(){
+                $('.my-dropdown1').sSelect();
+            });
+            });
+        </script>
+    </head>
+
+    <body>
+    <div class="outerWrapper">
+        <header class="brown_bg">
+            <div class="wrapper">
+                <a href="index.html" id="logo"> <img src="include/images/logo.png" alt=""/></a>
+                <a class="mob-menu" href="#">
+                    <span class="mob-open"><img src="include/images/mob-menu-img.png" alt="img"></span>
+                    <span class="mob-close"><img src="include/images/mob-close.png" alt="img"></span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="politicians.html">POLITICIANS</a></li>
+                        <li><a href="issues.html">ISSUES</a></li>
+                        <li><a href="#">SUBMIT</a></li>
+                        <li><a href="my-politics.html">MY POLITICS</a></li>
+                        <li class="last marg_right"><a href="#">LOG IN/SIGN UP</a></li>
+                        <li class="search marg_right"><a href="#"></a></li>
+                    </ul>
+                    <form action="#">
+                        <div class="search_box">
+                            <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                        </div>
+                    </form>
+                </nav>
+                
+            </div>
+        </header>
+        <article class="popupContainer">
+            <div class="toppolitician light_bg">
+                <div class="wrapper"> 
+                    <!-- Politician Page 1st Row start here -->
+                    <div class="signupLeft">
+                        <h2 class="signHead">Please comfirm your resident location</h2>
+                        <article class="tabSec">
+                            <ul class="tabs">
+                                <li class="active"><a href="#sign2">Your current location or</a></li>
+                                <li><a href="#sign1">Enter your address</a></li>
+                            </ul>
+                            <form action="#">
+                                <ul class="loginDetail sign" id="sign1">
+                                    <li>
+                                        <label>Address</label>
+                                        <input type="text" name="" value=""/>
+                                    </li>
+                                    <li>
+                                        <label>City </label>
+                                        <input type="text" name="" value=""/>
+                                    </li>
+                                    <li>
+                                        <label>State</label>
+                                        <div class="selectbox1">   
+                                            <select class="my-dropdown1" name="my-dropdown">
+                                                <option value="1">1</option>
+                                                <option value="test">2</option>
+                                                <option value="test">3</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="loginDetail sign" id="sign2" style="display:none;">
+                                    <li>
+                                        <label>City </label>
+                                        <input type="text" name="" value=""/>
+                                    </li>
+                                    <li>
+                                        <label>State</label>
+                                        <div class="selectbox1">   
+                                            <select class="my-dropdown1" name="my-dropdown">
+                                                <option value="1">1</option>
+                                                <option value="test">2</option>
+                                                <option value="test">3</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="remember sign">Is the pin on the map near your permanent address?</span>
+                                        <ul class="checkList">
+                                            <li>
+                                                <input type="checkbox" name="checkbox1" id="checkbox1" class="styled" />
+                                                <span>Yes</span>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" name="checkbox1" id="checkbox2" class="styled" />
+                                                <span>No</span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </form>
+                        </article>
+                    </div>
+                    <div class="mapRight">
+                        <span class="map"><img src="include/images/map.jpg" alt="map"/></span>
+                        <input type="submit" name="" value="Save" class="save"/> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Politician Page 2nd Row start here -->
+            <section class="congressPolitician light_brown_bg">
+                <div class="wrapper"> 
+                    <!-- Main container for Left Bar and Slider -->
+                    <div class="politicianSection">
+                        <div class="leftBar sign"> 
+                            <strong class="my">My Politicians in </strong>
+                            <div class="leftsearch_box">
+                                <input type="text" value="Search Politicians"/>
+                            </div>
+                            <div class="searchLeft">
+                                <h3>Congress <small>(6)</small></h3>
+                                <div class="or congressDrop_right mgnifire">or
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slider area -->
+                       
+                            <div class="activePolitician1 signupf3">
+            	
+                <ul class="bxslider7">
+                    <li>
+                        <figure class="img1">
+                            
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            <section class="politication_img"> 
+                            	<img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li class="last">
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li class="last">
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                </ul>
+               
+               </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Demo Section Start Here--> 
+
+            <!--3rd Row start here with slider-->
+            <section class="congressPolitician light_bg">
+                <div class="wrapper"> 
+                    <!-- Main container for Left Bar and Slider -->
+                    <div class="politicianSection">
+                        <div class="leftBar sign"> 
+                            <strong class="my">My Politicians in </strong>
+                            <div class="leftsearch_box">
+                                <input type="text" value="Search Politicians"/>
+                            </div>
+                            <div class="searchLeft">
+                                <h3>Congress <small>(6)</small></h3>
+                                <div class="or congressDrop_right mgnifire">or
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slider area -->
+                       
+                        <div class="activePolitician1  signupf3">
+            	
+                <ul class="bxslider7">
+                    <li>
+                        <figure class="img1">
+                            
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li class="last">
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li>
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                    <li class="last">
+                        <figure class="img1">
+                            <section class="politication_img"> <img src="include/images/man.png" alt="">
+                                <section class="hover_effect"></section>
+                            </section>
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>Mayor <br>
+                                Charlie Hales</h3>
+                            
+                        </section>
+                    </li>
+                </ul>
+               
+               </div>
+                    </div>
+                </div>
+            </section>
+            <div class="overlay"></div>
+            <article class="popup1">
+                <h5 class="confirm">Please comfirm your resident location</h5>
+                <ul class="enterList">
+                    <li><a href="#" class="mark">Your current location</a></li>
+                    <li>OR</li>
+                    <li><a href="#">Enter your address</a></li>
+                </ul>
+            </article>
+            <article class="popup2">
+                <a href="#" class="cross2"><img src="include/images/cross.png" alt="cross"/></a>
+                <p>PLEASE ALLOW POLITICROWD TO ACCESS YOUR LOCATION BASED ON YOUR GOOGLE'S LOCATION</p>
+                <a href="#" class="connectLink">Connect</a>
+            </article>
+        </article>
+        <footer class="footerCntr">
+    <div class="wrapper">
+        <article class="aboutBox">
+            <h2>About </h2>
+            <p>PolitiCrowd is a non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. </p>
+        </article>
+        <div class="contactBox">
+            <div class="first">
+            	<h2>Contact</h2>
+            	<p><a href="mailto:Info@politicrowd.com">Info@politicrowd.com</a></p>
+            </div>
+            <div class="second">
+                <h2>Support us</h2>
+                <a href="#" class="donation">Donation</a> 
+            </div>
+            </div>
+        <div class="followBox">
+            <h2>Follow us</h2>
+            <ul class="socialUl">
+                <li class="facebook"><a href="#"></a></li>
+                <li class="twiter"><a href="#"></a></li>
+            </ul>
+            <div class="form">
+                <form action="" method="post"  autocomplete="on">
+                    <input type="text"  onfocus="if(this.value == 'Your Email') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Your Email';}" value="Your Email" class="field" />
+                    <input type="submit" class="button" />
+                </form>
+            </div>
+            <p><small>&copy; 2013, PolitiCrowd.com. All Rights Reserved.</small> <a href="#">Privacy Policy </a>. <a href="#">Terms of Use</a></p>
+        </div>
+    </div>
+</footer>
+  </div>  </body>
+</html>

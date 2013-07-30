@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Politicrowd</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/media/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/stylish-select.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+        <script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="/static/media/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/custom.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery.stylish-select.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/custom-form-elements.js"></script>
+        
+        <script src="/static/media/js/yqlgeo.js"></script>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+
+<script>
+
+
+register = function(){
+	
+    $.get("/register_location/", {"address":$("#street").val(), "city":$("#city").val(), "state":$("#state").val(), "latitude":$("#latitude").val(), "longitude":$("#longitude").val()}, function(data){
+		
+		alert(data);		
+		
+	});	
+}
+
+function showAddr() {
+	
+	$("#map_ok").hide();
+	$("#address").show();
+	$("#local_field").show();
+	$("#latitude").val('');
+    $("#longitude").val('');	
+}
+jQuery(window).ready(function(){  
+        jQuery("#btnInit").click(initiate_geolocation);  
+    })  
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    function initiate_geolocation() {  
+    	$("#address").hide();
+        if (navigator.geolocation)  
+        {  
+            navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);  
+        }  
+        else  
+        {  
+            yqlgeo.get('visitor', normalize_yql_response);  
+        }  
+    }  
+    function handle_errors(error)  
+    {  
+        switch(error.code)  
+        {  
+            case error.PERMISSION_DENIED: alert("user did not share geolocation data");  
+            break;  
+            case error.POSITION_UNAVAILABLE: alert("could not detect current position");  
+            break;  
+            case error.TIMEOUT: alert("retrieving position timedout");  
+            break;  
+            default: alert("unknown error");  
+            break;  
+        }  
+    }  
+    function normalize_yql_response(response)  
+    {  
+        if (response.error)  
+        {  
+            var error = { code : 0 };  
+            handle_error(error);  
+            return;  
+        }  
+        var position = {  
+            coords :  
+            {  
+                latitude: response.place.centroid.latitude,  
+                longitude: response.place.centroid.longitude  
+            },  
+            address :  
+            {  
+                city: response.place.locality2.content,  
+                region: response.place.admin1.content,  
+                country: response.place.country.content  
+            }  
+        };  
+        handle_geolocation_query(position);  
+        
+    }  
+    function handle_geolocation_query(position)
+{
+    var image_url = "http://maps.google.com/maps/api/staticmap?sensor=false&center=" + position.coords.latitude + "," +
+                    position.coords.longitude + "&zoom=13&size=235x115&markers=color:blue|label:|" +
+                    position.coords.latitude + ',' + position.coords.longitude;
+    $("#map").attr('src',image_url);
+    $("#map").show();
+
+        
+    codeLatLng(position.coords.latitude, position.coords.longitude)
+}
+
+function codeLatLng(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results)
+        if (results[1]) {
+         //formatted address
+         var partsOfAddr = results[0].formatted_address.split(',');
+         var city = partsOfAddr[1];
+         var state = partsOfAddr[2].split(' ')[1];
+         $("#city").val(city);
+        $("#state").val(state);
+        alert(state);
+        $("#latitude").val(lat);
+        $("#longitude").val(lng);
+        $("#local_field").show();
+        $("#map_ok").show();
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+  }
+    </script> 
+
+
+
+        <script type="text/javascript">
+            $(document).ready(function(e) {
+                $('.bxslider7').bxSlider({
+					auto: true,
+					slideWidth:140,
+					slideMargin:40,
+					minSlides:1,
+					maxSlides: 4
+				});
+            });
+
+if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		
+		$('.bxslider7').bxSlider({
+			auto: true,
+			slideWidth:140,
+			slideMargin:40,
+			minSlides:1,
+			maxSlides: 1
+		});
+	});	
+}
+
+if ((navigator.userAgent.match(/iPad/i))) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		/*$('.headPolitician a.bx-prev, .headPolitician a.bx-next').show();*/
+		$('.bxslider7').bxSlider({
+			auto: true,
+			slideWidth:140,
+			slideMargin:40,
+			minSlides:3,
+			maxSlides: 3
+		});
+		
+		
+	});
+}
+
+
+
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+                $('.loginDetail').eq(1).show();
+                $('.tabSec:first').addClass('active');
+                $('.tabSec ul li a').click(function(){
+                    $('.tabSec ul li').removeClass('active');
+                    $(this).parent().addClass('active');
+                    var currentTab = $(this).attr('href');
+                    $('.loginDetail').hide();
+                    $(currentTab).show();
+                    return false;
+                });
+				$(".save").click(function(){
+					$('.overlay').fadeIn();	
+					$(".popup1").fadeIn();
+					return false;
+				});
+				$(".cross-icon, .overlay").click(function(){
+					$(".overlay").fadeOut();
+					$('.popup1').fadeOut();	
+					return false;
+				});
+				$('.overlay').css('opacity','1');
+				$(function(){
+                $('.my-dropdown1').sSelect();
+            });
+            });
+        </script>
+    </head>
+
+    <body>
+    <div class="outerWrapper">
+        <header class="brown_bg">
+            <div class="wrapper">
+                <a href="index.html" id="logo"> <img src="/static/media/images/logo.png" alt=""/></a>
+                <a class="mob-menu" href="#">
+                    <span class="mob-open"><img src="/static/media/images/mob-menu-img.png" alt="img"></span>
+                    <span class="mob-close"><img src="/static/media/images/mob-close.png" alt="img"></span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="politicians.html">POLITICIANS</a></li>
+                        <li><a href="issues.html">ISSUES</a></li>
+                        <li><a href="#">SUBMIT</a></li>
+                        <li><a href="my-politics.html">MY POLITICS</a></li>
+                        <li class="last marg_right"><a href="#">LOG IN/SIGN UP</a></li>
+                        <li class="search marg_right"><a href="#"></a></li>
+                    </ul>
+                    <form action="#">
+                        <div class="search_box">
+                            <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                        </div>
+                    </form>
+                </nav>
+                
+            </div>
+        </header>
+        
+
+        
+        
+        
+        
+        
+        
+        <article class="popupContainer">
+            <div class="toppolitician light_bg">
+                <div class="wrapper"> 
+                    <!-- Politician Page 1st Row start here -->
+                                <div class="overlay"></div>
+            
+                    
+                    <div class="signupLeft">
+                        <h2 class="signHead">Please comfirm your resident location</h2>
+                        <article class="tabSec">
+                            <ul class="tabs">
+                            	<li class="active"><a  onClick="showAddr()" href="#sign1">Enter your Address</a></li>
+                                <li class=""><a href="#sign2" id="btnInit">or your Current Location</a></li>
+                                
+                            </ul>
+                            <form method='POST' action='/hlocation/'>
+                            {{error}}
+                             {% csrf_token %}
+                                <ul class="loginDetail sign" id="sign1">
+                                    <li id="address">
+                                        <label>Address</label>
+                                        <input type="text" name = 'address' class="" id='street'/>
+                                    </li>
+                                    <input type="hidden" name="latitude" value="" id="latitude"/>
+        							<input type="hidden" name="longitude" value="" id="longitude"/>
+        							<div id="local_field" class="">
+                                    <li>
+                                        <label>City </label>
+                                        <input type="text" name="city" id="city"/>
+                                    </li>
+                                    <li>
+                                        <label>State</label>
+                                        <div class="selectbox1">   
+                                            <select class="my-dropdown1" id="state" name="state">
+                                            	<option name = "Choose" value = "">Select your state…</option>
+                                                <option name = "CA" value = "CA">California</option>
+                                                <option name = "OR" value = "OR">Oregon</option>
+                                                <option name = "WA" value = "WA">Washington</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    </div>
+                                    <div id="map_ok" class="hidden">
+                                    <li>
+                                        <span class="remember sign">Is the pin on the map near your permanent address?</span>
+                                        <ul class="checkList">
+                                            <li>
+                                                <input type="checkbox" name="checkbox1" id="checkbox1" class="styled" />
+                                                <span>Yes</span>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" name="checkbox1" id="checkbox2" class="styled" />
+                                                <span>No</span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    </div>
+                                </ul>
+									<input type="submit" name="" value="Save"/> 
+                            </form>
+                        </article>
+                    </div>
+                    <div class="mapRight">
+                        <span class="map"><img id="map" src="/static/media/images/map.jpg" alt="map"/></span>
+                        <input type="submit" name="" value="Save" class="save"/> 
+                    </div>
+                </div>
+            </div>
+
+            
+
+            
+        </article>
+        <footer class="footerCntr">
+    <div class="wrapper">
+        <article class="aboutBox">
+            <h2>About </h2>
+            <p>PolitiCrowd is a non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. </p>
+        </article>
+        <div class="contactBox">
+            <div class="first">
+            	<h2>Contact</h2>
+            	<p><a href="mailto:Info@politicrowd.com">Info@politicrowd.com</a></p>
+            </div>
+            <div class="second">
+                <h2>Support us</h2>
+                <a href="#" class="donation">Donation</a> 
+            </div>
+            </div>
+        <div class="followBox">
+            <h2>Follow us</h2>
+            <ul class="socialUl">
+                <li class="facebook"><a href="#"></a></li>
+                <li class="twiter"><a href="#"></a></li>
+            </ul>
+            <div class="form">
+                <form action="" method="post"  autocomplete="on">
+                    <input type="text"  onfocus="if(this.value == 'Your Email') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Your Email';}" value="Your Email" class="field" />
+                    <input type="submit" class="button" />
+                </form>
+            </div>
+            <p><small>&copy; 2013, PolitiCrowd.com. All Rights Reserved.</small> <a href="#">Privacy Policy </a>. <a href="#">Terms of Use</a></p>
+        </div>
+    </div>
+</footer>
+  </div>  </body>
+</html>
+/static/media

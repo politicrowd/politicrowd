@@ -1,0 +1,35 @@
+/*.search_box input[type="text"]{box-shadow: 0 2px 2px #BDBCB9 inset; border-radius:5px; }*/
+.banner .content{ text-shadow:0 2px 2px #CDCCCC;}
+ .between_brackets ul li .img1, .between_brackets ul li .img1 img{border-radius:100px;}
+.profile-img-sec figure.img1{border-radius:100px;}
+.profile-img-sec figure.img1:hover{border-radius:100px;  box-shadow: 3px 35px 15px -25px #94928D;}
+.openletter_right{box-shadow:0px 0px 2px #E0E0E0;-webkit-box-shadow:0px 0px 2px #E0E0E0;-moz-box-shadow:0px 0px 2px #E0E0E0;}
+/*.followBox input[type="text"],.followBox .form{box-shadow: 1px 2px 2px #9f524b inset; border-radius:5px; }*/
+.searchbox{box-shadow: 1px 2px 2px #bebbb6 inset; border-radius:5px;}
+.searchbox input[type="text"]{border-radius:5px;}
+.followBox .button{box-shadow: 1px 2px 2px #9f524b inset; border-radius:0px 5px 5px 0px; }
+ul.commentForm input[type="text"] { box-shadow: 1px 2px 2px #fff; border-radius: 6px; }
+.dropComment, .dropComment1 { box-shadow: -2px 0px 2px #dddad4;}
+ul.commentForm textarea { box-shadow: 1px 2px 2px #fff; border-radius: 16px;}
+.commenText textarea { box-shadow: 1px 2px 2px #fff; border-radius: 6px;}
+.postShowBtn a { border-radius: 4px; }
+.introSlider li{border-radius:90px;  box-shadow:0px 0px 4px 1px #bab8b5;}
+ .introSlider li img{border-radius:90px;}
+/*change*/
+.commentList .commentimg1{border-radius:90px;  box-shadow:1px 3px 5px #94928D;}
+.commentList .commentimg1 img{border-radius:90px;}
+/*change*/
+.activePolitician .hover_effect,.hover_effect,.upvote_hover_effect,.profile-img-sec figure .politication_img{border-radius: 100px ; }
+.notification, .reply { border-radius: 5px 5px 5px 5px;}
+/*.activePolitician ul li figure.img1{border-radius:50%;}*/
+/*change*/
+/*.politic_des figure.mail, .politic_des figure.openMail{border-radius:0;box-shadow:none;}*/
+/*change*/
+.loginDetail li input[type="text"],.textBox1,.loginDetail li input[type="password"]{border-radius:5px;}
+.flexslider {border-radius:5px;}
+.introForm li input[type="text"]{box-shadow: 1px 2px 2px #fff; border-radius: 6px;}
+.introForm li textarea,.imgInfo{box-shadow: 1px 2px 2px #fff; border-radius: 7px;}
+.textSec,.addBg{border-radius: 8px 8px 8px 8px;-webkit-border-radius: 8px 8px 8px 8px;-moz-border-radius: 8px 8px 8px 8px;box-shadow: 0 1px 2px #D4D2CF inset;-webkit-box-shadow: 0 1px 2px #D4D2CF inset;-moz-box-shadow: 0 1px 2px #D4D2CF inset;}
+.contact-form li input[type="text"]{ border-radius: 5px 5px 5px 5px;box-shadow: 0 2px 2px #BDBCB9 inset;}
+.textSec,.addBg{border-radius: 8px 8px 8px 8px;-webkit-border-radius: 8px 8px 8px 8px;-moz-border-radius: 8px 8px 8px 8px;box-shadow: 0 1px 2px #D4D2CF inset;-webkit-box-shadow: 0 1px 2px #D4D2CF inset;-moz-box-shadow: 0 1px 2px #D4D2CF inset;}
+.saveDraft{border-radius:5px;position: relative;behavior:url(include/css/PIE.htc);}

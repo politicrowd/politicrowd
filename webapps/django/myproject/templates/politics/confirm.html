@@ -1,0 +1,63 @@
+
+{% extends 'base.html' %}
+{% block title %}Multiple Politicians Returned! - PolitiCrowd.com </title>{% endblock %}
+
+{% block head %}
+
+        <script type="text/javascript">
+        
+         $(document).ready(function(e) {
+         	$('.bxslider7').bxSlider({
+                    auto: false,
+                    slideWidth:200,
+                    slideMargin:60,
+                    minSlides:1,
+                    maxSlides: 3
+                });
+         });
+         	        </script>
+{% endblock %}
+{% block body %}
+<section class="congressPolitician light_brown_bg">
+            <div  class="wrapper"> 
+
+
+                    <!-- Slider area -->
+          <br><br><br>
+                   <div id="confirmation">
+						<h3 id="confirmationh3">Overlapping district: Select the correct legislator if you know,<br> or click 'edit profile' and enter your address on <a href="/profile/">My Politics</a>.</h3>
+                    
+                    </div>
+                    <div class="activePolitician1">
+						
+                        <ul class="bxslider7">
+                        
+                            {% for politician in confirm %}
+                    		<li>
+                       			  <figure class="img1">
+                            
+                          		  <a class="circular-img" href="/register/extrarep/{{politician.unique}}/"><img height="158" width="158" src="/static/media/politicians/{{politician.photo}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""></a><small class="hover_effect"></small>
+
+                                
+                            		<em class="pol-shadow"></em>
+                      			  </figure>
+                       			 <section class="politic_des">
+                           		 <h3>{{politician.title}} <br>
+                                {{politician.first}} {{politician.last}}</h3>
+                            	<h5>{{politician.state}}</h5>
+                           		 <figure class="mail">{{politician.inbox.all.count}}</figure>
+                           		 <figure class="openMail">{{politician.responses}}</figure>
+                        		</section>
+                    	</li>
+                 		{% endfor %}
+                            
+                        </ul>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+{% endblock %}
+

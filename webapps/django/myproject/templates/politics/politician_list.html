@@ -1,0 +1,23 @@
+
+
+<div class="span35">
+<h3>Congress</h3><br/>
+{% for politician in politicians %}
+<img src="/static/media/politicians/{{politician.bioguide_id}}.jpg" height="125" width="100"/>
+<h4>
+<a class="pointer" onClick="fedLetters('{{politician.bioguide_id}}')">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</a><br/>
+</h4>
+{% endfor %}
+
+</div>
+
+<div class="span35">
+
+<h3>{% if state == 'OR' %}Oregon{% else %}{{state}}{% endif %} Legislature</h3><br/>
+{% for politician in state_reps %}
+
+<img src="{{politician.photo_url}}" height="125" width="100">
+<h4><a class="pointer" onClick="stateLetters('{{politician.leg_id}}')">{% if politician.chamber == "lower" %} Rep. {% else %} Sen. {% endif %} {{politician.first_name}} {{politician.last_name}}</a><br/>
+</h4>
+{% endfor %}
+</div>

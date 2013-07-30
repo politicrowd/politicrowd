@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}Step 3: Submit an OpenLetter - PolitiCrowd.com{% endblock %}
+{% block head %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+               $('.step33 select').sSelect();  
+            });
+        </script>
+        <script>
+$(document).ready(function() { 
+	
+$('#target_select').change(function() {
+		value = $("#target_select :selected").val();
+		
+			if(value == 'state') {
+			$("#legislators").text('');
+			$("#state-leg").hide();
+			$("#state-show").show();
+			$("#congress-state").val('State');
+			}
+			if(value == 'federal') {
+			$("#state-leg").hide();
+			$("#legislators").text('');
+			$("#state-show").hide();
+			$("#congress-state").val('Congress');
+			}
+			if(value == 'politician') {
+			$("#state-show").hide();
+			$("#congress-state").val('Politician');
+			$("#legislators").load("/legislators/?state=OR");
+			}		
+	});
+
+
+
+$("#state-legislators").change(function(){
+		var state = $("#state-legislators :selected").val();
+		if(state != ''){
+			alert(state);
+			$("#legislators").load("/legislators/?state=OR");
+
+		}
+		
+});
+
+
+});
+</script>
+{% endblock %}
+
+{% block body %}
+
+        <div class="body_infographic2">
+            <div class="wrapper">
+                <section class="submit_steps">
+                    <ul>
+                        <li class="active">
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"><img src="/static/media/images/intro-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/intro-icon.png" alt=""/></figure>
+                                <span>Introduction</span>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"><img src="/static/media/images/letter-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/letter-active.png" alt=""/></figure>
+                                <span>Start an OpenLetter</span>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <figure class="arrow2"><img src="/static/media/images/arrow2.png" alt=""/></figure>
+                            <figure class="arrow2_active"><img src="/static/media/images/arrow.png" alt=""/></figure>
+                            <div class="imgBox">
+                                <figure class="step_img"> <img src="/static/media/images/target-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/target-active.png" alt=""/></figure>
+                                <span>Target Politicians</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="imgBox">
+                                <figure class="step_img"> <img src="/static/media/images/preview-icon.png" alt=""/></figure>
+                                <figure class="step_active"><img src="/static/media/images/preview-active.png" alt=""/></figure>
+                                <span>Preview</span>
+                            </div>
+                        </li>                        
+                    </ul>
+                </section>
+            </div>
+        </div>
+        <div class="introSec">
+            <div class="wrapper">
+                <div class="introForm">
+                    <h2>Target politicians</h2>
+                    <ul class="step3">
+                    <form id="step2" action="/save3/" method="POST"> 
+                    {% csrf_token %}
+                    <input type="hidden" name="slug" value="{{slug}}">
+                        <li>
+                            <label>Who are you targeting?</label>
+                            <select name = "target" id="target_select">
+                            	<option name="choose" value="">Choose an Option</option>
+                                <option name="federal" id="federal" value="federal">Congress</option>
+                                <option name="state" id="state" value="state">State Legislature</option>
+                                <option name="politician" id="politician" value="politician">Individual Politician</option>
+                            </select>
+                        </li>
+                        <input type="hidden" name="congress" id="congress-state" value="Congress">
+                        <div id="state-show" class="hidden">
+                        <li>
+                            <label>State:</label>
+                            
+                            <select name = "state" id="state-list">
+                            	<option value = "">Select your state…</option>
+                                
+                                <option name = "OR" value = "OR" >Oregon</option>
+                               
+                            </select>
+                        </li>
+                        </div>
+                        <div id="state-leg" class="hidden">
+                        <li>
+                            <label>State:</label>
+                            <select name = "state-leg" id="state-legislators">
+                            	<option value = "">Select your state…</option>
+
+                                <option name = "CA" value = "CA" >California</option>
+                                <option name = "OR" value = "OR" >Oregon</option>
+                                <option name = "WA" value = "WA" >Washington</option>
+                            </select>
+                        </li>
+                        </div>
+                        <div id="legislators"></div>
+                    </form><br><br><br><br>
+                    <div class="buttonSec">
+                        <a href="/save1/?slug={{slug}}" class="backBtn">Back</a>
+                        <a onClick="document.getElementById('step2').submit();" class="nextBtn nextBtn3">Preview</a>
+                    </div>    
+                    </ul>
+                    
+                    
+                </div>
+            </div>
+        </div>
+{% endblock %}

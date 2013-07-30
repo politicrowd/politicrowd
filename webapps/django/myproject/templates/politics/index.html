@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+{% block title %}Home - PolitiCrowd {% endblock %}
+
+
+{% block head %}
+<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42077141-1', 'politicrowd.com'); ga('send', 'pageview'); </script>
+<script type="text/javascript">
+
+
+upvote = function(slug){
+
+ $.get("/open_up/", {"slug":slug}, function(data) {
+ 	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+
+
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			var _popover;
+      _popover = $("#arrowup_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowup_"+slug).popover("toggle");
+		return false;	
+
+		}
+		else {
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+			
+		}
+	}
+ 
+ });
+ };
+ 
+ 
+ 
+downvote = function(slug){
+	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+ $.get("/open_down/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+		var _popover;
+      _popover = $("#arrowdown_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowdown_"+slug).popover("toggle");
+		return false;
+		}
+		else{
+		
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes++;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+		}
+			
+	}
+ 
+ });
+ };
+$(document).ready(function(){
+	
+	$(".box").click(function(){
+     window.location=$(this).find("a").attr("href"); 
+     return false;
+});	
+	
+$('.bxslider1').bxSlider({
+minSlides:1,
+maxSlides: 3,
+slideWidth: 282,
+moveSlides: 1,
+slideMargin: 40
+});
+$('.bxslider2').bxSlider({
+minSlides:1,
+maxSlides: 3,
+slideWidth:172,
+moveSlides: 1,
+slideMargin:140
+
+});
+});
+
+if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+$(document).ready(function(){
+$('.bx-prev, .bx-next').hide();
+$('.bx-prev, .bx-next').show();
+$('.bxslider1').bxSlider({
+minSlides: 1,
+maxSlides: 1,
+slideWidth: 240,
+moveSlides: 1,
+slideMargin: 40
+});
+$('.bxslider2').bxSlider({
+minSlides: 1,
+maxSlides: 1,
+moveSlides: 1,
+slideWidth:165,
+slideMargin:150
+});
+});
+
+
+}
+
+if ((navigator.userAgent.match(/iPad/i))) {
+$(document).ready(function(){
+$('.bx-prev, .bx-next').hide();
+/*$(window).resize(function(e) {
+
+var height = $(window).height();
+var width = $(window).width();
+if (width > height) {
+*/			
+$('.bxslider1').bxSlider({
+minSlides: 2,
+maxSlides: 2,
+moveSlides: 1,
+slideWidth:282,
+slideMargin: 40
+});
+$('.bxslider2').bxSlider({
+minSlides: 2,
+maxSlides: 2,
+moveSlides: 1,
+slideWidth:165,
+slideMargin:150
+
+});
+
+/*} else {
+
+$('.bxslider1').bxSlider({
+minSlides: 2,
+maxSlides: 2,
+slideWidth: 282,
+slideMargin: 40
+});
+$('.bxslider2').bxSlider({
+minSlides: 2,
+maxSlides: 2,
+slideWidth:165,
+slideMargin:150
+});
+
+};*/
+});
+
+}
+
+</script>
+{% endblock %}
+
+
+{% block body %}
+<div class="banner">
+    <div class="wrapper">
+        <article class="content center">WELCOME TO POLITICROWD ALPHA<br>OPEN BETA TESTING AND MOBILE COMING JULY 15TH.</article>
+    </div>
+</div>
+<div class="body_infographic ">
+    <div class="wrapper">
+        <section class="infographic_slider">
+            <ul>
+                <li class="pencil"><small><img src="/static/media/images/community_writtenicon.png" alt=""/></small> <span class="infographictext">Community-written OpenLetters</span> </li>
+                <li class="arrow"></li>
+                <li><small class="sec-img"><img src="/static/media/images/seeka_responseicon.png" alt=""/></small> <span class="infographictext">Seek a response from Politicians</span> </li>
+                <li class="arrow"></li>
+                <li class="marg_right"><small class="sec-img"><img src="/static/media/images/communityvoice_icon.png" alt=""/> </small><span class="infographictext">by leveraging the community voice</span> </li>
+                <li class="nowdth"><a href="/engage/" id="letsstart"><span>Let's start</span></a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="trendingopen_letter ">
+    <div class="wrapper">
+        <section class="trending_box">
+            <h4>Trending OpenLetters</h4>
+            <small class="seeall"><a href="/issues/">See all</a></small>
+            <article class="trending_openLetters">
+                <ul class="bxslider1">
+                    {% for letter in open_letters %}
+                    <li>
+                        <div class="box">
+                        
+                            <section class="inner_box trend_{{letter.issue.slug}}">
+                                <h3 class="">{{letter.issue}}</h3>
+                               <a href="/openletters/{{letter.slug}}"></a>
+                                <p>{{letter.title}} </p>
+                            </section>
+                            <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                            <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                        </div>
+                        <section class="openletter">
+                            <article class="openletter_arrow"> <a onClick="upvote('{{letter.slug}}')" id="arrowup_{{letter.slug}}" class="arrowup"></a><span id="vote_count_{{letter.slug}}" class="{{letter.rank}}"></span> <span id="show_vote_{{letter.slug}}" class="count">{{letter.rank}}</span> <a onClick="downvote('{{letter.slug}}')" id="arrowdown_{{letter.slug}}" class="arrowdown"></a> </article>
+                            <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/square-stock/{{letter.issue.title}}-Square.jpg" alt=""/> </span>
+                                <section class="points">
+                                    <p> {% if letter.responses %}Responses: {{letter.responses}} {% else %}Started by: {{letter.creator}} in {{letter.creator.city}}, {{letter.creator.state}}{% endif %}</p>
+                                    <p>Requested politicians: {{letter.request_set.all.count}}</p>
+                                    <p>Contributors: {{letter.contributors.all.count}} </p>
+                                </section>
+                            </article>
+                        </section>
+                    </li>
+                    {% endfor %}
+                    
+                </ul>
+            </article>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+<section class="most_active_politicians light_bg">
+    <div class="wrapper">
+        <div class="activePolitician">
+            <h4>Trending Politicians</h4>
+            <div class="politicianSlider">
+                <ul class="bxslider2">
+
+                {% for politician in politicians %}
+                    <li>
+                        <figure class="img1">
+                            
+                            <a class="circular-img" href="/politicians/{{politician.unique}}">
+                            
+                            
+                            
+                            
+                            <img height="158" width="158" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> 
+                           		<small class="hover_effect"></small>
+                                <em class="arrow"></em>
+                                </a>
+                                
+                            <em class="pol-shadow"></em>
+                        </figure>
+                        <section class="politic_des">
+                            <h3>{% if politician.jurisdiction == 'federal' %}U.S.{% else %}{% if politician.jurisdiction == 'state' %}State{% endif %}{% endif %} {% if politician.title == 'Gov' %}Governor {% else %}{{politician.title}}{% endif %} [{% if politician.jurisdiction == 'state' %}{% if politician.party == 'Republican' %}R{% else %}{% if politician.party == 'Democratic' %}D{% endif %}{% endif %}{% else %}{{politician.party}}{% endif %}] <br>
+                                {{politician.first}} {{politician.last}}</h3>
+                            <h5>{% if politician.title == 'Sen' %}{% if politician.jurisdiction == 'state' %}District {{politician.district}}, {% endif %}{% else %}{% if politician.title != 'Gov' %}District {{politician.district}}, {% endif %}{% endif %}{% if politician.state == 'OR' %}Oregon {% else %}{{politician.state}}{% endif %} </h5>
+                            <figure class="mail">{{politician.request_count}}</figure>
+                            <figure class="openMail">{{politician.response_count}}</figure>
+                        </section>
+                    </li>
+                 {% endfor %}
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

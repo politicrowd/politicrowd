@@ -1,0 +1,372 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Politicians - PolitiCrowd.com {% endblock %}
+
+{% block head %}
+<script type="text/javascript">
+$(document).ready(function(e) {
+	$("#beta").click(function(){
+         		var _popover;
+      _popover = $("#beta").popover({
+        trigger: "manual",
+        placement: "top",
+        content: "Additional states will become available after the the Portland launch.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "Additional states will become available after the the Portland launch.";
+      return $("#beta").popover("toggle");
+
+         	
+         	});
+         	
+         	$("#beta1").click(function(){
+         		var _popover;
+      _popover = $("#beta1").popover({
+        trigger: "manual",
+        placement: "top",
+        content: "Additional states will become available after the the Portland launch.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "Additional states will become available after the the Portland launch.";
+      return $("#beta1").popover("toggle");
+
+         	
+         	});
+	
+	$('.bxslider7').bxSlider({
+		auto: false,
+		slideWidth:200,
+		slideMargin:60,
+		minSlides:1,
+		maxSlides: 3
+	});
+});
+
+
+if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		
+		$('.bxslider7').bxSlider({
+			auto: false,
+			slideWidth:170,
+			slideMargin:60,
+			minSlides:1,
+			maxSlides: 1
+		});
+	});	
+}
+
+if ((navigator.userAgent.match(/iPad/i))) {
+	$(document).ready(function(e) {
+		$('.bx-prev, .bx-next').hide();
+		/*$('.headPolitician a.bx-prev, .headPolitician a.bx-next').show();*/
+		$('.bxslider7').bxSlider({
+			auto: false,
+			slideWidth:200,
+			slideMargin:60,
+			minSlides:2,
+			maxSlides: 2
+		});
+		
+	});
+}
+
+
+</script>
+{% endblock %}
+
+{% block body %}
+{% if responses %}
+        <section class="mark-promise issues">
+            <div class="wrapper">
+                <div class="promise">
+
+                    <div class="promise-txtbx">
+                        <p>Marked as a Promise
+                            <label>(8)</label>
+                        </p>
+                        <input id="propen" name="" type="text" placeholder="Search for a promised OpenLetter">
+                    </div>
+                    <div class="legislature"> <a class="legis-link" href="#">State Legislature</a>
+                        <ul>
+                            <li><a href="#">All</a></li>
+                            <li><a href="#">Congress</a></li>
+                            <li><a href="#">State Legislature</a></li>
+                            <li><a href="#">My politicians</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="active-pol">
+                    <ul class="bxslider7">
+                        <li>
+                            <article>
+                                <section class="blue">
+                                    <h3 class="b1">Internet &amp; Technology</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient </p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                        <li>
+                            <article>
+                                <section class="green">
+                                    <h3 class="b2">Environment</h3>
+                                    <p>Dolor Mollis Sit Porta Inceptos</p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                        <li>
+                            <article>
+                                <section class="brown">
+                                    <h3 class="b3">Civil Rights</h3>
+                                    <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                        <li>
+                            <article>
+                                <section class="blue">
+                                    <h3 class="b1">Internet &amp; Technology</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient </p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                        <li>
+                            <article>
+                                <section class="green">
+                                    <h3 class="b2">Environment</h3>
+                                    <p>Dolor Mollis Sit Porta Inceptos</p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                        <li>
+                            <article>
+                                <section class="brown">
+                                    <h3 class="b3">Civil Rights</h3>
+                                    <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+                                </section>
+                                <figure class="box_shadow"><img src="include/images/trendingbox_shadow.png" alt=""/> </figure>
+                                <figure class="boxbottom_arrow"><img src="include/images/boxbottom_arrow.png" alt=""/> </figure>
+                            </article>
+                            <div class="arrows"> <a class="up-arrow" href="#"></a> <span>2,000 </span> <a class="down-arrow" href="#"></a> </div>
+                            <div class="circ-img"> <span><img src="include/images/circular-pol-img.png" alt="img"></span><em class="pol-shadow"></em>
+                                <label>I promise</label>
+                            </div>
+                            <div class="pol-txt">
+                                <p><span>Response:</span><small>0</small></p>
+                                <p><span>Targeted politicians:</span><small>10</small></p>
+                                <p><span>contributors:</span><small>50</small></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        {% endif %}<!-- Politician Page 2nd Row start here -->
+<section class="congressPolitician light_brown_bg">
+    <div class="wrapper"> 
+        <!-- Main container for Left Bar and Slider -->
+        <div class="politicianSection">
+            <div class="leftBar"> <a href="#" class="search101 search-ico"><img src="/static/media/images/search.png" alt=""/></a>
+            	<form action="#">
+                <div class="leftsearch_box">
+                    <input type="text" value="Search Politicians"/>
+                </div>
+                </form>
+                <div class="searchLeft">
+                    <h3>Congress
+                        <small>{{congress.count}}</small></h3>
+                    <div id="OR" class="congressDrop_right mgnifire state1"> <a href="#"  id="beta" class=""><img src="/static/media/images/heart_img.png" alt=""/></a>
+                        
+                        <div class="dropPanel4 poli hidden">
+                            <ul class="contentDrop hidden">
+                                <li><a class="CA" href="#">California</a></li>
+                                <li><a class="OR" href="#" selected>Oregon</a></li>
+                                <li><a class="WA" href="#">Washington</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tagsArea hidden">
+                    <h5>Hot Tags:</h5>
+                    <h4>Mollis Bibendum, Parturient, Elit Dolor,
+                        Sit Tellus, Inceptos </h4>
+                </div>
+            </div>
+            <div class="open-head poliLink">                  
+                    <ul>
+                        <li class="active"><a href="#">Congress</a></li>
+                        <li><a href="#">State Legislature</a></li>
+                        <li class="last"><a href="#">My politicians</a></li>
+                    </ul>
+                </div>
+            <!-- Slider area -->
+            <div class="most-target link2 hidden">
+                <a class="target-link" href="#">In Demand</a>
+                <ul class="target-drop">
+                    <li><a href="#">Most active</a></li>
+                    <li><a href="#">In Demand</a></li>
+                    <li><a href="#">My politicians</a></li>
+                </ul>                    
+            </div>
+            <div class="activePolitician1">
+            	
+                <ul class="bxslider7">
+                    {% for politician in congress %}
+                            <li {% if forloop.counter|divisibleby:3 %}class="last"{% endif %}>
+                                <figure class="img1">
+
+                                     <a class="circular-img" href="/politicians/{{politician.unique}}">{% if politician.jurisdiction == 'federal' %} <img height="158" width="158" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="158" width="158" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %}<small class="hover_effect"></small>
+                                     <em class="arrow"></em>
+                                     </a>
+                                     
+                                    
+                                    <em class="pol-shadow"></em>
+                                </figure>
+                                <section class="politic_des">
+                                    <h3>{% if politician.jurisdiction == 'federal' %}U.S.{% else %}{% if politician.jurisdiction == 'state' %}State{% endif %}{% endif %} {{politician.title}} [{% if politician.jurisdiction == 'state' %}{% if politician.party == 'Republican' %}R{% else %}{% if politician.party == 'Democratic' %}D{% endif %}{% endif %}{% else %}{{politician.party}}{% endif %}] <br>
+                                {{politician.first}} {{politician.last}}</h3>
+                            <h5>{% if politician.title == 'Sen' %}{% if politician.jurisdiction == 'state' %}District {{politician.district}}, {% endif %}{% else %}District {{politician.district}}, {% endif %}{% if politician.state == 'OR' %}Oregon {% else %}{{politician.state}}{% endif %} </h5>
+                            <figure class="mail">{{politician.request_count}}</figure>
+                            <figure class="openMail">{{politician.response_count}}</figure>
+                                </section>
+                            </li>
+                            {% endfor %}
+                </ul>
+               
+               </div>
+        </div>
+    </div>
+</section>
+<!-- Demo Section Start Here--> 
+
+<!--3rd Row start here with slider-->
+<section class="congressPolitician light_bg">
+    <div class="wrapper"> 
+        <!-- Main container for Left Bar and Slider -->
+        <div class="politicianSection">
+            <div class="leftBar"><a class="search-ico" href="#"><img src="/static/media/images/search.png" alt=""/></a>
+                <form action="#">
+                <div class="leftsearch_box">
+                    <input type="text" value="Search Politicians"/>
+                </div>
+                </form>
+                <div class="searchLeft"> 
+                    <h3>State Legislature
+                        <small>{{state.count}}</small></h3>
+                     <div id="OR" class="congressDrop_right mgnifire state"> <a href="#"  id="beta1" class=""><img src="/static/media/images/heart_img.png" alt=""/></a>
+                        
+                        <div class="dropPanel poli hidden">
+                            <ul class="contentDrop">
+                                <li><a class="CA" href="#">California</a></li>
+                                <li><a class="OR" href="#" selected>Oregon</a></li>
+                                <li><a class="WA" href="#">Washington</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tagsArea hidden">
+                    <h5>Hot Tags:</h5>
+                    <h4>Mollis Bibendum, Parturient, Elit Dolor,
+                        Sit Tellus, Inceptos </h4>
+                </div>
+            </div>
+            <div class="open-head poliLink">                  
+                    <ul>
+                        <li class="active"><a href="#">Congress</a></li>
+                        <li><a href="#">State Legislature</a></li>
+                        <li class="last"><a href="#">My politicians</a></li>
+                    </ul>
+                </div>
+            <div class="most-target link2">
+                <a class="target-link hidden" href="#">In demand</a>
+                <ul class="target-drop">
+                    <li><a href="#">Most active</a></li>
+                    <li><a href="#">In demand</a></li>
+                    <li><a href="#">My politicians</a></li>
+                </ul>                    
+            </div>
+            <!-- Slider area -->
+            <div class="activePolitician1">
+                <ul class="bxslider7">
+                    {% for politician in state %}
+                            <li {% if forloop.counter|divisibleby:3 %}class="last"{% endif %}>
+                                <figure class="img1">
+
+                                     <a class="circular-img" href="/politicians/{{politician.unique}}">{% if politician.jurisdiction == 'federal' %} <img height="158" width="158" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% else %} <img height="158" width="158" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> {% endif %}<small class="hover_effect"></small>
+                                     <em class="arrow"></em>
+                                     </a>
+                                     
+                                    
+                                    <em class="pol-shadow"></em>
+                                </figure>
+                                <section class="politic_des">
+                                    <h3>{% if politician.jurisdiction == 'federal' %}U.S.{% else %}{% if politician.jurisdiction == 'state' %}State{% endif %}{% endif %} {{politician.title}} [{% if politician.jurisdiction == 'state' %}{% if politician.party == 'Republican' %}R{% else %}{% if politician.party == 'Democratic' %}D{% endif %}{% endif %}{% else %}{{politician.party}}{% endif %}] <br>
+                                {{politician.first}} {{politician.last}}</h3>
+                            <h5>{% if politician.title == 'Sen' %}{% if politician.jurisdiction == 'state' %}District {{politician.district}}, {% endif %}{% else %}District {{politician.district}}, {% endif %}{% if politician.state == 'OR' %}Oregon {% else %}{{politician.state}}{% endif %} </h5>
+                            <figure class="mail">{{politician.request_count}}</figure>
+                            <figure class="openMail">{{politician.response_count}}</figure>                                </section>
+                            </li>
+                            {% endfor %}
+                </ul>
+                </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

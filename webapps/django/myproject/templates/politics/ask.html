@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Ask me about...{% endblock %}
+
+{% block content %}
+<h3>Ask me anything about…</h3> 
+
+<form name="titleform" action="/save/" method = "post">
+{% csrf_token %}
+
+{% if issues %}
+   <select name="issue">
+{% for issue in issues %}
+    <option value="{{ issue.slug }}">{{ issue.title }}</option>
+{% endfor %}
+	<option value-"other">Other</option>
+    </select>
+{%endif%}
+<br>
+Link to Youtube Video (Optional): <textarea name = "youtube" rows="1" cols="60">{{youtube}}</textarea></br>
+
+<h3>Frame an issue for questions and discussion:</h3>
+    <textarea name="question" rows="2" cols="60">
+    </textarea><br>
+<h3>Speak your mind if you'd like:</h3>
+<textarea name="extra" rows="5" cols="60">
+</textarea><br>
+    <input type="submit" value="Create"/>
+</form>
+{% endblock %}

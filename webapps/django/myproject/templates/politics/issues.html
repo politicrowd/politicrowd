@@ -1,0 +1,293 @@
+
+{% extends 'base.html' %}
+{% block title %}Issues - PolitiCrowd.com{% endblock %}
+
+{% block head %}
+<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42077141-1', 'politicrowd.com'); ga('send', 'pageview'); </script>
+        <script type="text/javascript">
+        
+        
+        upvote = function(slug){
+
+ $.get("/open_up/", {"slug":slug}, function(data) {
+ 	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+
+
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			var _popover;
+      _popover = $("#arrowup_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowup_"+slug).popover("toggle");
+		return false;	
+
+		}
+		else {
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+			
+		}
+	}
+ 
+ });
+ };
+ 
+ 
+ 
+downvote = function(slug){
+	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+ $.get("/open_down/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+		var _popover;
+      _popover = $("#arrowdown_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowdown_"+slug).popover("toggle");
+		return false;
+		}
+		else{
+		
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes++;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+		}
+			
+	}
+ 
+ });
+ };
+
+
+            $(document).ready(function(e) {
+     $('.open-head ul li a').click(function(){
+		$('.open-head ul li').removeClass('active');
+		$(this).parent('li').addClass('active');
+		var target = $(this).text();
+		if (target == 'State+Local')
+			{
+			    target = 'State';
+			}
+		
+		$('#letter-container').load('/load/letter_box/?target='+target+'');
+			return false;
+	});
+	
+            	$("#next").click(function(){
+            		$("#open-letter-box").load('/load/letterbox/issue/?issue=all&page={{ open_letters.next_page_number }}');
+            		return false;
+            	});
+            	
+            	$("#previous").click(function(){
+            		$("#open-letter-box").load('/load/letterbox/issue/?issue=all&page={{ open_letters.previous_page_number }}');
+            		return false;
+            	});
+
+                $('.bxslider7').bxSlider({
+                    minSlides: 1,
+                    maxSlides: 3,
+                    slideWidth: 282,
+                    slideMargin: 40/static/media
+                });
+            });
+            if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+                $(document).ready(function(e) {
+                    $('.bx-prev, .bx-next').hide();
+                    $('.bxslider7').bxSlider({
+                        auto: true,
+                        slideWidth:240,
+                        slideMargin:60,
+                        minSlides:1,
+                        maxSlides: 1
+                    });
+                    $('.issues-list li').hide();
+                    $('.issues-list li.bold').show();
+                    $('.issues-list li.bold').click(function(){
+                        $(this).siblings('li').toggle();
+                        return false;
+                    });
+                });	
+            }
+            if ((navigator.userAgent.match(/iPad/i))) {
+                $(document).ready(function(e) {
+                    $('.bx-prev, .bx-next').hide();
+                    /*$('.headPolitician a.bx-prev, .headPolitician a.bx-next').show();*/
+                    $('.bxslider7').bxSlider({
+                        auto: true,
+                        slideWidth:282,
+                        slideMargin:60,
+                        minSlides:2,
+                        maxSlides: 2
+                    });	
+                    $('.issues-list li').hide();
+                    $('.issues-list li.bold').show();
+                    $('.issues-list li.bold').click(function(){
+                        $(this).siblings('li').toggle();
+                        return false;
+                    });	
+                });
+            }
+        </script>
+{% endblock %}
+
+{% block body %}
+   
+        <section id="my-politics" class="openletter-sec issues">
+            <div class="wrapper">
+                <div class="open-head">
+                    <h3>OpenLetters to: </h3>
+                    <ul>
+                    	<li id="all" class="active"><a href="#">All</a></li>
+                        <li class=""><a href="#">Congress</a></li>
+                        <li class="last"><a href="#">State+Local</a></li>
+                    </ul>
+                </div>
+                <div id="letter-container">
+                <div class="issues-sec">
+                    <section class="issue-left-sec">
+                        <ul id="issue-box" class="issues-list">
+                             <li id="all" class="bold active"><a href="#" class="all"><span>All Issues</span><small> </small></a></li>
+                             <span id="unique" class="None"></span>
+                            {% for issue in issues %}
+                            <li><a id="{{issue.issue.title}}" class="{{issue.issue.title}}" href="#"><span>{{ issue.issue.title}} </span><small>({{issue.dcount}})</small></a></li>
+                            {% endfor %}
+                            <br>
+                            <br><br>
+                            
+                        </ul>
+                    </section>
+                    <div class="open-box">
+                        <div class="open-data"> 
+                            <!--<a class="toptxt" href="#">Top</a>-->
+                            <div class="most-target politics">
+                                <a href="#" class="SBtn3"><img src="/static/media/images/search.png"/></a>
+                                <a class="target-link noshow" href="#">Top</a>
+                                <ul class="target-drop politics noshow">
+                                    <li><a href="#">Top</a></li>
+                                    <li><a href="#">New </a></li>
+                                    <li><a href="#">Trending</a></li>
+                                    <li><a href="#">Controversial</a></li>
+                                </ul>                   
+                            </div>
+							<span id="open-letter-box">
+                            <ul class="open-listing">
+                                {% for open_letter in open_letters %}
+                            {% if forloop.first %}
+                                <li class="first">
+                                    <div class="arrows">
+                                        <a onClick="upvote('{{open_letter.slug}}')" id="arrowup_{{open_letter.slug}}" class="up-arrow"></a><span id="vote_count_{{open_letter.slug}}" class="{{open_letter.upvotes.count}}"></span> <span id="show_vote_{{open_letter.slug}}" class="count">{{open_letter.upvotes.count}}</span> <a onClick="downvote('{{open_letter.slug}}')" id="arrowdown_{{open_letter.slug}}" class="down-arrow"></a> 
+                                    </div>
+                                    <span class="img-sec"><img src="/static/media/images/square-stock/{{open_letter.issue.title}}-Square.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                       <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <div class="arrows">
+                                        <a onClick="upvote('{{open_letter.slug}}')" id="arrowup_{{open_letter.slug}}" class="up-arrow"></a><span id="vote_count_{{open_letter.slug}}" class="{{open_letter.upvotes.count}}"></span> <span id="show_vote_{{open_letter.slug}}" class="count">{{open_letter.upvotes.count}}</span> <a onClick="downvote('{{open_letter.slug}}')" id="arrowdown_{{open_letter.slug}}" class="down-arrow"></a> 
+                                    </div>
+                                    <span class="img-sec"><img src="/static/media/images/square-stock/{{open_letter.issue.title}}-Square.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                        <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            
+                            <ul class="pagination">
+                                <span class="step-links">
+        
+            
+       
+<li> <a id="next" href="#">next</a></li>
+        <li><a><span class="current">
+            Page {{ open_letters.number }} of {{ open_letters.paginator.num_pages }}
+        </span></a>
+        </li>
+			<li><a id="previous" href="#">previous</a></li>
+        
+          
+        <br/><br/>
+    </span>
+
+                            </ul>
+                           
+                        </div>
+
+                        
+                    </div>
+                    </span>
+                    <div class="searchbox">
+                        <form autocomplete="on" method="post" action="">
+                            <input type="text" class="field" value="Find Openletters" onblur="if (this.value == '') {this.value = 'Find Openletters';}" onfocus="if(this.value == 'Find Openletters') {this.value = '';}" />
+                            <input type="submit" class="button">
+                        </form>
+                    </div>
+
+                    </div>
+                </div>
+        </section>
+        {% endblock %}
+

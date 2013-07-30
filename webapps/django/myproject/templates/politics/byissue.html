@@ -1,0 +1,60 @@
+<link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+<div id="pages">
+{% if pages %}
+
+<header><h4>Submissions for {{issue.title}}:</h4></header><br/>
+<div class="btn-group">
+<div class="input-prepend">
+<span id="appendedPrependedDropdownButton">Sorted by:</span> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+Trending
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a class="pointer" onClick="top()">Top</a></li>
+    <li><a class="pointer" onClick="new()">New</a></li>
+    <li><a class="pointer" onClick="controversial()">Controversial</a></li>
+  </ul>
+  </div>
+</div>
+<br/><br/>
+
+{% for page in pages %}
+
+{{page.rank}} | <a href="/openletters/{{page.slug}}/">{{page.title}}</a><br/><br/>
+
+{% endfor %}
+
+<script>
+
+nextpage = function(slug) {
+	$("#pages").load(
+	"/issue/{{issue.slug}}/?page={{ pages.next_page_number }}");
+}
+prevpages = function(slug) {
+	$("#pages").load(
+	"/issue/{{issue.slug}}/?page={{ pages.previous_page_number }}");
+}
+
+</script>
+    <span class="step-links">
+        {% if pages.has_previous %}
+           <a onClick="prevpages()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pages.number }} of {{ pages.paginator.num_pages }}
+        </span>
+
+        {% if pages.has_next %}
+            <a onClick="nextpage()" class="pointer" >next</a>
+        {% endif %}
+    </span>
+
+
+
+
+{% else %}
+
+No submissions yet for {{issue.title}}.
+{% endif %}
+</div>

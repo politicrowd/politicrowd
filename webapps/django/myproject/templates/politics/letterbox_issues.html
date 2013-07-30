@@ -1,0 +1,169 @@
+<script type="text/javascript">
+upvote = function(slug){
+
+ $.get("/open_up/", {"slug":slug}, function(data) {
+ 	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+
+
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			votes++;
+			votes++;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			var _popover;
+      _popover = $("#arrowup_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowup_"+slug).popover("toggle");
+		return false;	
+
+		}
+		else {
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+			
+		}
+	}
+ 
+ });
+ };
+ 
+ 
+ 
+downvote = function(slug){
+	$("#arrowup_"+slug).popover("hide");
+ 	$("#arrowdown_"+slug).popover("hide");
+ $.get("/open_down/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes--;
+			votes--;
+			$("#vote_count_"+slug).attr('class', votes);
+			$("#show_vote_"+slug).text(votes);
+		var _popover;
+      _popover = $("#arrowdown_"+slug).popover({
+        trigger: "manual",
+        placement: "right",
+        content: "You just changed your vote.",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = "You just changed your vote.";
+      return $("#arrowdown_"+slug).popover("toggle");
+		return false;
+		}
+		else{
+		
+		var votes = $("#vote_count_"+slug).attr('class');
+			
+			votes++;
+			$("#show_vote_"+slug).text(votes);	
+			$("#vote_count_"+slug).attr('class', votes);
+		}
+			
+	}
+ 
+ });
+ };
+
+next = function(){
+	
+	
+	$("#open-letter-box").load('/load/letters/?issue={{issue.title}}&target={{target}}&page={{ open_letters.next_page_number }}')
+     return false;
+            	}
+            	
+            previous = function(){
+            	
+            	$("#open-letter-box").load('/load/letters/?issue={{issue.title}}&target={{target}}&page={{ open_letters.previous_page_number }}');
+            		return false;
+            	};
+</script>
+
+<ul class="open-listing">
+                                {% for open_letter in open_letters %}
+                            {% if forloop.first %}
+                                <li class="first">
+                                
+                                    <div class="arrows">
+                                         
+                                        <a onClick="upvote('{{open_letter.slug}}')" id="arrowup_{{open_letter.slug}}" class="up-arrow"></a><span id="vote_count_{{open_letter.slug}}" class="{{open_letter.rank}}"></span> <span id="show_vote_{{open_letter.slug}}" class="count">{{open_letter.rank}}</span> <a onClick="downvote('{{open_letter.slug}}')" id="arrowdown_{{open_letter.slug}}" class="down-arrow"></a> 
+                                    </div>
+                                   
+                                    <span class="img-sec"><img src="/static/media/images/square-stock/{{open_letter.issue.title}}-Square.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                       <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li>
+                                     <div class="arrows">
+                                        <a onClick="upvote('{{open_letter.slug}}')" id="arrowup_{{open_letter.slug}}" class="up-arrow"></a><span id="vote_count_{{open_letter.slug}}" class="{{open_letter.rank}}"></span> <span id="show_vote_{{open_letter.slug}}" class="count">{{open_letter.rank}}</span> <a onClick="downvote('{{open_letter.slug}}')" id="arrowdown_{{open_letter.slug}}" class="down-arrow"></a> 
+                                    </div>
+                                    <span class="img-sec"><img src="/static/media/images/square-stock/{{open_letter.issue.title}}-Square.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                        <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            
+                            <ul class="pagination">
+                                <span class="step-links">
+        
+            
+       
+<li> <a id="next" class="cursor" onClick="next()">next</a></li>
+        <li><a><span class="current">
+            Page {{ open_letters.number }} of {{ open_letters.paginator.num_pages }}
+        </span></a>
+        </li>
+			<li><a id="previous" class="cursor" onClick="previous()">previous</a></li>
+        
+          
+        <br/><br/>

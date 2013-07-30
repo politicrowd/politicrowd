@@ -1,0 +1,6 @@
+
+<li id="all" class="bold active"><a href="#" class="all"><span>All Issues </span><small> ({{count}})</small></a></li>
+                             <span id="unique" class="None"></span>
+                            {% for issue in issues %}
+                            <li><a id="{{issue.issue.title}}" class="cursor" onclick="issueselect('{{issue.issue.title'}})"><span>{{ issue.issue.title}} </span><small>({{issue.dcount}})</small></a></li>
+                            {% endfor %}

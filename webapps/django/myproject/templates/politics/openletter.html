@@ -1,0 +1,982 @@
+
+{% extends 'base.html' %}
+{% block title %}{{open_letter.issue}} - PolitiCrowd.com{% endblock %}
+{% block head %}
+<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42077141-1', 'politicrowd.com'); ga('send', 'pageview'); </script>
+     <script src="/static/media/js/validate.js"></script>
+
+<style type="text/css">
+
+label { width: 40em; float: left; }
+label.error { float: none; color: #BF2623; padding-left: .5em; vertical-align: top; }
+p { clear: both; }
+.submit { margin-left: 12em; }
+em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+input.error,
+select.error,
+textarea.error {
+    border: 1px solid #BF2623;
+}
+</style>
+
+
+        <script type="text/javascript">
+        
+                    $(document).ready(function(e){                   
+            
+            $("#follow").click(function(){
+            	var slug = "{{open_letter.slug}}";
+	$.get("/follow_open_letter/", {"slug":slug}, function(data){
+		var _popover;
+      _popover = $("#follow").popover({
+        trigger: "manual",
+        placement: "top",
+        content: data,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = data;
+      return $("#follow").popover("toggle");
+		alert(data);	
+		return false;	
+		
+	});
+	});
+			
+            });
+            
+            </script>
+             <script type="text/javascript">
+            
+            $(document).ready(function(e) {
+
+$("#emailform").validate({
+  rules: {
+    email: {
+      minlength: 3,
+      required: true,
+      email: true
+    }
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});  
+
+
+
+$("#commentform").validate({
+  rules: {
+    comment: {
+      minlength: 100,
+      required: true,
+      
+    }
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});    
+
+
+
+
+$('form[id^="replyform_"]').submit(function(){
+var text = $(this).attr('id');
+var id = text.split("_")[1];
+var textarea = $("#commenText_"+id).val();
+if(textarea == ''){
+      var _popover;
+      var content = "Please enter your reply in the field below";
+      
+      _popover = $("#commenText_"+id).popover({
+        trigger: "manual",
+        placement: "top",
+        content: "Please enter your reply below",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = content;
+     $("#commenText_"+id).popover("show");	
+		return false;
+}
+else{
+	if(textarea.length <= 39){
+	      var _popover;
+      var content = "Your reply must be at least 40 characters long";
+      
+      _popover = $("#commenText_"+id).popover({
+        trigger: "manual",
+        placement: "top",
+        content: "Your reply must be at least 40 characters long",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = content;
+     $("#commenText_"+id).popover("show");	
+		return false;
+	}	
+}
+	
+});      
+         
+  
+          
+		
+		$('.ok-btn').click(function(){
+		$('.thanks').hide();
+		return false;
+	});
+	
+	search = function(){
+	var search = $("#politician_search").val();
+	$.get("/politician_search/{{open_letter.slug}}/", {"search":search}, function(data){
+		
+		$("#between_brackets").text();
+		$("#between_brackets").html(data);		
+		
+	});
+	}
+	
+	
+	$('#comment').keyup(function() {
+		if ($("#comment").val().length > 500) {
+			$("#title_input").show();
+		}
+	});
+            
+	
+	
+	
+upvote_comment = function(comment_id){
+
+ $.get("/comment/up/", {"comment_id":comment_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+ 
+ 
+ 
+ upvote_reply = function(reply_id){
+
+ $.get("/reply/up/", {"reply_id":reply_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes++;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes--;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes++;
+			votes++;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+
+ 
+ 
+ 
+ downvote_comment = function(comment_id){
+
+ $.get("/comment/down/", {"comment_id":comment_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes++;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#comment_rank_"+comment_id).attr('class');
+			votes--;
+			votes--;
+			$("#comment_rank_"+comment_id).attr('class', votes);
+			$("#comment_rank_"+comment_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+
+downvote_reply = function(reply_id){
+
+ $.get("/reply/down/", {"reply_id":reply_id}, function(data) {
+	if (data == "1")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes--;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);			
+			
+			
+		}
+	else {
+		if (data == "0")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes++;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);
+			
+		}
+		else{
+		if (data == "2")
+		{
+			var votes = $("#reply_rank_"+reply_id).attr('class');
+			votes--;
+			votes--;
+			$("#reply_rank_"+reply_id).attr('class', votes);
+			$("#reply_rank_"+reply_id).text(votes);
+
+		}	
+		}
+	}
+ 
+ });
+ }
+
+	
+	
+	
+
+	
+	
+	
+	            	
+   upvote = function(slug){
+
+ $.get("/open_up/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#upvote_count").attr('class');
+			votes++;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+			
+			$(".slider6").load("/requestpolitician/{{open_letter.slug}}/",function(){$(".thanks").toggle();});
+			
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var downvotes = $("#downvote_count").attr('class');
+			downvotes--;
+			$("#downvote_count").attr('class', downvotes);
+			$("#downvote_count").text(downvotes);
+			
+			var votes = $("#upvote_count").attr('class');
+			votes++;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+			$("#politician_vote").load(
+	"/requestpolitician/{{open_letter.slug}}/",function(){$(".thanks").toggle();}); 
+	$("#politician_vote").prepend("Don't forget to request a response from your politicians!");
+		}
+		else {
+		var votes = $("#upvote_count").attr('class');
+			
+			votes--;
+			$("#upvote_count").text(votes);	
+			$("#upvote_count").attr('class', votes);
+			
+			
+			
+		}
+	}
+ 
+ });
+ }
+ 
+ 
+ downvote = function(slug){
+
+ $.get("/open_down/", {"slug":slug}, function(data) {
+	if (data == "1")
+		{
+			
+			var votes = $("#downvote_count").attr('class');
+			votes++;
+			$("#downvote_count").attr('class', votes);
+			$("#downvote_count").text(votes);
+			                                          
+			
+			
+			
+			
+		}
+	else {
+		if (data == "2")
+		{
+			var upvotes = $("#upvote_count").attr('class');
+			upvotes--;
+			$("#upvote_count").attr('class', votes);
+			$("#upvote_count").text(votes);
+
+			
+			var votes = $("#downvote_count").attr('class');
+			votes++;
+			$("#downvote_count").attr('class', votes);
+			$("#downvote_count").text(votes);
+			
+		}
+		else {
+		var votes = $("#downvote_count").attr('class');
+			
+			votes--;
+			$("#downvote_count").text(votes);	
+			$("#downvote_count").attr('class', votes);
+			
+			
+			
+		}
+	}
+ 
+ });
+ }
+ 
+                $(function() {
+                    $("#foo2").carouFredSel({
+                        responsive: true,
+                        circular: false,
+                        infinite: false,
+                        auto 	: false,
+                        width: '100%',
+                        scroll:1,
+                        prev: '#foo2_prev',
+                        next: '#foo2_next',
+                        items: {
+				
+                            //	height: '30%',	//	optionally resize item-height
+                            visible: {
+                                min: 1,
+                                max: 4
+                            }
+                        }
+                    });                   
+                });
+                $('.bxslider1').bxSlider({
+                    minSlides:1,
+                    maxSlides:4,
+                    slideWidth:155,
+                    slideMargin:20
+                });
+                $('.bxslider3').bxSlider({
+					
+                    onSliderLoad: function() {
+                        $('.bxslider4').bxSlider({
+                            minSlides:3,
+                            maxSlides:3,
+                            slideWidth:54,
+                            slideMargin:30
+                        }); 
+                        $('.bxslider5').bxSlider({
+                            minSlides:3,
+                            maxSlides:3,
+                            slideWidth:50,
+                            slideMargin:30
+                        }); 
+						
+                    }
+					
+                }); 
+                
+                $('.slider6d').bxSlider({
+                    mode: 'vertical',
+                    minSlides:3,
+                    Pager:false,
+                    maxSlides:3,
+                    moveSlides: 1,
+                    speed:800,
+                    slideMargin: 2
+                });
+            });		
+            if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100px',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 1,
+                                    max: 1
+                                }
+                            }
+                        });                   
+                    });
+                    $('.bxslider1').bxSlider({
+                    minSlides:1,
+                    maxSlides:1,
+                    slideWidth:240,
+                    slideMargin:20
+                });
+                });
+                 
+            }
+			 
+            if ((navigator.userAgent.match(/iPad/i))) {
+                $(document).ready(function(e) {
+                    $(function() {
+                        $("#foo2").carouFredSel({
+                            responsive: true,
+                            circular: false,
+                            infinite: false,
+                            auto 	: false,
+                            width: '100%',
+                            scroll:1,
+                            prev: '#foo2_prev',
+                            next: '#foo2_next',
+                            items: {
+				
+                                //	height: '30%',	//	optionally resize item-height
+                                visible: {
+                                    min: 3,
+                                    max: 3
+                                }
+                            }
+                        });                   
+                    });
+                });
+            }
+            
+				 
+				 
+        </script>
+{% endblock %}
+
+{% block body %}
+
+    
+        <div class="body_infographic light_bg">
+            <div class="wrapper">
+                <section class="body_upvote_openletter">
+                    <ul>
+                       <li>
+                            <figure class="img"><img src="/static/media/images/left_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/left_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Vote to be heard.</span> </li>
+                        <li class="arrow"></li>
+                        <li>
+                            <figure class="img"><img src="/static/media/images/middle_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/middle_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Comment to enrich the conversation.</span> </li>
+                        <li class="arrow"></li>
+                        <li>
+                            <figure> <img src="/static/media/images/right_graphic.png" alt="" class="active1"/>
+                                <img src="/static/media/images/right_graphic1.png" alt="" class="active"/>
+                            </figure>
+                            <span class="infographictext">Vote on comments to build a community voice.</span> </li>
+
+                    </ul>
+                    <a href="" class="openletter_close"></a> </section>
+            </div>
+        </div>
+        <div class="trendingopen_letter openlettergray">
+            <div class="wrapper">
+                <section class="body_upvote_openletter padd">
+                    <h4>Title: {{open_letter.title}}</h4>
+                    <div class="upvote_innercontainer">
+                        <article class="issues_edu">Issue: <span><a href="/issues/?issue={{open_letter.issue.slug}}">{{open_letter.issue}}</a></span></article>
+                        <article class="all_issues"><a href="/issues/">all issues</a></article>
+                        <section class="politician_container">
+                            <div class="upvote_downvote_left">
+                                <article id="upvote_count" class="{{open_letter.upvotes.count}}">{{open_letter.upvotes.count}}</article>
+                                <article><a onClick="upvote('{{open_letter.slug}}')" class="up_arrow_grey"></a></article>
+                                <article><a onClick="downvote('{{open_letter.slug}}')" class="down_arrow_grey morg"></a></article>
+                                <article id="downvote_count" class="{{open_letter.downvotes.count}}">{{open_letter.downvotes.count}}</article>
+                                <div class="thanks hidden">
+                                   <em></em>
+                                    <strong class="voting">THANK YOU FOR VOTING</strong>
+                                    <span class="politicians">Please select politicians to request their response</span>
+                                    <div class="sideSlide">
+                                        <ul class="slider6">
+
+                                        </ul>
+
+                                    </div>
+                                    <a class="ok-btn pointer" onClick="politician_request()">ok</a>
+                                </div>
+                            </div>
+                            <section class="ploitician_slider">
+                                <figure class="bracket_left"></figure>
+                                <div id="between_brackets" class="between_brackets">
+                                    <ul class="bxslider1">
+                                    {% for request in requests %}
+                                    
+                                    	  
+                                        
+                                        
+                                        <li>
+                                            <div class="img1">
+                                                <article class="arrow"></article>
+                                                <section class="upvote_politication_img"> <a href="/politicians/{{request.politician.unique}}"><img class="Img1" width="85" height="85" src="/static/media/politicians/oregon/{{request.politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> <small class="hover_effect"></small></a>
+
+                                                </section><em class="pol-shadow"></em>
+                                            </div>
+                                            <section class="politic_des">
+                                                <h3>{{request.politician.title}}, {{request.politician.state}}
+                                                    <br>
+                                                    {{request.politician.first}} {{request.politician.last}}</h3>
+                                                <h5>{% if request.upvotes >= request.politician.response_threshold %}<span>Requesting: {{request.upvotes}}/{{request.politician.response_threshold}}</span>{% else %}Requesting: {{request.upvotes}}/{{request.politician.response_threshold}}{% endif %}</h5>
+                                                <figure class="openMail blue_clr">Responses: {{request.responses}}</figure>
+                                            </section>
+                                        </li>
+                                        {% endfor %}
+                                       
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <figure class="bracket_right"></figure>
+                            </section>
+                            <div class="search_politicians">
+                                <p>{{requests.count}} politicians addressed</p>
+                                <a href="" class="search"></a> </div>
+                            <div class="search_box">
+ 								<form method='POST' onsubmit='javascript:search();return false;'>
+                                <input type="text" id="politician_search"  onfocus="if(this.value == 'Search for a Politician (enter first and last name)') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for a Politician (enter first and last name)';}" value="Search for a Politician (enter first and last name)"/>
+                                 <input type="button" value="" style="margin:-9999px" name="btn-submit" class="btn-go" onclick="javascript:search();return false;" />
+								</form>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <div class="body_openletter_middle"> 
+                    <div class="introBox2">
+                    {% if open_letter.introduction %}
+                        <div class="textIntro"> <img src="/static/media/images/rectangle-stock/{{open_letter.issue.title}}-Rectangle.jpg" alt=""/>
+                            <h2>Introduction</h2>
+                            <p>{{open_letter.introduction}}</p>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <ul class="">
+                        <li>
+                            <section class="openletter_right">
+                                <article class="heading">
+                                    <h3>{{open_letter.title}}</h3>
+                                    <small>Started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</small> </article>
+                                <p>To: &nbsp&nbsp
+                               {% for request in requests %}{% if forloop.last %}{{request.politician.title}} {{request.politician.first}} {{request.politician.last}}{% else %}{{request.politician.title}} {{request.politician.first}} {{request.politician.last}}, {% endif %}{% endfor %} </p>
+                                <p>{{open_letter.content}}</p>
+                                <p> Sincerely,<br>
+                                    {{open_letter.contributors.count}} member{{open_letter.contributors.count|pluralize}} of PolitiCrowd  </p>
+                                <article class="middleshadow"> <img src="/static/media/images/body_openletter_shadow.png" alt=""/> </article>
+                                
+                            </section>
+                            <div class="introBox">
+                                <div class="textIntro"> <img src="/static/media/images/rectangle-stock/{{open_letter.issue.title}}-Rectangle.jpg" alt=""/>
+                                {% if open_letter.introduction %}
+                                    <h2>Introduction</h2>
+                                    <p>{{open_letter.introduction}}</p>
+                                    {% endif %}
+                                </div>
+
+                                                                
+                        <div class="introSocial1">
+                            <div class="introsocial">
+                                <h3 id="follower">Share with Friends or Follow </h3>
+                                <ul class="introsocial1">
+                                    <li><a href="#" class="facebookSocial"></a></li>
+                                    <li><a href="#" class="twiterSocial"></a></li>
+                                    <li><a href="#" class="messageSocial"></a></li>
+                                    <li id="following" class="marg_right"><a id="follow" class="followSocial pointer"></a></li>
+                                </ul>
+                                
+                                <div id="message" class="drop-sec">
+                                    	
+                                        <ul>
+                                       <form id="emailform" method="POST" action="/email/page/">
+                                        {% csrf_token %}
+                                        	<li>
+                                        	 <label>Share by email:</label>
+                                        	 </li>
+                                        	 <li>
+                                    <input type="email"  name="email" class="required" onfocus="if(this.placeholder == 'Email address') {this.placeholder = '';}" onblur="if (this.placeholder == '') {this.placeholder = 'Enter an address';}" placeholder="Email address" /><br>
+                                            	
+                                            </li>
+                                            <input type="hidden" name="slug" value="{{open_letter.slug}}">
+                                              
+                                            <li><input type="submit" value="Submit" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                    
+                                
+                                
+                            </div>
+                        </div>
+                    
+                                </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <section class="commentCntr">
+            <div class="wrapper">
+                <div class="innerCommentCntr">
+                    <section class="leftSection">
+                        <div class="commentInfo">
+                            <h2>Add your voice:</h2>
+                            <p>What do you think about this OpenLetter? What ideas do you have to contribute? Politicians need this feedback to understand their constituents.</p>
+                            <form id="commentform" method='POST' action="/comment/{{open_letter.slug}}/">
+                            {% csrf_token %}
+                            <ul class="commentForm">
+                            	<span id="title_input" class="hidden">
+                                <li>
+                                    <label>Title (option)</label>
+                                    <input type="text"  name="title" id="title" onfocus="if(this.value == 'Add a title to a long comment') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Add a title to a long comment';}" value="Add a title to a long comment" />
+                                </li>
+                                </span>
+                                <li>
+                                    <label>Add your voice</label>
+                                    <textarea name="comment" id="comment" class="required" row="2" col="2"></textarea>
+                                   
+                                </li>
+                                <li> {% if politician %}<small>
+                                <input type="hidden" name="politician" value="ok"/>
+                                        <input type="checkbox" name="promise" value="ok" class="styled" />
+                                        Mark as a promise</small>{% endif %}
+                                    <input type="submit" value="submit" />
+                                </li>
+                            </ul>
+                            </form>
+                        </div>
+
+                        {% if comments %}
+                        <div class="commentPost">
+                            <div class="commentHd">
+                                <h3>Responses from Politicians: </h3>
+                                
+                                <div class="most-target hidden">
+                                    <a class="target-link" href="#">Controversial</a>
+                                    <ul class="target-drop">
+                                        <li><a href="#">Top</a></li>
+                                        <li><a href="#">New </a></li>
+                                        <li><a href="#">Trending</a></li>
+                                        <li><a href="#">Controversial</a></li>
+                                    </ul>                   
+                                </div>
+                            </div>
+                            {% for comment in politician_comments %}
+                            <div class="commentLink">
+                                <div class="title-sec">
+                                {% if comment.title %}	<h3>Title: {{comment.title}}</h3>{% endif %}
+                                    <div class="drop-sec">
+                                    	
+                                    </div>
+                                </div>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_comment('{{comment.id}}')"></a> <span id="comment_rank_{{comment.id}}" class="{{comment.rank}}">{{comment.rank}}</span> <a class="arrowdown1" onClick="downvote_comment('{{comment.id}}')"></a> </div>
+                                    <div class="commentRight">
+                                        <p>{{comment.comment}}</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                {% if comment.replies.all %}
+                                    <section class="reply potion">
+                                        <p>{{comment.replies.count}}</p>
+                                    </section>
+                                    {% endif %}
+                                    {% if comment.politician %}<div class="commentimg1"> <img height="50" width="50" src="/static/media/politicians/oregon/{{comment.politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt=""> </div>{% endif %}
+                                    
+                                    <ul class="uiLeft">
+                                        <li>by {% if comment.politician %}<a href="/politicians/{{comment.politician.unique}}/">{{comment.politician.title}}. {{comment.politician.first}} {{comment.politician.last}}</a>{% else %} {{comment.creator}} in {{comment.creator.city}}, {{comment.creator.state}} {% endif %}&nbsp&nbsp</li>
+                                        <li class="last">&nbsp&nbsp {{comment.creation_date|date:"M j, g:i A"}}</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: {% if comment.title %} {{comment.title}} {% endif %}</h3>
+                                        
+                                        <form method="POST" id="replyform_{{comment.id}}" class="replyform" action="/reply/{{open_letter.slug}}/{{comment.id}}/">
+                                        {% csrf_token %}
+                                        <div class="commenText" >
+                                            <textarea id="commenText_{{comment.id}}" name="reply" row="2" col="2"></textarea>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                                        </form>
+                                        
+                                    </div>
+                                <div class="replyComment">
+                                	{% for reply in comment.replies.all %}
+                                    <div class="commentLink commenttxt bord-bot">
+                                   	 	<div class="title-sec">
+                                        <h3>Reply: {{comment.title}} </h3>
+                                        <div class="drop-sec">
+                                    	<a class="closeUL" href="#"><img src="/static/media/images/cross.png" alt="img"></a>
+                                        <ul>
+                                       <form method="POST" action="/report_reply/{{reply.id}}/{{open_letter.slug}}/">
+                                        {% csrf_token %}
+                                        	<li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="abuse"/></small>
+                                                <span>Abusive language.</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="spam" /></small>
+                                                <span>Spam</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="other"/></small>
+                                                <span>Other</span>
+                                            </li>   
+                                            <li><textarea name="other" id="other-reply-{{reply.id}}" cols="" rows=""></textarea></li>       
+                                            <li><input type="submit" value="Report" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                    </div>
+                                        <div class="commenText">
+                                        <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_reply('{{reply.id}}')"></a> <span id="reply_rank_{{reply.id}}" class="{{reply.rank}}">{{reply.rank}}</span> <a class="arrowdown1" onClick="downvote_reply('{{reply.id}}')"></a> </div>
+                                        
+                                        
+                                            <div class="commentRight">
+                                                <p>{{reply.comment}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="reply-uiLeft">
+                                                <li>by {{reply.creator.first}} in {{reply.creator.city}}, {{reply.creator.state}}&nbsp</li>
+                                                <li class="last">&nbsp {{reply.creation_date}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                            <div class="commentHd"><br/><br/><br/><br/>
+                                <h3>Contributors ({{open_letter.contributors.count}})</h3>
+             
+                            </div>
+                            
+                            {% for comment in comments %}
+                            <div class="commentLink">
+                                <div class="title-sec">
+                                {% if comment.title %}	<h3>Title: {{comment.title}}</h3>{% endif %}
+                                <div class="drop-sec">
+                                    	<a class="closeUL" href="#"><img src="/static/media/images/cross.png" alt="img"></a>
+                                        <ul>
+                                       <form method="POST" action="/report/{{comment.id}}/{{open_letter.slug}}/">
+                                        {% csrf_token %}
+                                        	<li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="abuse"/></small>
+                                                <span>Abusive language.</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="spam" /></small>
+                                                <span>Spam</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{comment.id}}" name="checkbox1" id="checkbox1" class="styled" value="other"/></small>
+                                                <span>Other</span>
+                                            </li>   
+                                            <li><textarea name="other" id="other-{{comment.id}}" cols="" rows=""></textarea></li>       
+                                            <li><input type="submit" value="Report" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                    
+                                </div>
+                                <div class="commenText">
+                                    <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_comment('{{comment.id}}')"></a> <span id="comment_rank_{{comment.id}}" class="{{comment.rank}}">{{comment.rank}}</span> <a class="arrowdown1" onClick="downvote_comment('{{comment.id}}')"></a> </div>
+                                    <div class="commentRight">
+                                        <p>{{comment.comment}}</p>
+                                    </div>
+                                </div>
+                                <div class="commentList">
+                                {% if comment.replies.all %}
+                                    <section class="reply potion">
+                                        <p>{{comment.replies.count}}</p>
+                                    </section>
+                                    {% endif %}
+                                    {% if comment.politician %}<div class="commentimg1"> <img height="50" width="50" src="/static/media/politicians/oregon/{{politician.unique}}.jpg" onError="this.onerror=null;this.src='/static/media/images/info.png';" alt="">  </div>{% endif %}
+                                    
+                                    <ul class="uiLeft">
+                                        <li>by {% if comment.politician %}<a href="/politicians/{{comment.creator.politician.unique}}/">{{comment.politician.title}}. {{comment.politician.first}} {{comment.politician.last}}</a>{% else %} {{comment.creator}} in {{comment.creator.city}}, {{comment.creator.state}} {% endif %}&nbsp&nbsp</li>
+                                        <li class="last">&nbsp&nbsp {{comment.creation_date|date:"M j, g:i A"}}</li>
+                                    </ul>
+                                    <ul class="uiRight">
+                                        <li class="last"><a class="reply-link" href="#">Reply</a></li>
+                                    </ul>
+                                </div>
+                                
+                                    <div class="commentLink commentbox">
+                                        <h3>Reply: {% if comment.title %} {{comment.title}} {% endif %}</h3>
+                                        <form method="POST" id="replyform_{{comment.id}}" class="replyform" action="/reply/{{open_letter.slug}}/{{comment.id}}/">
+                                        {% csrf_token %}
+                                        <div class="commenText" >
+                                            <textarea id="commenText_{{comment.id}}" name="reply" row="2" col="2"></textarea>
+                                            <input type="submit" value="Submit" />
+                                        </div>
+                                        </form>
+                                        
+                                    </div>
+                                <div class="replyComment">
+                                	{% for reply in comment.replies.all %}
+                                    <div class="commentLink commenttxt bord-bot">
+                                   	 	<div class="title-sec">
+                                        <h3>Reply: {{comment.title}} </h3>
+                                        <div class="drop-sec">
+                                    	<a class="closeUL" href="#"><img src="/static/media/images/cross.png" alt="img"></a>
+                                        <ul>
+                                       <form method="POST" action="/report_reply/{{reply.id}}/{{open_letter.slug}}/">
+                                        {% csrf_token %}
+                                        	<li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="abuse"/></small>
+                                                <span>Abusive language.</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="spam" /></small>
+                                                <span>Spam</span>
+                                            </li>
+                                            <li>
+                                            	<small><input type="checkbox" class="{{reply.id}}" name="checkbox1" id="checkbox1" class="styled" value="other"/></small>
+                                                <span>Other</span>
+                                            </li>   
+                                            <li><textarea name="other" id="other-reply-{{reply.id}}" cols="" rows=""></textarea></li>       
+                                            <li><input type="submit" value="Report" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+                                    </div>
+                                        <div class="commenText">
+                                        <div class="commentLeft"> <a class="arrowup1 pointer" onClick="upvote_reply('{{reply.id}}')"></a> <span id="reply_rank_{{reply.id}}" class="{{reply.rank}}">{{reply.rank}}</span> <a class="arrowdown1" onClick="downvote_reply('{{reply.id}}')"></a> </div>
+                                        
+                                        
+                                            <div class="commentRight">
+                                                <p>{{reply.comment}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="commentList">
+                                            <ul class="reply-uiLeft">
+                                                <li>by {{reply.creator.first}} in {{reply.creator.city}}, {{reply.creator.state}}&nbsp</li>
+                                                <li class="last">&nbsp {{reply.creation_date}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        <div class="postShowBtn"> <a href="#">show more</a> </div>
+                        </div>
+                        
+                        {% endif %}
+                    </section>
+                    
+                </div>
+                
+            </div>
+        </section>
+{% endblock %}

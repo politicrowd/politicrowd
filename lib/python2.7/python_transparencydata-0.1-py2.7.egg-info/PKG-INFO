@@ -1,0 +1,41 @@
+Metadata-Version: 1.1
+Name: python-transparencydata
+Version: 0.1
+Summary: Library for interacting with the Sunlight Labs Transparency Data API
+Home-page: http://github.com/sunlightlabs/python-transparencydata/
+Author: Jeremy Carbaugh
+Author-email: jcarbaugh@sunlightfoundation.com
+License: BSD
+Description: =======================
+        python-transparencydata
+        =======================
+        
+        Python library for interacting with the TransparencyData.com API.
+        
+        The TransparencyData.com API provides campaign contribution and lobbying data.
+        
+        http://transparencydata.com/api/
+        
+        python-transparencydata is a project of Sunlight Labs (c) 2010
+        Written by Jeremy Carbaugh <jcarbaugh@sunlightfoundation.com>
+        
+        All code is under a BSD-style license, see LICENSE for details.
+        
+        Source: http://github.com/sunlightlabs/python-transparencydata/
+        
+        Requirements
+        ============
+        
+        python >= 2.4
+        
+        simplejson >= 1.8 (not required with Python 2.6, will use built-in ``json`` module)
+        
+        
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

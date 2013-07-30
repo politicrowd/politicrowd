@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+$(document).ready(function(){
+	$("#form").validate();
+$("#form").submit(function() {
+	if($(this).validate().checkForm()) {
+		$("#submit").attr('disabled',true);
+    } else {
+        $('#submit').attr('disabled',false);
+    }
+});
+});
+</script>
+
+<div id="container">
+<div id="title-user" class="span12">
+<h2>{{user.username|capfirst}}'s Activity:</h2><br/> <br/>
+</div>
+{% if something %}
+<div class="span4 well">
+{% if favorites %}
+<div id="user-favorites" class="well">
+
+{% for favorite in favorites %}
+{% if favorite.ama.all %}
+<h3>Favorite Town Halls</h3><br/>
+{% for ama in favorite.ama.all %}
+<a href="/congress/{{ama.slug}}/">{{ama.title}}</a><br/>
+Starts {{ama.creation_date}}<br/>
+{% endfor %}
+{% endif %}
+{% if favorite.page.all %}
+<h3>Favorite Discussions</h3><br/>
+{% for page in favorite.page.all %}
+<a href="/{{page.slug}}/">{{page.question}}</a><br/>
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+</div>
+{% endif %}
+
+<div class="well">
+<h3>Representatives in Congress</h3><br/>
+{% for politician in politicians %}
+<h4>
+<a href="/congress/{{politician.firstname}}/{{politician.lastname}}/">{{politician.title}} {{politician.firstname}} {{politician.lastname}}</a><br/>
+</h4>
+{% endfor %}
+</div>
+{% if state %}
+<div class="well">
+<img SRC="/static/media/states/{{home}}.png"/><br/>
+<h3>{% if home == 'OR' %}Oregon {% else %} {% if home == 'CA' %}California {% else %} {{home}} {% endif %} {% endif %}Legislative Officials</h3><br/>
+{% for politician in state %}
+<h4><a href="/congress/{{politician.state}}/{{politician.first_name}}/{{politician.last_name}}/">{% if politician.chamber == "lower" %} Rep. {% else %} Sen. {% endif %} {{politician.first_name}} {{politician.last_name}}</a><br/>
+</h4>
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+{% else %}
+{% if states %}
+<script>
+$(document).ready(function(){
+$("#address-click").click(function(){
+	
+	$("#theform").show();
+});
+});
+</script>
+<div id = "address-click" class="well span6">
+<h3>Click to Engage your Politicians</h3><br/>
+You can submit, comment and vote without submitting your address. However, we need your permanent address if you want to interact with your politicians in the following two ways. The first is by tagging them to a user-submitted platform to let them know if you are in favor of it or not. The second is to participate in online town hall forums hosted by your elected officials. <br/><br/><b>We will not share your address or mail you anything.</b>
+<span id="theform" class="hidden">
+<br/><br/>
+<form name="query" id="form" class="well form-horizontal" action="/hlocation/" method = "post">
+<h4>Type your Name and Permanent Address</h4><br/>
+{% csrf_token %}
+<p>
+	<label for="name">First Name</label><input type="text" class="span3 required" title="Please enter your first name" name = "first" id="first"/>
+</p>
+<p>
+	<label for="name">Last Name</label><input type="text" class="span3 required" title="Please enter your last name" name = "last" id="last"/>
+</p>
+<hr>
+<p>
+<label for="address">Address</label><input type="text" class="span4 required" title="Please enter your address. (We'll keep it secret!)" name="address" id="address"/>
+</p>
+<p>
+<label for="city">City</label><input type="text" class="span3 required" title="Please enter your city." name="city" id="city"/>
+</p>
+
+<p>
+<label for="states">State:</label> <select name = "state" id="state">
+<option name = "Choose" value = "Choose">Select your state…</option>
+{% for state in states %}
+<option name = "{{state.1}}" value = "{{state.0}}" >{{state.1}}</option>
+{% endfor %}
+</select>
+
+</p>
+<p>
+<label for="zip">Zip Code</label><input type="text" class="span4 required" title="Please enter your Zip Code" name="zip" id="zip"/>
+</p>
+<p>
+    <input type="submit" id="submit" class="btn btn-primary" value="Submit"/>
+</p>
+</form>
+</span>
+</div>
+{% endif %}
+{% endif %}
+{% if posts %}
+<div id="created-pages" class="span4 well">
+<h3>{{user.username|capfirst}} has created:</h3><br />
+{% for post in posts %}
+{{post.rank}} | <a href="/{{post.slug}}/">{{post.question}}</a><br />
+{% endfor %}
+</div>
+{% endif %}
+{% if favorites %}
+{% endif %}
+
+
+{% if comments %}
+<div id="politi-comments" class="span4 well">
+<h3>Comments:</h3>
+<br /><br/>
+{% for comment in comments %}
+<a href="/{{comment.article.slug}}/">{{comment.article.question}}</a>: {{comment.comment}}<br /><br/>
+
+{% endfor %}
+</div>
+{% endif %}
+
+
+</div>
+{% endblock %}

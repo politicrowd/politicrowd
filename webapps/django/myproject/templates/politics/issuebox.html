@@ -1,0 +1,79 @@
+
+                         <script type="text/javascript">
+                        
+                         $("#nxt").click(function(){
+            		$("#open-letter-box").load('/load/issues_list/{% if target %}?target={{target}}&{% else %}?{% endif %}page={{ open_letters.next_page_number }}');
+            		return false;
+            	});
+            	
+            	$("#prev").click(function(){
+            		
+            		$("#open-letter-box").load('/load/issues_list/{% if target %}?target={{target}}&{% else %}?{% endif %}page={{ open_letters.previous_page_number }}');
+            		return false;
+            	});
+                         
+
+                         </script>
+                         
+                                {% if open_letters %}
+                                <ul id="open-letter-box" class="open-listing">
+
+                         {% for open_letter in open_letters %}
+                            {% if forloop.first %}
+                                <li class="first">
+                                    <div class="arrows">
+                                        <a class="up-arrow" href="#"></a>
+                                        <span>{{open_letter.rank}}</span>
+                                        <a class="down-arrow" href="#"></a>
+                                    </div>
+                                    <span class="img-sec"><img src="/static/media/images/open-img.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                       <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <div class="arrows">
+                                        <a class="up-arrow" href="#"></a>
+                                        <span>{{open_letter.rank}}</span>
+                                        <a class="down-arrow" href="#"></a>
+                                    </div>
+                                    <span class="img-sec"><img src="/static/media/images/open-img.jpg" alt="img"></span>
+                                    <div class="open-txt">
+                                        <a href="/openletters/{{open_letter.slug}}">{{open_letter.title}}</a>
+                                        <ul>
+                                            <li class="first"><a href="#">started by {{open_letter.creator}} in {{open_letter.creator.city}}, {{open_letter.creator.state}}</a></li>
+                                            <li class="last"><a href="#">contributors: <label>{{open_letter.contributors.all.count}}</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                                 {% else %}
+                                 <li>
+                                    <a><h1>Sorry there are no OpenLetters.</h1></a>
+                                </li>
+                                </ul>
+                                {% endif %}
+                                       <ul class="pagination">
+                            <span class="step-links">
+        
+           
+       
+<li> <a id="nxt" href="#">next</a></li>
+        <li><a><span class="current">
+            Page {{ open_letters.number }} of {{ open_letters.paginator.num_pages }}
+        </span></a>
+        </li>
+
+          <li><a id="prev" onClick="previous()" href="#">previous</a></li>
+          
+        <br/><br/>
+    </span>
+
+                             </ul>
+                     

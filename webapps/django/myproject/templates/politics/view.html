@@ -1,0 +1,1125 @@
+{% extends "base.html" %}
+
+<!--Load Youtube Filter-->
+{% load filters %}
+{% block extrahead %}
+<!--JAVASCRIPT FUNCTIONS-->
+<script src="/static/media/js/validate.js"></script>
+<script src="/static/media/js/discuss.js"></script>
+<style type="text/css">
+
+label { width: 20em; float: left; }
+label.error { float: none; color: #BF2623; padding-left: .5em; vertical-align: top; }
+p { clear: both; }
+.submit { margin-left: 12em; }
+em { font-weight: bold; padding-right: 1em; vertical-align: top; }
+input.error,
+select.error,
+textarea.error {
+    border: 1px solid #BF2623;
+}
+</style>
+			
+
+<!--END JAVASCRIPT-->
+{%endblock%}
+<!--END HEADER-->
+
+<!--Begin <body> in content block of base.html-->
+{% block content %}
+<div class="span8">
+<div class="span8">
+    <div id="slug" class="{{slug}}">
+    </div>
+
+
+
+
+<!--END SEARCH-->
+
+<!--Creator's Content-->
+    <div class="row">
+        <div class="span12">
+            
+<!--<h1><span id="poli-red">POLITI</span><span id="poli-blue">CROWD</span>-->
+          
+            <h2>{{question|title}} {% if comstate %}<img width="80" height="80" src="/static/media/states/{{comstate}}.png" />{% endif %}</h2>
+        
+   
+
+<!--Search for politician/individual/group-->
+<!--JQEUERY/ajax get from same page look at django book for instant search example search django ajax-->
+    <div class="row">
+        <div id = "search" class="span8">
+
+        <form name="query" class="well span4 form-horizontal" action="/search/" method = "get">
+        <h3>Search for Politicians to Tag</h3>
+        <p>
+	    <input type="hidden" name="slug" id = "slug" value="{{slug}}"/>
+	    <label for="name">Name</label><input type="text" class="span3" name = "query" id="query" placeholder = "Search by First and Last Name...">
+        </p>
+        <p>
+        <input type="submit" class="btn btn-primary" value="Submit"/> <input type="button" class="btn btn-danger" id="cancell_" value="Cancel" onclick="remove_visibility('search')" />
+        </p>
+        </form>
+        </div>
+    </div>
+{% if user.is_authenticated %}
+    <div id = "search-results">
+        <p>
+        </p>
+    </div>
+    <br />
+{% endif %}		
+  			
+        </div>
+    </div>
+<!--Show YouTube video if it exists-->
+<!--Create many to many youtube video field so can reference back to existing videos-->
+<!--use policrowd as a backup media site-->
+    <p>
+
+    {% if youtube_url %}
+
+        {{youtube_url|youtube|safe}}
+
+    {% endif %}
+
+    </p>
+<!--END YOUTUBE-->
+
+<!--Optional Extra details/comments-->
+
+
+    <div id="title-contain">
+
+        <div id="extra-top">
+  			<div class="row">
+               
+                <div class="">
+                    <div class="well span75"> {{extra|linebreaks}}
+                    
+                    <br/>
+                    <a id="favorite" onClick="favorite('{{slug}}')" class="btn btn">Add to Favorites</a><br/><br/>
+                    <div id="fav-yes" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Success!</strong> You have added this Open Letter to your favorites.
+</div>
+                    <div id="fav-no" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  You have already added this Open Letter to your favorites.
+</div>
+                    
+                    </div>
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <br /><br />  <br />
+
+  
+</div>
+
+            
+            <div class="span75 well">
+
+       <h4>{% if federal == 'Congress' %}This OpenLetter has been Sent to {{mentions.count}} Federal Representative{{mentions.count|pluralize}} {% else %}{% if federal == 'State' %}This OpenLetter has been Sent to {{state_mentions.count}} State Representative{{state_mentions.count|pluralize}} {% else %} This OpenLetter is targeting {{politician}}{% endif %}{% endif %}</h4><br/>
+  {% if federal == 'Politician' %}<a class="btn btn-primary btn" onClick="favone('{{slug}}')"><i class="icon-envelope icon-white"></i> Send to {{politician}}</a>{% else %}<a class="btn btn-primary btn" onClick="favall('{{slug}}')"><i class="icon-envelope icon-white"></i> Send to Your Politicians</a>{% endif %}<br/><br/>
+  <div id="fav-allok" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Success!</strong> You Have Sent this Open Letter to your Politicians.
+</div>
+  <div id="fav-allno" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  You Have Already Sent this Open Letter to your Politicians.
+</div>
+<div id="fav-none" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  Sorry, you are not in {{politician}}'s district!
+</div>
+<div id="fav-nolocation" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  We can't find your Politicians! <strong>Click <a onClick="toggle_visibility('form')" class="pointer">Here</a> to find them!</strong><br/><br/>
+  </div>
+  <div id="form" class="hidden span75">
+  <form name='query' id="address" class='span4' action='/hlocation/' method = 'post'>
+        {% csrf_token %}
+        <legend>Identify Your Politicians</legend>
+        <label for='name'>FIRST Name</label><input type="text" class="required" title="Please enter your first name" name="name" id="name"/>
+        <label for='address'>Address</label> <input type='text' class='required' title='Please enter your street address' name = 'address' id='street'/>
+        </p>
+        <input type="hidden" name="slug" value="{{slug}}"/>
+        <p>
+        <label for='city'>City</label> <input type='text' class='required' title='Please enter your city name' name='city' id='city'/>&nbsp&nbsp&nbsp<label for='state'>State</label> <select name = 'state' id='state' class='required' title='Select your state'>
+<option name = "Choose" value = "">Select your state…</option>
+
+<option name = "AL" value = "AL" >Alabama</option>
+
+<option name = "AK" value = "AK" >Alaska</option>
+
+<option name = "AZ" value = "AZ" >Arizona</option>
+
+<option name = "AR" value = "AR" >Arkansas</option>
+
+<option name = "CA" value = "CA" >California</option>
+
+<option name = "CO" value = "CO" >Colorado</option>
+
+<option name = "CT" value = "CT" >Connecticut</option>
+
+<option name = "DE" value = "DE" >Delaware</option>
+
+<option name = "DC" value = "DC" >District of Columbia</option>
+
+<option name = "FL" value = "FL" >Florida</option>
+
+<option name = "GA" value = "GA" >Georgia</option>
+
+<option name = "HI" value = "HI" >Hawaii</option>
+
+<option name = "ID" value = "ID" >Idaho</option>
+
+<option name = "IL" value = "IL" >Illinois</option>
+
+<option name = "IN" value = "IN" >Indiana</option>
+
+<option name = "IA" value = "IA" >Iowa</option>
+
+<option name = "KS" value = "KS" >Kansas</option>
+
+<option name = "KY" value = "KY" >Kentucky</option>
+
+<option name = "LA" value = "LA" >Louisiana</option>
+
+<option name = "ME" value = "ME" >Maine</option>
+
+<option name = "MD" value = "MD" >Maryland</option>
+
+<option name = "MA" value = "MA" >Massachusets</option>
+
+<option name = "MI" value = "MI" >Michigan</option>
+
+<option name = "MN" value = "MN" >Minnesota</option>
+
+<option name = "MS" value = "MS" >Mississippi</option>
+
+<option name = "MO" value = "MO" >Missouri</option>
+
+<option name = "MT" value = "MT" >Montana</option>
+
+<option name = "NE" value = "NE" >Nebraska</option>
+
+<option name = "NV" value = "NV" >Nevada</option>
+
+<option name = "NH" value = "NH" >New Hampshire</option>
+
+<option name = "NJ" value = "NJ" >New Jersey</option>
+
+<option name = "NM" value = "NM" >New Mexico</option>
+
+<option name = "NY" value = "NY" >New York</option>
+
+<option name = "NC" value = "NC" >North Carolina</option>
+
+<option name = "ND" value = "ND" >North Dakota</option>
+
+<option name = "OH" value = "OH" >Ohio</option>
+
+<option name = "OK" value = "OK" >Oklahoma</option>
+
+<option name = "OR" value = "OR" selected>Oregon</option>
+
+<option name = "PA" value = "PA" >Pennsylvania</option>
+
+<option name = "RI" value = "RI" >Rhode Island</option>
+
+<option name = "SC" value = "SC" >South Carolina</option>
+
+<option name = "SD" value = "SD" >South Dakota</option>
+
+<option name = "TN" value = "TN" >Tennessee</option>
+
+<option name = "TX" value = "TX" >Texas</option>
+
+<option name = "UT" value = "UT" >Utah</option>
+
+<option name = "VT" value = "VT" >Vermont</option>
+
+<option name = "VA" value = "VA" >Virginia</option>
+
+<option name = "WA" value = "WA" >Washington</option>
+
+<option name = "WV" value = "WV" >West Virginia</option>
+
+<option name = "WI" value = "WI" >Wisconsin</option>
+
+<option name = "WY" value = "WY" >Wyoming</option>
+
+</select>
+
+<br/><label for='zip'>Zip Code</label><input type='text' class='required' title='Please enter your zip code' name='zip' id='zip'/>
+        </p>
+        <p><input type='submit' class='btn btn-primary btn-large' value='Connect &raquo;'/></p>
+        </form>
+        </div>
+         
+         <div class="politicians span3 offset1" id="federal">
+         
+         </div>
+         <div class="politicians span3" id="state_rep">
+         
+         </div>
+              {% if mentions %}
+<!--Iterate through each of the individuals/groups/etc treated here as one seperate database object-->
+        <div class=""><br/>
+        <h5>Federal Representatives:</h5>
+        {%for mention in mentions%}
+            <a href="/congress/{{mention.first}}/{{mention.last}}/">{{mention.mentions}} | {{mention.title}} {{mention.first}} {{mention.last}}</a>&nbsp&nbsp
+        {%endfor%}
+        <br/>
+        </div>
+        {% endif %}
+        <div class="">
+        {% if state_mentions %}
+        <br/>
+		<h5>State Representatives:</h5>
+        {%for mention in state_mentions%}
+            <a href="/congress/{{mention.state}}/{{mention.first}}/{{mention.last}}/">{{mention.mentions}} | {% if mention.title == "lower" %} Rep. {% else %} Sen. {% endif %}  {{mention.first}} {{mention.last}}</a>&nbsp&nbsp
+        {%endfor%}
+        {% endif %}
+        </div>
+{% if federal %}
+<hr>
+{% else %}
+{% if not federal %}
+<hr>
+{% endif %}
+{% endif %}        
+{% if federal %}
+{% if lcommittee %}
+<h4>Recommended to Legislative Committee(s) in Congress:</h4>
+{% else %}
+{% if ucommittee %}
+<h4>Recommended to Legislative Committee(s) in Congress:</h4>
+{% endif %}
+{% endif %}
+           
+            {% if lcommittee %}
+           
+            
+        [House] <a href="/congress/congress/{{lcommittee_id}}/">{{lcommittee}}</a><br/><br/>
+          
+            {% endif %}
+            
+            {% if ucommittee %}
+            
+            
+           
+          [Senate] <a href="/congress/congress/{{ucommittee_id}}/">{{ucommittee}}</a>
+           
+         
+            
+            {% endif %}
+           
+            
+            {% endif %}
+            
+            {% if comstate %}      
+           
+            {% if lcommittee %}
+            <h4>Recommended to [{{comstate}}] State Legislative Committee(s):</h4><br/>
+            {% else %}
+            {% if ucommittee %}
+            <h4>Recommended to [{{comstate}}] State Legislative Committee(s):</h4><br/>
+            {% endif %}
+            {% endif %}
+            {% if lcommittee %}
+            
+            [House] <a href="/congress/committee/{{lcommittee_id}}/">{{lcommittee}}</a><br/><br/>
+            {% endif %}
+            {% if ucommittee %}
+            [Senate] <a href="/congress/committee/{{ucommittee_id}}/">{{ucommittee}}</a>
+            {% endif %}
+            {% endif %}
+           
+      
+        
+</div>
+<style type="text/css">
+  
+  [id^=scroll_]{
+    border-color:white;
+    padding: 10px;
+  }
+  #replyer {
+    height: 400px;
+    background: white;
+  }
+  
+
+</style>
+
+
+    <p>
+    
+        <div class="span12">
+            {% if user.is_authenticated %}
+            
+            <div>
+            <p>
+            <div id = "replyer" class="hidden">
+                           </div>
+           </p>
+        </div>
+    </div>
+    </p>
+
+    </div>
+    {% else %}
+
+    {% endif %}
+
+
+    
+
+</div>
+     <div class="span12"><br/>
+<form name="comment" class = "well span6" id = "theform" action="/{{slug}}/comment/" method = "post">
+                <h3>Add your Voice</h3>
+                {% csrf_token %}
+                <input type="hidden" name="favorable-compromised" id = "favorable-compromised" value=""/>
+                    <input type="hidden" name="critical-compromised" id = "critical-compromised" value=""/>
+                    <p>
+                    
+                    <select name = "response" id="response_form" class="required" title="Please select a valid response type">
+                    <option name = "Choose" value = "">Categorize your response…</option>
+                    {% for response in responses %}
+                        <option name = "{{response}}" value = "{{response}}" >{{response}}</option>
+                    {% endfor %}
+                    </select>
+                    </p>
+               <p>
+                   <textarea name = "comment" id = "comment_text" placeholder = "What do you have to add to this Open Letter?" class="span6 required" title="You need to type a comment before submitting." rows="6"></textarea></label>
+               </p>
+               <span id="compromise-check" class="hidden">
+               <div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <input type="checkbox" id="compromise-select" name="compromises" value="Compromise" /> Check to cite users' comments in your compromise. (Optional)<br />
+</div>  
+
+               </span>
+               <p>
+	               <button class="btn btn-large" type="submit" id="submit">Submit</button>
+               </p>
+               </form>
+
+
+
+</div>
+
+<div class="span12">
+               
+               <div id="fav_comp" class="span35 hidden">
+        <div id="fav_comp_title">
+            <h4>Compromise ~ (Favorable Citation):</h4>
+        </div><br/>
+        <div id="fav_comp_comment" style="word-wrap:break-word">
+        <div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  If you select a <strong>Favorable Comment</strong> to cite in your compromise, it will appear here.
+</div>  
+
+        </div>
+    </div>
+
+    <div id="crit_comp" class="span35 hidden">
+        <div id="crit_comp_title">
+       
+        <h4>Compromise ~ (Critical Citation):</h4>
+        </div><br/>
+        <div id="crit_comp_comment" style="word-wrap:break-word">
+        <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  If you select a <strong>Critical Comment</strong> to cite in your compromise, it will appear here.
+</div>
+        </div>
+    </div>
+    </div>
+
+
+<div class="span12">
+<div id="background" class="#BDD4DE">
+<hr>
+
+
+<div id="response_types" data-toggle="buttons-radio">
+       
+<button id="favorable-menu" onClick="remove_visibility('tabs2'), background('#BDD4DE'), remove_visibility('tabs3'), toggle_visibility('tabs1'), toggle_visibility('box-favorable'), remove_visibility('box-critical'), remove_visibility('box-compromise'), remove_visibility('comp-report'), remove_visibility('compromise-votes'), remove_visibility('comp-source'), toggle_visibility('com-source'), remove_visibility('comp-response-type'), toggle_visibility('box-response-type'), remove_visibility('comp-reply'), toggle_visibility('box-reply'), toggle_visibility('box-report'), toggle_visibility('comment-votes')"class="btn btn-primary btn-large">{{pro_count}} Favorable Response{{pro_count|pluralize}}</button> &nbsp&nbsp
+           <button id="compromise-menu" onClick="remove_visibility('tabs1'), background('#A185FF'), remove_visibility('tabs3'), toggle_visibility('tabs2'), toggle_visibility('box-compromise'), remove_visibility('comment-votes'), toggle_visibility('compromise-votes'), remove_visibility('com-source'), toggle_visibility('comp-source'), toggle_visibility('comp-report'), remove_visibility('box-report'), remove_visibility('box-critical'), remove_visibility('box-response-type'), toggle_visibility('comp-response-type'), remove_visibility('box-reply'), toggle_visibility('comp-reply'), remove_visibility('box-favorable')" class="btn btn-custom btn-large">{{comp_count}} Compromise{{comp_count|pluralize}}</button> &nbsp&nbsp
+           <button id="critical-menu" onClick="remove_visibility('tabs1'), background('#BF2623'), remove_visibility('tabs2'),  toggle_visibility('tabs3'), toggle_visibility('box-critical'), remove_visibility('box-favorable'), remove_visibility('box-compromise'), remove_visibility('comp-source'), toggle_visibility('com-source'), remove_visibility('comp-response-type'), toggle_visibility('box-response-type'), remove_visibility('comp-reply'), toggle_visibility('box-reply'), remove_visibility('comp-report'), remove_visibility('compromise-votes'), toggle_visibility('box-report'), toggle_visibility('comment-votes')" class="btn btn-danger btn-large">{{neg_count}} Critical Response{{neg_count|pluralize}}</button> <br/><br/> 
+        
+        </div> 
+
+
+
+
+
+    <div id="tabs1" class="span8">
+<h3>Favorable Response{{pro_count|pluralize}}</h3><br/>
+        {% for comment in pro_comments %}
+        {% if comment.flag < 3 %}
+        <div class="well">
+            <span id="the_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="the_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+		<h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="com_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="com_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                <span id="the_comment_{{comment.id}}">
+                {{comment.comment}}</span><br/>
+                <span class="reg_buttons"><button class="btn-mini btn-primary" onClick="upvote('{{comment.id}}')">I Agree</button>&nbsp&nbsp&nbsp<button id="c_down_{{comment.id}}" onClick="downvote('{{comment.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button class="btn-mini" onClick="toggle_visibility('make_reply_{{comment.id}}')">Add Reply</button>&nbsp&nbsp&nbsp<button onClick="report('{{comment.id}}')" class="btn-mini">Report Inappropriate</button></span><span class="fav_button hidden"><button onClick="favcompromise('{{comment.id}}')" class="btn-mini btn-primary">Cite in Compromise</button></span>
+              
+             <div id="reportok_{{comment.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{comment.creator|capfirst}}'s Comment</strong>
+</div>  
+<div id="reportbad_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="ok_{{comment.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="bad_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div>  			
+			<div id="make_reply_{{comment.id}}" class="offset1">
+			<form name="titleform" id="the_reply_form_{{comment.id}}" action="" method = "post">
+			<br/><h3>Add Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="id_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<textarea name = "comment" id = "comment_{{comment.id}}" value="" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="submitt_{{comment.id}}" value="Submit" onclick="reply('{{comment.id}}'), remove_visibility('make_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('make_reply_{{comment.id}}'), toggle_visibility('reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			
+			
+            </div><br/>
+            <div id="new_{{comment.id}}" style="background:white" class="replies hidden"></div>
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="replies">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button><br/>
+                    
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Comment</strong>
+</div>  
+
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div>  
+
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button>
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Reply</strong>
+</div>  
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This Reply!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div> 
+
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    
+                    {{reply.comment}}
+                    <br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})" class="pointer">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})" class="pointer">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')" class="pointer">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')" class="pointer">Click to view.</a></span><br/>
+            </div>
+            {% endif %}
+            {% endfor %}
+		
+			{% endif %}
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="com_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="com_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span>
+                    <br/>
+                    <a id="report_{{comment.id}}" onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+        {% endif %}
+        {% endfor %}
+        <script>
+
+nextpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.next_page_number }}");
+}
+prevpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.previous_page_number }}");
+}
+
+</script>
+{% if pro_comments.paginator.num_pages > 1 %}
+        <span class="step-links">
+        {% if pro_comments.has_previous %}
+           <a onClick="prevpro()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pro_comments.number }} of {{ pro_comments.paginator.num_pages }}
+        </span>
+
+        {% if pro_comments.has_next %}
+            <a onClick="nextpro()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+{% endif %}
+
+    </div>
+    
+    
+    <!-- tabs2 compromise comments -->
+    
+    
+    
+    
+    
+    <div id="tabs2" class="span8">
+    <h3>Compromises</h3><br/>
+        {% for comment in compromises %}
+        {% if comment.flag < 3 %}
+        <div class="well">
+            <span id="comp_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="comp_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+		<h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="comps_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="comps_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                <span id="thes_comment_{{comment.id}}">
+                {{comment.comment}}
+                <br/>
+                <div class = "span8 offset-1">
+                 {% if comment.favorable %}
+                <span id = "favorable_{{comment.id}}" class="span34">
+                <h6>Cited Favorable Response by <a href="/{{comment.favorable.creator}}/profile/">{{comment.favorable.creator}}</a></h6><br/>
+                {{comment.favorable.comment}}
+                <br/><br/>
+                </span>
+        {% endif %}
+        {% if comment.critical %}
+                <span id="critical_{{comment.id}}" class="span34">
+                <h6>Cited Critical Response by <a href="/{{comment.critical.creator}}/profile/">{{comment.critical.creator}}</a></h6><br/>
+                {{comment.critical.comment}}
+                
+
+                </span>
+       {% endif %}
+       </div>
+                
+                
+                
+                </span><br/>
+                <button class="btn-mini btn-primary" onClick="compupvote('{{comment.id}}')">I Agree</button>&nbsp&nbsp&nbsp<button id="c_down_{{comment.id}}" onClick="compdownvote('{{comment.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button class="btn-mini" onClick="toggle_visibility('cmake_reply_{{comment.id}}')">Add Reply</button>&nbsp&nbsp&nbsp<button onClick="compreport('{{comment.id}}')" class="btn-mini">Report Inappropriate</button></span>
+              
+             <div id="comp_reportok_{{comment.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{comment.creator|capfirst}}'s Comment</strong>
+</div>  
+<div id="comp_reportbad_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="compyes_{{comment.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="compno_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> 
+ 
+  </div>  
+  
+ 
+        
+              
+  			
+			<div id="cmake_reply_{{comment.id}}" class="offset1 hidden">
+			<form name="titleform" id="com_reply_form_{{comment.id}}" action="" method = "post">
+			<br/><h3>Add Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="comid_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<textarea name = "comment" id = "comcomment_{{comment.id}}" value="" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="comsubmitt_{{comment.id}}" value="Submit" onclick="comreply('{{comment.id}}'), remove_visibility('cmake_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('cmake_reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			
+			
+            </div><br/>
+            <div id="com_new_{{comment.id}}" style="background:white" class="replies hidden"></div>
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="replies">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button><br/>
+                    
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Comment</strong>
+</div>  
+
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div>  
+
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button>
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Reply</strong>
+</div>  
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This Reply!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div> 
+
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    
+                    {{reply.comment}}
+                    <br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})" class="pointer">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})" class="pointer">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')" class="pointer">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')" class="pointer">Click to view.</a></span><br/>
+            </div>
+            {% endif %}
+            {% endfor %}
+		
+			{% endif %}
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="com_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="com_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span>
+                    <br/>
+                    <a id="report_{{comment.id}}" onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+        {% endif %}
+        {% endfor %}
+        <script>
+
+nextpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.next_page_number }}");
+}
+prevpro = function(slug) {
+	$("#tabs1").text();
+	$("#tabs1").load(
+	"/pro/{{slug}}/?page={{ pro_comments.previous_page_number }}");
+}
+
+</script>
+{% if pro_comments.paginator.num_pages > 1 %}
+        <span class="step-links">
+        {% if pro_comments.has_previous %}
+           <a onClick="prevpro()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pro_comments.number }} of {{ pro_comments.paginator.num_pages }}
+        </span>
+
+        {% if pro_comments.has_next %}
+            <a onClick="nextpro()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+{% endif %}
+
+    </div>
+
+    
+    
+    
+    <!-- endtabs2 compromise -->
+    
+    
+    
+    
+    <!-- tabs3 critical comments -->
+    
+    
+    
+    <div id="tabs3" class="span8">
+<h3>Critical Responses</h3><br/>
+        {% for comment in neg_comments %}
+        {% if comment.flag < 3 %}
+        <div class="well">
+            <span id="the_up_{{comment.id}}" class="{{comment.up}}">
+            </span>
+            <span id="the_down_{{comment.id}}" class="{{comment.down}}">
+            </span>
+            {% if comment.source %}
+		<div id="scroll_{{comment.id}}" class="sourced">
+		{% else %}
+		<div id="scroll_{{comment.id}}" class="">
+		{% endif %}
+		<h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="com_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="com_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                <span id="the_comment_{{comment.id}}">{{comment.comment}}</span><br/>
+                <span class="reg_buttons"><button class="btn-mini btn-primary" onClick="upvote('{{comment.id}}')">I Agree</button>&nbsp&nbsp&nbsp<button id="c_down_{{comment.id}}" onClick="downvote('{{comment.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button class="btn-mini" onClick="toggle_visibility('make_reply_{{comment.id}}')">Add Reply</button>&nbsp&nbsp&nbsp<button onClick="report('{{comment.id}}')" class="btn-mini">Report Inappropriate</button></span><span class="crit_button hidden"><button onClick="critcompromise('{{comment.id}}')" class="btn-mini btn-primary">Cite in Compromise</button></span>
+              
+             <div id="reportok_{{comment.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{comment.creator|capfirst}}'s Comment</strong>
+</div>  
+<div id="reportbad_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="ok_{{comment.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="bad_{{comment.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div>  			
+			<div id="make_reply_{{comment.id}}" class="offset1">
+			<form name="titleform" id="the_reply_form_{{comment.id}}" action="" method = "post">
+			<br/><h3>Add Reply</h3>
+			{% csrf_token %}
+			<input type="hidden" name="id" id="id_{{comment.id}}" value="{{comment.id}}"/>
+			
+    		<p>
+    		<textarea name = "comment" id = "comment_{{comment.id}}" value="" rows="7" cols="50"></textarea>
+    		</p>
+    		<p>
+    		<input type="button" class="btn btn-primary" id="submitt_{{comment.id}}" value="Submit" onclick="reply('{{comment.id}}'), remove_visibility('make_reply_{{comment.id}}')" />
+    		<input type="button" class="btn btn-danger" onClick="remove_visibility('make_reply_{{comment.id}}'), toggle_visibility('reply_{{comment.id}}')" id="cancell_{{comment.id}}" value="Cancel"/>  		</p>
+    		
+    		
+			</form>
+			</div>
+			
+			
+			
+            </div><br/>
+            <div id="new_{{comment.id}}" style="background:white" class="replies hidden"></div>
+            {% if comment.replies.all %}
+            
+            {% for reply in comment.replies.all %}
+            {% if reply.flag < 3 %}
+			{% if reply.creator == creator %}
+			<div class="replies">
+			<span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button><br/>
+                    
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Comment</strong>
+</div>  
+
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div>  
+
+                </div>
+            
+			</div>
+			
+			{% else %}
+            <div class="replies">
+            <span id="ups_{{reply.id}}" class="{{reply.up}}"></span>
+            <span id="downs_{{reply.id}}" class="{{reply.down}}"></span>
+                <div id="reply_{{reply.id}}" class="{{comment.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    {{reply.comment}}<br/><br/>
+                    <button id="r_up_{{reply.id}}" onClick="replyupvote('{{reply.id}}')" class="btn-mini btn-primary">I Agree</button>&nbsp&nbsp&nbsp<button id="r_down_{{reply.id}}" onClick="replydownvote('{{reply.id}}')" class="btn-mini btn-danger">I Disagree</button>&nbsp&nbsp|&nbsp&nbsp<button onClick="replyreport('{{reply.id}}')" class="btn-mini">Report Inappropriate</button>
+                    <div id="rreportok_{{reply.id}}" class="alert hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Reported {{reply.creator|capfirst}}'s Reply</strong>
+</div>  
+<div id="rreportbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Already Reported This Reply!</strong>
+</div>  
+
+
+            <div id="rok_{{reply.id}}" class="alert alert-success hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Thanks for Voting!</strong>
+</div>  
+<div id="rbad_{{reply.id}}" class="alert alert-error hidden">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>You Can Only Vote Once!</strong> </div> 
+
+                </div>
+            </div>
+            
+            {% endif %}
+            
+                <br/>
+            {% else %}
+            <div class="replies">
+            <span id="report_{{reply.id}}">
+                    <h5><a href="/{{reply.creator}}/profile/">{{reply.creator}}</a> | <span id="re_up_{{reply.id}}">{{reply.up}}</span> In Favor, <span id="re_down_{{reply.id}}">{{reply.down}}</span> Against</h5><br/>
+                    
+                    {{reply.comment}}
+                    <br/>
+                    <br/>
+                    <a onClick="replyreport({{reply.id}})" class="pointer">Report Reply</a>&nbsp&nbsp
+                    <a onClick="unreportreply({{reply.id}})" class="pointer">Un-Report Reply</a>
+                    &nbsp&nbsp<a onClick="remove_visibility('report_{{reply.id}}')" class="pointer">Hide Reply</a><br/>
+            </span>
+            <span id="notice_{{reply.id}}">This reply has been reported. <a onClick="toggle_visibility('report_{{reply.id}}'), remove_visibility('notice_{{reply.id}}')" class="pointer">Click to view.</a></span><br/>
+            </div>
+            {% endif %}
+            {% endfor %}
+		
+			{% endif %}
+        </div>
+        {% else %}
+        
+            <span id="reportcomment_{{comment.id}}">
+                    <h4><a href="/{{comment.creator}}/profile/">{{comment.creator}}</a> | <span id="com_up_{{comment.id}}">{{comment.up}}</span> In Favor, <span id="com_down_{{comment.id}}">{{comment.down}}</span> Against</h4><br/>
+                    <span id="reportedcomment_{{reply.id}}">
+                    {{comment.comment}}
+                    </span>
+                    <br/>
+                    <a id="report_{{comment.id}}" onClick="report({{comment.id}})">Report Comment</a>&nbsp&nbsp
+                    <a onClick="unreportcomment({{comment.id}})">Un-Report Comment</a>&nbsp&nbsp<a onClick="remove_visibility('reportcomment_{{comment.id}}')">Hide Comment</a><br/>
+            </span>
+            <span id="noticecomment_{{comment.id}}">This reply has been reported. <a onClick="toggle_visibility('reportcomment_{{comment.id}}'), remove_visibility('noticecomment_{{comment.id}}')">Click to view.</a></span><br/>
+            
+        {% endif %}
+        {% endfor %}
+        <script>
+
+nextneg = function(slug) {
+	$("#tabs3").text();
+	$("#tabs3").load(
+	"/neg/{{slug}}/?page={{ neg_comments.next_page_number }}");
+}
+prevneg = function(slug) {
+	$("#tabs3").text();
+	$("#tabs3").load(
+	"/neg/{{slug}}/?page={{ neg_comments.previous_page_number }}");
+}
+
+</script>
+{% if neg_comments.paginator.num_pages > 1 %}
+        <span class="step-links">
+        {% if neg_comments.has_previous %}
+           <a onClick="prevneg()" class="pointer">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ neg_comments.number }} of {{ neg_comments.paginator.num_pages }}
+        </span>
+
+        {% if neg_comments.has_next %}
+            <a onClick="nextneg()" class="pointer" >next</a>
+        {% endif %}
+   	    </span>
+{% endif %}
+
+    </div>
+
+    
+    
+    <!-- endof tabs3 -->
+
+
+
+
+
+</div>
+
+
+
+
+
+<!-- -->
+	    
+    <div class="span4">
+    <div id="drop3" class="">
+    <span id="compromise-box" class=""><!--if submit with no variable say something's wrong with your javascript-->
+  			
+  			  			 </span>
+  			 <br/>
+  			 <span id="compromise-results">
+  			 </span> 
+  			 </div>
+  			 
+  			   			 
+        
+
+
+
+
+
+     </div>
+     <div class="span12">
+     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/><br/><br/>     </div>
+     {% endblock %}

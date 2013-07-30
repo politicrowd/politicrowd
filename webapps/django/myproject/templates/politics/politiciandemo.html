@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Politician Inbox Demo - PolitiCrowd.com</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/media/js/flexslider.css" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />                
+        <link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+        <script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="/static/media/js/jquery.flexslider.js"></script>
+        <script type="text/javascript" src="/static/media/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" src="/static/media/js/custom.js"></script>
+        <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42077141-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42077141-1', 'politicrowd.com'); ga('send', 'pageview'); </script>
+        <script type="text/javascript">
+         load_letters = function(target){
+        	if(target == 'responded'){
+        	$(".request").removeClass('active');
+        	$(".response").addClass('active');
+        	        	
+        	}
+        	else{
+        		$(".response").removeClass('active');
+        		$(".request").addClass('active');
+        		
+        	
+        	}
+        	
+        
+        }
+
+            $(document).ready(function(){
+                $('.bxslider1').bxSlider({
+                    minSlides: 1,
+                    maxSlides: 3,
+                    slideWidth: 282,
+                    slideMargin: 40
+                });
+                $('.bxslider2').bxSlider({
+                    minSlides: 3,
+                    maxSlides: 3,
+                    slideWidth:165,
+                    slideMargin:150
+
+                });
+            });
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            $(window).load(function() {
+                $('#slider2').flexslider({
+                    animation: "slide",
+                    slideshow: false,  
+                    controlNav:false
+                });
+            });
+			
+			
+            if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ) {
+                $(document).ready(function(){
+                    $('.bx-prev, .bx-next').hide();
+                    $('.bxslider1').bxSlider({
+                        minSlides: 1,
+                        maxSlides: 1,
+                        slideWidth: 240,
+                        slideMargin: 40
+                    });
+                    $('.bxslider2').bxSlider({
+                        minSlides: 1,
+                        maxSlides: 1,
+                        slideWidth:165,
+                        slideMargin:150
+			
+                    });
+                    /*$('.issues-list li').hide();
+                    $('.issues-list li.bold').show();
+                    $('.issues-list li.bold').click(function(){
+                        $(this).siblings('li').toggle();
+                    });*/
+                });
+            }
+			 
+            if ((navigator.userAgent.match(/iPad/i))) {
+                $(document).ready(function(){
+                    $('.bx-prev, .bx-next').hide();
+                    $('.bxslider1').bxSlider({
+                        minSlides: 2,
+                        maxSlides: 2,
+                        slideWidth: 282,
+                        slideMargin: 40
+                    });
+                    $('.bxslider2').bxSlider({
+                        minSlides: 2,
+                        maxSlides: 2,
+                        slideWidth:165,
+                        slideMargin:150
+
+                    });
+                    /*$('.issues-list li').hide();
+                    $('.issues-list li.bold').show();
+                    $('.issues-list li.bold').click(function(){
+                        $(this).siblings('li').toggle();
+                    });*/
+                });
+            }
+				 
+				 
+        </script>
+    </head>
+
+    <body class="profile-page">
+    <div class="outerWrapper">
+        <header class="brown_bg">
+            <div class="wrapper">
+                <a href="/" id="logo"> <img src="/static/media/images/logo.png" alt=""/></a>
+                <a class="mob-menu" href="#">
+                    <span class="mob-open"><img src="/static/media/images/mob-menu-img.png" alt="img"></span>
+                    <span class="mob-close"><img src="/static/media/images/mob-close.png" alt="img"></span>
+                </a>
+                <nav>
+                    <ul>
+                    	<li><a href="/about/">ABOUT</a></li>
+                        <li><a href="/demo/politician/">POLITICIAN'S INBOX [DEMO]</a></li>
+                        <li><a href="/demo/openletter/">OPENLETTER [DEMO]</a></li>
+                        
+                        <li class="last marg_right"><a href="#">SIGN UP 7/15!</a></li>
+                        <li class="search marg_right"><a href="#"></a></li>
+                    </ul>
+                    <form action="#">
+                        <div class="search_box">
+                            <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                        </div>
+                    </form>
+                </nav>
+
+            </div>
+        </header>
+        <div class="toppolitician light_bg profile">
+        
+            <div class="wrapper"> 
+                <!-- Politician Page 1st Row start here -->
+                <div class="turnPaperTop profile">
+                	<span class="left-donkey"></span>
+                    <span class="right-elephant"></span>
+
+                    <section class="committee-sec-wrapper">    
+                        
+                                    <div id="one" class="committee-sec">
+                                        <ul class="committee">
+                                            <li>
+                                                <h3>Appropriations Committee</h3>
+                                                <p>The powerful Appropriations Committee writes the legislation that allocates federal funds to the numerous government agencies, departments, and organizations on an annual basis.</p>
+                                            </li>
+                                            <li  class="last">
+                                                <h3>Banking, Housing and Urban Affairs</h3>
+                                                <p>The Banking, Housing and Urban Affairs Committee deals with issues including our nation's banks, the financial markets, the insurance industry, housing, urban development and mass transit.</p>
+                                            </li>
+                                        </ul>
+                                        <ul class="paging">
+                                            <li><a href="#" class="left"></a></li>
+                                            <li>P 1</li>
+                                            <li><a href="#" class="right"></a></li>
+                                        </ul>     
+                                         <span class="shadow"></span>                                   
+                                    </div> 
+                                
+                                    <div id="two" class="committee-sec">
+                                        <section class="info-wrapper">
+                                            <div class="profile-img-sec">
+                                                <figure class="img1">                                                
+                                                    <article class="arrow"> <img alt="" src="/static/media/images/most_politician_arrow.png" /> </article>
+                                                    <section class="politication_img"> <img alt="" src="/static/media/images/info.png" />
+                                                    
+                                                        <!--                                                    <section class="hover_effect"></section>-->
+                                                    </section>
+                                                    
+                                                </figure><!--change-->
+                                                    <em class=""></em>
+                                                    <!--change-->
+                                                <span class="or-sec">OR</span>
+                                            </div>
+                                            <div class="profile-info-sec-wrapper">
+                                                <ul class="profile-info-sec">
+                                                    <li><span>Sen.</span></li>
+                                                    <li><strong>GRANT ARNOLD</strong></li>
+                                                    <li><p>2303 N Randolph Ave Ste 7<br> Portland, OR 97227</p></li>
+                                                    <li><p>Phone: 555-503-8749</p></li>
+                                                    <li><a href="http://www.senate.gov">www.senate.gov</a></li>
+                                                </ul>
+                                                <ul class="introsocial1 profile">
+													<!--change-->
+                                                                                                        <li><a class="facebookSocial" href="http://www.facebook.com/politicrowd"></a></li>
+                                                    <li><a class="twiterSocial" href="http://www.twitter.com/politicrowd"></a></li>
+                                                    <li><a class="messageSocial" href="#"></a></li>
+                                                    <li class="marg_right"><a class="followSocial" href="#"></a></li>
+                                                </ul>
+                                            </div>
+                                            <div id="message" class="drop-sec">
+                                    	
+                                        <ul>
+                                       <form id="emailform" method="POST" action="/email/page/">
+                                        {% csrf_token %}
+                                        	<li>
+                                        	 <label>Send link to:</label>
+                                        	 </li>
+                                        	 <li>
+                                        	 <input type="hidden" name="politician" value="test">
+                                    <input type="email"  name="email" onfocus="if(this.placeholder == 'Enter an address') {this.placeholder = '';}" onblur="if (this.placeholder == '') {this.placeholder = 'Enter an address';}" placeholder="Enter an address" /><br>
+                                            	
+                                            </li>
+                                          
+                                            <li><input type="submit" value="Submit" /></li>        
+                                            </form>
+                                            </ul>
+                                    </div>
+
+                                        </section>     
+                                         <span class="shadow"></span>                            
+                                    </div> 
+                                
+                           
+                        
+                        <ul class="info-sec">
+                            <li class="first"><a href="#one"><span>Committee Membership</span></a></li>  
+                            <li><a href="#two"><small>Info</small></a></li>                                                      
+                        </ul>
+                    </section>
+                    <!--                    <a href="#" class="flex-next donkeyright"></a>-->
+                </div>
+            </div>
+        </div>
+        <!-- Politician Page 2nd Row start here -->
+        <section class="mark-promise profile">
+            <div class="wrapper">
+                <ul class="rank-sec">
+                    <li id="first">
+                        <span>Total Received OpenLetters</span>
+                        <strong>100</strong>
+                        <aside class="flag-sec">
+                            <div class="flag">
+                                <small class="top"></small>
+                                <span>Rank</span>
+                                <strong>#4</strong>
+                                <small></small>
+                            </div>
+                        </aside>
+                    </li>
+                    <li class="second">
+                        <span>Total Responded OpenLetters</span>
+                        <strong>80</strong>
+                    </li>
+                    <li>
+                        <span>Recent Responses</span>
+                        <strong>5</strong>
+                    </li>
+                </ul>
+                <div class="promise profile">
+                    <div class="legislature">
+                        <a class="legis-link" href="#">Month</a>
+                        <ul>
+                            <li><a href="#">Day</a></li>
+                            <li><a href="#">Week</a></li>
+                            <li><a href="#">Month</a></li>
+                        </ul>
+                    </div>
+                    <form action="#">
+                    <div class="promise-txtbx profile">
+                        <div>
+                        	<small><img src="/static/media/images/search.png" alt="img"></small><a class="first active" href="#">Most Requested<label>(8)</label></a>
+                        	<input type="text" value="Search" onblur="if (this.value == '') {this.value = 'Search';}" onfocus="if(this.value == 'Search') {this.value = '';}">
+                        </div>
+                        <!--<input name="" type="text" placeholder="Search for a promised OpenLetter">-->
+                    </div>
+                    </form>
+                </div>
+                <section class="trending_box">                  
+                    <article class="trending_openLetters profile">               
+                        <ul class="bxslider1">
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_Int_tec">
+                                        <h3>Internet & Technology</h3>
+                                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient </p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p>Politician responses: 4 </p>
+                                            <p>Requested politicians: 22</p>
+                                            <p>Contributors: 505 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_environment">
+                                        <h3>Environment</h3>
+                                        <p>Donec id elit non mi porta gravida at eget metus.</p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p>Politician responses: 2 </p>
+                                            <p>Requested politicians: 10</p>
+                                            <p>Contributors: 320 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_civil">
+                                        <h3>Civil Rights</h3>
+                                        <p>Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p> Politician responses: 3 </p>
+                                            <p>Requested politicians: 15</p>
+                                            <p>Contributors: 275 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+
+
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_Int_tec">
+                                        <h3>Internet & Technology</h3>
+                                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient </p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p>Politician responses: 2 </p>
+                                            <p>Requested politicians: 10</p>
+                                            <p>Contributors: 150 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_environment">
+                                        <h3>Environment</h3>
+                                        <p>Donec id elit non mi porta gravida at eget metus.</p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p>Politician responses: 3 </p>
+                                            <p>Requested politicians: 14</p>
+                                            <p>Contributors: 74 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <div class="box">
+                                    <section class="inner_box trend_civil">
+                                        <h3>Civil Rights</h3>
+                                        <p>Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                                    </section>
+                                    <figure class="box_shadow profile"><img src="/static/media/images/trendingbox_shadow.png" alt=""/> </figure>
+                                    <figure class="boxbottom_arrow"><img src="/static/media/images/boxbottom_arrow.png" alt=""/> </figure>
+                                </div>
+                                <section class="openletter">
+                                    <article class="openletter_arrow"> <a href="#" class="arrowup"></a> <span class="count">2,000 </span> <a href="#" class="arrowdown"></a> </article>
+                                    <article class="right_section"> <span class="thumbimg"><img src="/static/media/images/thum_img.jpg" alt=""/> </span>
+                                        <section class="points">
+                                            <p>Politician responses: 23 </p>
+                                            <p>Requested politicians: 10</p>
+                                            <p>Contributors: 50 </p>
+                                        </section>
+                                    </article>
+                                </section>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <a class="prev3" id="foo5_prev" href="#"></a> <a class="next3" id="foo5_next" href="#"></a> </article>
+                </section>
+            </div>
+        </section>
+
+        <!-- Demo Section Start Here--> 
+
+        <!--3rd Row start here with slider-->
+        <section id="my-politics" class="congressPolitician light_bg profile">
+            <div class="wrapper"> 
+                <!-- Main container for Left Bar and Slider -->
+                <div class="open-head">                    
+                    <ul>
+                        <li class="request first active"><a class="cursor" onClick="load_letters('requested')">786 Requested Responses</a></li>                        
+                        <li class="response break last"><a class="cursor" onClick="load_letters('responded')">80 Responses Given </a></li>
+                    </ul>
+				<!--change-->
+                </div>
+                <div class="issues-sec profile">
+                    <section class="issue-left-sec">
+                        <ul class="issues-list">
+                            <li class="bold active profile"><a href="#"><span>All Issues</span><small>(786)</small></a></li>
+                            <li><a href="#"><span>Education</span><small>(110)</small></a></li>
+                            <li><a href="#"><span>Foreign Affairs</span><small>(100) </small></a></li>
+                            <li><a href="#"><span>Environment</span><small>(98)</small></a></li>
+                            <li><a href="#"><span>Civil Rights</span><small>(86)</small></a></li>
+                            <li><a href="#"><span>Agriculture</span><small>(77)</small></a></li>
+                            <li><a href="#"><span>Energy</span><small>(73)</small></a></li>
+                            <li><a href="#"><span>Crime</span><small>(70)</small></a></li>
+                            <li><a href="#"><span>Business</span><small>(66)</small></a></li>
+                            <li><a href="#"><span>Budget</span><small>(56)</small></a></li>
+                            <li><a href="#"><span>Veterans' Affairs </span><small>(50)</small></a></li>
+                            <li><a href="#"><span>Government Reform</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Welfare</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Healthcare</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Immigration</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Internet and Technology</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Jobs</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Small Business</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Social Security</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Taxes</span><small>(0)</small></a></li>
+                            <li><a href="#" class="fade"><span>Transportation</span><small>(0)</small></a></li>
+                        </ul>
+
+                    </section>
+                    <div class="open-box">
+                        <div class="open-data">
+                             <div class="most-target politics">
+							 <a class="SBtn3" href="#"><img src="/static/media/images/search.png"></a>
+                                    <a class="target-link" href="#">Top</a>
+                                    <ul class="target-drop politics">
+                                        <li><a href="#">Top</a></li>
+                                        <li><a href="#">New </a></li>
+                                        <li><a href="#">Trending</a></li>
+                                        <li><a href="#">Controversial</a></li>
+                                    </ul>                   
+                                </div>
+                            <!--<a href="#" class="toptxt">Top</a>-->
+                            <ul class="open-listing">
+                                <li class="first">
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="arrows">
+                                        <a href="#" class="up-arrow"></a>
+                                        <span>2,250</span>
+                                        <a href="#" class="down-arrow"></a>
+                                    </div>
+                                    <span class="img-sec"><img alt="img" src="/static/media/images/open-img.jpg"></span>
+                                    <div class="open-txt">
+                                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Sed posuere consectetur est at lobortis.</p>
+                                        <ul>
+                                            <li class="first"><a href="#">started by Jeremy Fish</a></li>
+                                            <li class="last"><a href="#">contributors: <label>50</label></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="pagination">
+                                <li><a href="#">Next</a></li>
+                                <li><a href="#">P1</a></li>
+                                <li><a href="#">Prev</a></li>
+                            </ul>
+                        </div>
+                        <small class="position-arrow"></small>
+                    </div>
+                    <div class="searchbox">
+                        <form autocomplete="on" method="post" action="">
+                            <input type="text" class="field" value="Find Openletters" onblur="if (this.value == '') {this.value = 'Find Openletters';}" onfocus="if(this.value == 'Find Openletters') {this.value = '';}" />
+                            <input type="submit" class="button">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+<footer class="footerCntr">
+    <div class="wrapper">
+        <article class="aboutBox">
+            <h2><a href="/about/">About</a> </h2>
+            <a href="/about/"><p>PolitiCrowd is a non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. </p></a>
+        </article>
+        <div class="contactBox">
+            <div class="first">
+            	<h2>Contact</h2>
+            	<p><a href="mailto:Info@politicrowd.com">Info@politicrowd.com</a></p>
+            </div>
+            <div class="second">
+                <h2>Support us</h2>
+               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="97NV6FB3S8HP8">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form> 
+            </div>
+            </div>
+        <div class="followBox">
+            <h2>Follow us</h2>
+            <ul class="socialUl">
+                <li class="facebook"><a href="http://www.facebook.com/politicrowd"></a></li>
+                <li class="twiter"><a href="http://www.twitter.com/politicrowd"></a></li>
+            </ul>
+            <div class="form">
+            
+              
+            </div>
+            <p><small>&copy; 2013, PolitiCrowd.com. All Rights Reserved.</small> <a href="/privacypolicy/">Privacy Policy </a>. <a href="#">Terms of Use</a></p>
+        </div>
+    </div>
+</footer>
+        </div>
+    </body>
+</html>

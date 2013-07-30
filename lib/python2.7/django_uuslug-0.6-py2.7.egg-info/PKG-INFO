@@ -1,0 +1,110 @@
+Metadata-Version: 1.1
+Name: django-uuslug
+Version: 0.6
+Summary: A Django slugify application that guarantees uniqueness and handles unicode
+Home-page: http://github.com/un33k/django-uuslug
+Author: Val L33
+Author-email: val@neekware.com
+License: UNKNOWN
+Description: django-uuslug
+        ================
+        
+        A Django slugify application that guarantees uniqueness and handles unicode.
+        UUSlug = (``U``nique + ``U``code Slug)
+        
+        Patches welcome: https://github.com/un33k/django-uuslug
+        
+        Usage
+        =====
+        
+        A. Install django-uuslug:
+            * _ Make sure you have python 2.6+ and can install from pypi
+                1. easy_install django-uuslug
+                2. pip install django-uuslug
+                3. git clone http://bitbucket.org/un33k/django-uuslug
+                    a. cd django-uuslug
+                    b. run python setup.py
+                4. wget https://github.com/un33k/django-uuslug/zipball/master
+                    a. unzip the downloaded file
+                    b. cd into django-uuslug-* directory
+                    c. run python setup.py
+        
+        B. Test & contribute to django-uuslug: (for developers)
+            * _ git clone http://bitbucket.org/un33k/django-uuslug
+                    a. cd into django-uuslug
+                    b. run python bootstrap.py
+                    c. run bin/buildout -vvvvv
+                    d. run bin/test
+        
+        
+        Unicode Test Example
+        =====================
+        from uuslug import uuslug as slugify
+        
+        s = "This is a test ---"
+        r = slugify(s)
+        self.assertEquals(r, "this-is-a-test")
+        
+        s = 'C\'est déjà l\'été.'
+        r = slugify(s)
+        self.assertEquals(r, "c-est-deja-l-ete")
+        
+        s = 'Nín hǎo. Wǒ shì zhōng guó rén'
+        r = slugify(s)
+        self.assertEquals(r, "nin-hao-wo-shi-zhong-guo-ren")
+        
+        s = '影師嗎'
+        r = slugify(s)
+        self.assertEquals(r, "ying-shi-ma")
+        
+        
+        Uniqueness Test Example
+        =======================
+        Override your object's save method with something like this (models.py)
+        
+        from django.db import models
+        from uuslug import uuslug as slugify
+        
+        class CoolSlug(models.Model):
+            name = models.CharField(max_length=100)
+            slug = models.CharField(max_length=200)
+            
+            def __unicode__(self):
+                return self.name
+            
+            def save(self, *args, **kwargs):
+                self.slug = slugify(self.name, instance=self)
+                super(CoolSlug, self).save(*args, **kwargs)
+        
+        Test:
+        =====
+         
+        name = "john"
+        c = CoolSlug.objects.create(name=name)
+        c.save()
+        self.assertEquals(c.slug, name) # slug = "john"
+          
+        c1 = CoolSlug.objects.create(name=name)
+        c1.save()
+        self.assertEquals(c1.slug, name+"-1") # slug = "john-1"
+        
+        ToDo:
+        =====
+        clean up README
+        add more test and examples
+        
+        Credits:
+        =========
+        This is a cleaned and packaged up version of snippet (369) from http://www.djangosnippets.org/
+        Improved to handle unique slugs and unicode chars and packaged for easy install.
+        
+        
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Utilities

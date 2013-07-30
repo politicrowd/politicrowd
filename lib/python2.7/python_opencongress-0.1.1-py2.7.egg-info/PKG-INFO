@@ -1,0 +1,18 @@
+Metadata-Version: 1.1
+Name: python-opencongress
+Version: 0.1.1
+Summary: A Python interface to the OpenCongress.org API
+Home-page: http://github.com/cpharmston/python-opencongress
+Author: Chuck Harmston
+Author-email: cpharmston@gmail.com
+License: Dual-licensed under MIT and GPL
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}PolitiCrowd - Login or Sign Up!{% endblock %}
+{% block head %}
+<script type="text/javascript">
+ $(document).ready(function(e) {
+ 	$('#orgcheck').mousedown(function() {
+ 		
+    if (!$(this).is(':checked')) {
+        $("#firstorg").text('Organization Name');
+        $("#last").hide();
+    }
+    else{
+    	$("#firstorg").text('First Name');
+    	$("#last").show();
+    }
+});
+ 	
+ 	
+  $("#loginform").validate({
+  rules: {
+  	email:{
+  		email: true
+  		
+  	}
+
+    
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});     
+
+$("#signupform").validate({
+  rules: {
+  	email:{
+  		email: true
+  		
+  	}
+
+    
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});     
+
+        });
+</script>
+{% endblock %}
+
+{% block body %}
+
+<section class="signContainer">
+    <article class="wrapper">
+        <article class="signLeft">
+            <h2 class="signHead">Log In</h2>
+            <strong class="back">Welcome back!</strong>
+
+            <form method="POST" id="loginform" action="/login/">
+            	{% csrf_token %}
+                <ul class="loginDetail">
+                    <li>
+                        <label>Email</label>
+                        <input type="text" class="required" name="email" />
+                    </li>
+                    <li> <span class="forgot">
+                        <label>Password </label>
+                        <a href="#">I forgot my password</a> </span>
+                        <input type="password" class="required" name="password" />
+                        <article class="forgotPop"> <a href="#" class="cross"><img src="/static/media/images/cross.png" alt="cross"/></a>
+                            <h3 class="passHead">FORGOT YOUR PASSWORD?</h3>
+                            <strong class="tellUs">Tell us the email you used to sign up and we'll help you log in.</strong>
+                            <input type="text" name="" value="" class="textBox1"/>
+                            <input type="submit" name="" value="Reset My Password" class="reset"/>
+                        </article>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="" value="" class="check"/>
+                        <span class="remember">Remember me </span>
+                        <input type="submit" name="" value="Log me in!" class="sBtn"/>
+                    </li>
+                </ul>
+            </form>
+        </article>
+        <article class="signLeft right">
+            <h2 class="signHead">New here? Let's get you started.</h2>
+            
+            <form method="POST" id="signupform" action="/register/">
+            	{% csrf_token %}
+            	
+                <ul class="loginDetail">
+                    <li>{{error}}
+                        <label>Email</label>
+                        <input type="text" class="required"name="email" />
+                    </li>
+                    <li>
+                        <label>Password </label>
+                        <input type="password" class="required" name="password1"/>
+                    </li>
+                    <li>
+                        <label>Repeat password (just so we're sure)</label>
+                        <input type="password" class="required" name="password2"/>
+                    </li>
+                    <li>
+                    
+                                <input type="hidden" name="organization" value=""/>
+                                        <input type="checkbox" id="orgcheck" name="promise" value="ok" class="" />
+                                        Check if you are an advocacy group or organization.
+                    	
+                    </li>
+                    <li>
+                        <label id="firstorg">First Name</label>
+                        <input type="text" class="required" name="first" />
+                    </li>
+                    <li id="last">
+                        <label>Last name or last initial</label>
+                        <input type="text" class="required" name="last" />
+                    </li>
+                    <li>
+                    	<label>Zip Code</label>
+                    	<input type="text" class="required" name="zipcode" />
+                    </li>
+                    <li> <span class="terms">By signing up, you agree to our <a href="#"> terms of use</a> and <a href="#">privacy policy</a> </span>
+                        <input type="submit" value="Get engaged" class="sBtn2"/>
+                    </li>
+                </ul>
+            </form>
+        </article>
+    </article>
+</section>
+{% endblock %}

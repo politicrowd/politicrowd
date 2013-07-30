@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="/static/media/img/favv.ico" />
+<title>{% block title %} {% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/media/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/stylish-select.css" />
+        <link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+     	<script src="/static/media/bootstrap-1/js/bootstrap.min.js"></script>
+     	<link rel="stylesheet" type="text/css" href="/static/media/bootstrap-1/css/bootstrap.min.css" />
+        <script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+        <script type="text/javascript" src="/static/media/js/jquery.bxslider.js"></script>
+        <script type="text/javascript" language="javascript" src="include/js/jquery.carouFredSel-6.2.0-packed.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/jquery.stylish-select.min.js"></script>
+        <script type="text/javascript" language="javascript" src="/static/media/js/custom-form-elements.js"></script>
+		<script type="text/javascript" language="javascript" src="/static/media/js/custom.js"></script>
+		<script src="/static/media/js/validate.js"></script>
+		<script src="/static/media/js/tooltip.js"></script>
+
+{% block head %}
+
+{% endblock %}
+</head>
+
+<body>
+<div class="outerWrapper">
+<header class="brown_bg">
+    <div class="wrapper"> <a href="/" id="logo"> <img src="/static/media/images/logo.png" alt=""/></a> <a class="mob-menu" href="#"> <span class="mob-open"><img src="/static/media/images/mob-menu-img.png" alt="img"></span> <span class="mob-close"><img src="/static/media/images/mob-close.png" alt="img"></span> </a>
+        <nav>
+            <ul>
+                <li><a href="/politicians/">POLITICIANS</a></li>
+                <li><a href="/issues/">ISSUES</a></li>
+                <li><a href="/engage/">ENGAGE</a></li>
+                <li><a href="/profile/">MY POLITICS</a></li>
+                {% if user.is_authenticated %}<li class="last marg_right"><a href="/logout/">LOG OUT</a> {% else %}<li class="last marg_right"><a href="/login/">LOG IN/SIGN UP</a></li>{% endif %}
+                <li class="search marg_right"><a href="#"></a></li>
+            </ul>
+            <form action="#">
+                <div class="search_box">
+                    <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                </div>
+            </form>
+        </nav>
+    </div>
+</header>
+
+
+{% block body %}
+
+{% endblock %} 
+
+
+<footer class="footerCntr">
+    <div class="wrapper">
+        <article class="aboutBox">
+            <h2><a href="/about/">About</a> </h2>
+            <a href="/about/"><p>PolitiCrowd is a non-profit organization whose goal is to transform the relationship between politicians and their constituents. By leveraging the power of our community through OpenLetters, political influence can extend beyond the voting booth. </p></a>
+        </article>
+        <div class="contactBox">
+            <div class="first">
+            	<h2>Contact</h2>
+            	<p><a href="mailto:Info@politicrowd.com">Info@politicrowd.com</a></p>
+            </div>
+            <div class="second">
+                <h2>Support us</h2>
+               <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="97NV6FB3S8HP8">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form> 
+            </div>
+            </div>
+        <div class="followBox">
+            <h2>Follow us</h2>
+            <ul class="socialUl">
+                <li class="facebook"><a href="http://www.facebook.com/politicrowd"></a></li>
+                <li class="twiter"><a href="http://www.twitter.com/politicrowd"></a></li>
+            </ul>
+            <div class="form">
+                <form action="" method="post"  autocomplete="on">
+                    <input type="text"  onfocus="if(this.value == 'Your Email') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Your Email';}" value="Your Email" class="field" />
+                    <input type="submit" class="button" />
+                </form>
+            </div>
+            <p><small>&copy; 2013, PolitiCrowd.com. All Rights Reserved.</small> <a href="/privacypolicy/">Privacy Policy </a>. <a href="#">Terms of Use</a></p>
+        </div>
+    </div>
+</footer>
+ </div>
+</body>
+</html>

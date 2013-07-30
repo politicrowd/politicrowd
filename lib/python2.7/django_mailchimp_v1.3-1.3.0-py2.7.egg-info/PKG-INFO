@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: django-mailchimp-v1.3
+Version: 1.3.0
+Summary: Mailchimp wrapper for Django, using Mailchimp API 1.3
+Home-page: http://github.com/piquadrat/django-mailchimp
+Author: Jonas Obrist et al.
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

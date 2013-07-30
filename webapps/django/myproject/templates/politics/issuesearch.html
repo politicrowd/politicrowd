@@ -1,0 +1,16 @@
+
+
+{% block content %}
+<div class="well span6">
+{% if issues %}
+<h4>
+Click the issue you want to discuss or type in your own:</h4><br/><br/>
+{% for issue in issues %}
+
+<a onClick="issue('{{issue.title}}')" class="pointer">{{issue.rank}} | {{issue.title}}</a><br/>
+
+{% endfor %}
+{% endif %}
+</div>
+
+{% endblock %}

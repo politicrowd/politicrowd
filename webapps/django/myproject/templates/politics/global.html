@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<script src="/static/media/js/jquery-1.8.2.min.js"></script>
+<script src="/static/media/js/jquery.carouFredSel-6.1.0.js"></script>
+<script>
+$(document).ready(function() {
+
+	// Using default configuration
+	$("#foo1").carouFredSel();
+	
+	// Using custom configuration
+	$("#issues").carouFredSel({
+	circular: true,
+	infinite: true,
+	items: 4,
+	auto: false,
+	prev: {
+		button: "#prev_issue",
+		key: "left"
+	},
+	next: {
+		button: "#next_issue",
+		key: "right"
+	}
+});
+
+$("#open_letters").carouFredSel({
+	circular: true,
+	infinite: true,
+	items: 4,
+	auto: false,
+	prev: {
+		button: "#prev_letter",
+		key: "left"
+		
+	},
+	next: {
+		button: "#next_letter",
+		key: "right"
+		
+		
+	}
+});
+
+
+$("#politicians").carouFredSel({
+	circular: true,
+	infinite: true,
+	items: 4,
+	auto: false,
+	prev: {
+		button: "#prev_politician",
+		key: "left"
+		
+	},
+	next: {
+		button: "#next_politician",
+		key: "right"
+		
+		
+	}
+});
+
+
+});
+
+
+issuepages = function(slug) {
+	$("#issue_pages").show();
+	$("#issue_pages").load(
+	"/issue/"+slug+"/");
+	
+}
+</script>
+<div>
+<h2 class="offset1">Issues</h2>
+<div class="well">
+<div id="issues" class="span12">
+{% for issue in issues %}
+<div class="span3">
+<a onClick="issuepages('{{issue.slug}}')" class="pointer">{{issue.title}}</a><br/>
+</div>
+{% endfor %}
+</div>
+<button id="prev_issue" class="btn btn-large"> <i class="icon-chevron-left"></i> Prev</button> &nbsp&nbsp&nbsp&nbsp<button id="next_issue" class="btn btn-large"> <i class="icon-chevron-right"></i> Next</button>
+
+</div>
+
+<div class="span12" id="issue_pages">
+
+</div>
+</div>
+<br/><br/>
+
+<h2 class="offset1">OpenLetters</h2>
+<div class="well">
+<div id="open_letters" class="span12">
+{% for open_letter in open_letters %}
+<div class="span3">
+
+<a href="/{{open_letter.slug}}/">{{open_letter.question}}</a>
+</div>
+{% endfor %}
+</div>
+<button id="prev_letter" class="btn btn-large"> <i class="icon-chevron-left"></i> Prev</button> &nbsp&nbsp&nbsp&nbsp<button id="next_letter" class="btn btn-large"> <i class="icon-chevron-right"></i> Next</button>
+</div>
+<br/><br/><br/>
+
+
+
+<h2 class="offset1">Politicians</h2>
+<div>
+<div id="politicians" class="span12">
+{% for politician in politicians %}
+<div class="span3 well">
+
+<a href="/congress/{{politician.first}}/{{politician.last}}/">{{politician.title}} {{politician.first}} {{politician.last}}</a><br/><img src="/static/media/congress/{{politician.politician}}.jpg"><br/><br/> Forwarded {{politician.mentions}}x: <a href="/{{politician.post.slug}}/">{{politician.post.question}}</a><br/><br/><br/>
+</div>
+{% endfor %}
+</div>
+<button id="prev_politician" class="btn btn-large"> <i class="icon-chevron-left"></i> Prev</button> &nbsp&nbsp&nbsp&nbsp<button id="next_politician" class="btn btn-large"> <i class="icon-chevron-right"></i> Next</button>
+</div>
+<br/><br/><br/>
+
+
+
+
+{% endblock %}

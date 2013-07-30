@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<!--JAVASCRIPT FUNCTIONS-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+<script type="text/javascript">
+toggle_visibility = function (id) {
+	var e = $("#"+id);
+	e.show();
+}
+remove_visibility = function (id) {
+	var e = $("#"+id);
+	e.hide();
+}
+
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	var top = $('#favorable').offset().top;
+	$(window).scroll(function() {
+		var y = $(window).scrollTop();
+		
+		if (y >= top) {
+			$('#drop').addClass('fixed');
+		} else {
+			$('#drop').removeClass('fixed');
+		}
+	});
+});
+</script>
+
+<!--END JAVASCRIPT-->
+{%endblock%}
+<!--END HEADER-->
+
+
+
+
+<!-- MAKE FAVORABLE, ETC DROPPABLE TOO SO REVERTS BACK TO ORIGINAL PLACE IF DECIDE NOT TO DROP 
+AFTERALL THEN CAN UNHIDE THE CLASS -->
+<!--Begin <body> in content block of base.html-->
+{% block content %}
+<!--Creator's Content-->
+<div id = "creator_content">
+<div id="title">
+<b><u>(Issue: {{issue}})</u>: {{question}}</b></ br></ br>
+</div>
+<!--Optional Extra details/comments-->
+<p>
+
+{{extra}}
+
+</p>
+</div>
+
+<!--END CREATOR CONTENT-->
+
+
+<!--Dynamic User Comments-->
+<div id="user_all">
+<!--find out way to make type of comment iterable so don't need to repeat this three times-->
+
+<!--If pro_comments list exists:-->
+{% if pro_comments %}
+
+
+<script type="text/javascript" src="http://politicrowd.com/static/media/jquery-ui/js/jquery-ui.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() { 
+$('#drop1').droppable({hoverClass:'border', tolerance:'pointer', accept:'div[id^="fave"]', drop: function() {
+	
+	$('#merge').append($('.ui-draggable').attr("id") );
+	}	});
+	
+$('#drop2').droppable({hoverClass:'border', tolerance:'pointer', accept:'div[id^="test"]', drop: function() {
+	alert('Dropped');
+	}	});
+	
+$('#drop3').droppable({hoverClass:'border', tolerance:'pointer', accept:'div[id^="test"]', drop: function() {
+	alert('Dropped');
+	}	});
+	
+});
+</script>
+
+
+<!--Beg. div id="favorable"-->
+<div id = "favorable">
+<script type="text/javascript">
+$(document).ready(function() { 
+	$({% for comment in pro_comments %}'#fave_{{comment.id}}',{% endfor %} '#replies').draggable({containment: 'document', cursor: 'pointer', revert: 'invalid', start: function() {
+	$('#event').text('Dragging started');
+	
+	},
+	drag: function() {
+		$('#event').text('Dragging');
+		var e = $('.show_details_{{comment.id}}');
+		e.hide();
+		},
+	stop: function() {
+		$('#event').text('Dragging stopped');
+		$('#fave_{{comment.id}}').addClass('fixed');
+	}
+	});
+
+});
+
+</script>
+
+Favorable:<br>
+
+	<!--Loop through every comment in list of 'pro_comments'-->
+	{% for comment in pro_comments %}
+		<!--Only display comments with less than 3 negative flags-->	
+		{% if comment.flag < 3 %}
+		
+		
+
+
+
+
+<div class="show_details_{{comment.id}}">
+		
+			<!--Display vote count, creator, flags, called_out boolean value, report icon-->
+			{{comment.rank}} | {{comment.creator}} 
+			</div>
+			<div class="shower_details_{{comment.id}}">
+			<div id="fave_{{comment.id}}" class="">
+			{{comment.comment}}
+			</div>
+			</div>
+		
+			<!--END COMMENT-->
+			{% if comment.replies.all %}
+			<div class="show_details_{{comment.id}}">
+				<!--Replies Div-->
+				<div id = "replies">
+				<!--Iterate through each reply in comment's list of replies-->
+				{% for reply in comment.replies.all %}
+					<!--Check if reply has less than 3 negative flags-->
+					{% if reply.flag < 3 %}
+						<!--Check if the creator of the reply authored the page-->
+						
+							<!--Reply: vote, vote count, creator, reply-->
+							<a href="/{{slug}}/replyvote/?id={{ reply.id }}" class="vote">{{reply.rank}}</a> | {{reply.creator}}:
+							<br />{{reply.comment}}
+							<br />
+							<!--END REPLY-->
+					<!--ENDIF FLAG < 3 CHECK-->
+					{% endif %}
+				<!--ENDFOR REPLY ITERATOR-->
+				{% endfor %}
+				</div>
+				<!--END REPLY DIV-->
+				</div>
+				<br />
+			<!--ENDIF COMMENT.REPLIES.ALL-->
+			{% endif %}
+
+	<!--ENDIF CHECKING WHETHER COMMENT.FLAG<3-->
+	{% endif %}
+<!--ENDFOR PROCOMMENTS ITERATOR-->
+	{% endfor %}
+	<!--End "favorable" div-->
+</div>
+<!--ENDIF PROCOMMENTS EXISTANCE CHECK-->	
+{% endif %}
+
+<!--If pro_comments list exists:-->
+{% if comments %}
+
+<!--Beg. div id="comment"-->
+<div id = "comment">
+Neutral or Informative:<br />
+	<!--Loop through every comment in list of 'comments'-->
+	{% for comment in comments %}
+		<!--Only display comments with less than 3 negative flags-->	
+		{% if comment.flag < 3 %}
+		<script type="text/javascript">
+$(document).ready(function() { 
+	$('#tcomment_{{comment.id}}').draggable({containment: 'document', cursor: 'pointer', grid:[40,40], start: function() {
+	$('#event').text('Dragging started');
+	
+	},
+	drag: function() {
+		$('#event').text('Dragging');
+		var e = $('.show_details_{{comment.id}}');
+		e.hide();
+		},
+	stop: function() {
+		$('#event').text('Dragging stopped');
+		$('#com_{{comment.id}}').addClass('fixed');
+	}
+	});
+	
+});
+
+</script>
+<div class = "show_details_{{comment.id}}">
+			<!--Display vote count, creator, flags, called_out boolean value, report icon-->
+			{{comment.rank}} | {{comment.creator}} 
+			<br />
+			</div>
+			<div id="tcomment_{{comment.id}}" class="">
+			{{comment.comment}}
+			</div>
+			<br />
+
+{% if comment.replies.all %}
+				<!--Replies Div-->
+				<div id = "replies">
+				<div class="show_details_{{comment.id}}">
+				<!--Iterate through each reply in comment's list of replies-->
+				{% for reply in comment.replies.all %}
+					<!--Check if reply has less than 3 negative flags-->
+					{% if reply.flag < 3 %}
+						<!--Check if the creator of the reply authored the page-->
+						
+							<!--Reply: vote, vote count, creator, reply-->
+							<a href="/{{slug}}/replyvote/?id={{ reply.id }}" class="vote">{{reply.rank}}</a> | {{reply.creator}}:
+							<br />{{reply.comment}}
+							<br />
+							<!--END REPLY-->
+					<!--ENDIF FLAG < 3 CHECK-->
+					{% endif %}
+				<!--ENDFOR REPLY ITERATOR-->
+				{% endfor %}
+				</div>
+				<!--END REPLY DIV-->
+				</div>
+				<br />
+			<!--ENDIF COMMENT.REPLIES.ALL-->
+			{% endif %}
+	<!--ENDIF CHECKING WHETHER COMMENT.FLAG<3-->
+	{% endif %}
+<!--ENDFOR COMMENTS ITERATOR-->
+	{% endfor %}
+	<!--End "comments" div-->
+</div>
+<!--ENDIF COMMENTS EXISTANCE CHECK-->	
+{% endif %}
+
+
+<!--If neg_comments list exists:-->
+{% if neg_comments %}
+
+<!--Beg. div id="favorable"-->
+<div id = "critical">
+
+Critical:<br>
+
+	<!--Loop through every comment in list of 'pro_comments'-->
+	{% for comment in neg_comments %}
+		<!--Only display comments with less than 3 negative flags-->	
+		{% if comment.flag < 3 %}
+			<!--Display vote count, creator, flags, called_out boolean value, report icon-->
+			{{comment.rank}} | {{comment.creator}} 
+			<br />
+			{{comment.comment}}
+			<br />
+			
+			{% if comment.replies.all %}
+			<div class="show_details_{{comment.id}}">
+				<!--Replies Div-->
+				<div id = "replies">
+				<!--Iterate through each reply in comment's list of replies-->
+				{% for reply in comment.replies.all %}
+					<!--Check if reply has less than 3 negative flags-->
+					{% if reply.flag < 3 %}
+						<!--Check if the creator of the reply authored the page-->
+						
+							<!--Reply: vote, vote count, creator, reply-->
+							<a href="/{{slug}}/replyvote/?id={{ reply.id }}" class="vote">{{reply.rank}}</a> | {{reply.creator}}:
+							<br />{{reply.comment}}
+							<br />
+							<!--END REPLY-->
+					<!--ENDIF FLAG < 3 CHECK-->
+					{% endif %}
+				<!--ENDFOR REPLY ITERATOR-->
+				{% endfor %}
+				</div>
+				<!--END REPLY DIV-->
+				</div>
+				<br />
+			<!--ENDIF COMMENT.REPLIES.ALL-->
+			{% endif %}
+	<!--ENDIF CHECKING WHETHER COMMENT.FLAG<3-->
+	{% endif %}
+<!--ENDFOR NEGCOMMENTS ITERATOR-->
+	{% endfor %}
+	<!--End "critical" div-->
+</div>
+<!--ENDIF NEGCOMMENTS EXISTANCE CHECK-->	
+{% endif %}
+
+<div id="drop" class="">
+<div id="drop1" class=""></div>
+<div id="drop2" class=""></div>
+<div id="drop3" class=""></div>
+<form name="merge" id = "merge" action="/merger/" method = "post">
+{% csrf_token %}
+<input type="hidden" name="id" value="{{comment.id}}"</input>
+<input id = "submit" type="submit" value="Submit" disabled="disabled"/>
+</form>
+</div>
+<!--END "user_all" div id-->
+</div>
+{% endblock %}
+

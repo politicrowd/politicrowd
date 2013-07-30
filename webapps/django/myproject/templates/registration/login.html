@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42077141-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-42077141-1', 'politicrowd.com'); ga('send', 'pageview'); </script>
+<meta charset="utf-8" name="google-site-verification" content="loSoKjV0F5dXDSacnAKBfCjPegC_mZAnkowZwPm100c" />
+
+<title>Coming Soon - PolitiCrowd.com</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/static/media/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/media/css/css3.css" />
+<link rel="stylesheet" type="text/css" href="/static/media/css/responsive.css" />
+<script type="text/javascript" src="/static/media/js/html5shiv.js"></script>
+<script type="text/javascript" src="/static/media/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/static/media/js/custom.js"></script>
+<script src="/static/media/js/validate.js"></script>
+<script src="/static/media/bootstrap-1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/media/bootstrap-1/css/bootstrap.min.css" />
+<script src="/static/media/js/tooltip.js"></script>
+<link rel="shortcut icon" href="/static/media/img/favv.ico" />
+<script type="text/javascript">
+        $(document).ready(function(e) {
+        $("#email").validate({
+  rules: {
+  	email: {
+      required: true,
+      email: true
+    }
+    
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      console.log(value.message);
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});  
+        
+{% if email %}
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: "We have added "+{{email}}+" to updates!",
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      _popover.data("popover").options.content = content;
+      {% endif %}
+
+        
+        
+        
+        });
+        </script>
+
+
+</head>
+
+<body>
+<div class="comingWrapper">
+<header class="brown_bg">
+            <div class="wrapper">
+                <a href="/" id="logo"> <img src="/static/media/images/logo.png" alt=""/></a>
+                <a class="mob-menu" href="#">
+                    <span class="mob-open"><img src="/static/media/images/mob-menu-img.png" alt="img"></span>
+                    <span class="mob-close"><img src="/static/media/images/mob-close.png" alt="img"></span>
+                </a>
+                <nav>
+                    <ul>
+                    	<li><a href="/about/">ABOUT</a></li>
+                        <li><a href="/demo/politician/">POLITICIAN'S INBOX [DEMO]</a></li>
+                        <li><a href="/demo/openletter/">OPENLETTER [DEMO]</a></li>
+                        
+                        <li class="last marg_right"><a href="#">SIGN UP 7/15!</a></li>
+                        <li class="search marg_right"><a href="#"></a></li>
+                    </ul>
+                    <form action="#">
+                        <div class="search_box">
+                            <input type="text"  onfocus="if(this.value == 'Search for an OpenLetter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search for an OpenLetter';}" value="Search for an OpenLetter"/>
+                        </div>
+                    </form>
+                </nav>
+
+            </div>
+        </header>
+
+<section class="coming-sec">
+	<article class="coming-box">
+    	
+        <h1>PDX Launch 8/4/13<br/> 1:00-4:30 PM<br/>Pioneer Square</h1><br/>
+        <p>The onset of the digital age has revolutionized the way we engage with everything. So why  not the way we connect with our government? </p><br><p>PolitiCrowd is a non-profit, non-partisan web platform that promotes democratic and transparent engagement between people and politicians. <br>Visit the <a href="/about/"> About Page</a> to learn more.<br></p><br><br>
+        <h2>Stay Connected on <a href="http://www.facebook.com/PolitiCrowd">Facebook</a> and <a href="http://www.twitter.com/PolitiCrowd">Twitter</a>!</h2>
+        <p>We'd love to hear from you! Email us at <a href="mailto:crowd@politicrowd.com">Crowd@PolitiCrowd.com</a>.<br/><a href="/volunteer/">Sign up</a> to volunteer!</p>
+        <div class="social-strip">
+            <div class="mail-box">
+                <form id="email" action="/email/" method="post">
+                {% csrf_token %}
+                    <input type="email" name="email" class="required" value="Enter your email address to stay updated"  onfocus="if(this.value == 'Enter your email address to stay updated') {this.value = '';}"  onblur="if (this.value == '') {this.value = 'Enter your email address to stay updated';}"  />
+                    <input name="" type="submit"  />
+                </form>
+            </div>
+            <ul class="social-icons">
+            	<li class="fb"><a href="http://www.facebook.com/PolitiCrowd"></a></li>
+                <li class="twit"><a href="http://www.twitter.com/PolitiCrowd"></a></li>
+            </ul><br/><br/><br/><br/><br/><br/>
+        </div>
+    </article>
+</section>
+
+ </div>
+</body>
+</html>
